@@ -1,0 +1,21 @@
+
+# https://editorconfig.org
+
+# EditorConfig 代码编辑器配置信息
+
+root = true
+
+# 应用于所有文件
+[*]
+# 字符集 设置文件的字符集
+charset = utf-8
+# 缩进符
+indent_style = space
+# 缩进数
+indent_size = 2
+# 缩进类型视lf
+end_of_line = lf
+# 始终再文章末尾进入一个新行
+insert_final_newline = true
+# 移除无效空格
+trim_trailing_whitespace = true

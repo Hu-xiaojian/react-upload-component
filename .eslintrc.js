@@ -1,0 +1,98 @@
+module.exports = {
+  root: true,
+  overrides: [],
+  plugins: ['react', '@typescript-eslint', 'prettier', 'jsx-a11y'],
+  'extends': [
+    'eslint:recommended',
+    'airbnb',
+    'plugin:react/recommended',
+    // 'standard-with-typescript',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:import/recommended',
+    'plugin:prettier/recommended',
+    'plugin:jsx-a11y/recommended',
+  ],
+  'parser': '@typescript-eslint/parser',
+  'settings': {
+    'import/resolver': {
+      'node': {
+        'extensions': ['.js', '.jsx', '.ts', '.tsx'],
+      },
+    },
+  },
+  'env': {
+    'es6': true,
+    'browser': true,
+    'node': true,
+  },
+  'parserOptions': {
+    'ecmaVersion': 6,
+    'sourceType': 'module',
+    'ecmaFeatures': {
+      'jsx': true,
+      'experimentalObjectRestSpread': true,
+    },
+  },
+  'rules': {
+    'import/no-extraneous-dependencies': [
+      'error',
+      {
+        'devDependencies': true,
+        'optionalDependencies': false,
+        'peerDependencies': false,
+        'packageDir': './',
+      },
+    ],
+    'react/static-property-placement': ['off', 'static public field'],
+    '@typescript-eslint/no-empty-interface': [
+      'error',
+      {
+        'allowSingleExtends': false,
+      },
+    ],
+    'new-cap': ['off', { 'capIsNewExceptionPattern': true }],
+    '@typescript-eslint/no-var-requires': 0,
+    'react/prefer-stateless-function': ['off', { 'ignorePureComponents': true }],
+    'no-nested-ternary': 'off',
+    'import/extensions': 'off',
+    // 禁止使用 var
+    'no-var': 'error',
+    'import/newline-after-import': ['error', { 'count': 1 }],
+    'class-methods-use-this': ['off', { 'enforceForClassFields': false }],
+    'jsx-a11y/rule-name': 0,
+    'prettier/prettier': 2,
+    'semi': ['error', 'always'],
+    'linebreak-style': [0, 'error', 'windows'],
+    'comma-dangle': 0,
+    'no-plusplus': 0,
+    'no-console': 0,
+    'arrow-body-style': 0,
+    'arrow-parens': [2, 'as-needed'],
+    'no-mixed-operators': [
+      'error',
+      {
+        'groups': [
+          ['%', '**'],
+          ['%', '+'],
+          ['%', '-'],
+          ['%', '*'],
+          ['%', '/'],
+          ['**', '+'],
+          ['**', '-'],
+          ['**', '*'],
+          ['**', '/'],
+          ['&', '|', '^', '~', '<<', '>>', '>>>'],
+          ['==', '!=', '===', '!==', '>', '>=', '<', '<='],
+          ['&&', '||'],
+          ['in', 'instanceof'],
+        ],
+        'allowSamePrecedence': false,
+      },
+    ],
+    'no-template-curly-in-string': 1,
+    'react/prop-types': [2, { 'ignore': ['children', 'className'] }],
+    'react/forbid-prop-types': [2, { 'forbid': ['any'] }],
+    'react/jsx-filename-extension': [2, { 'extensions': ['.tsx', '.jsx'] }],
+    'jsx-a11y/label-has-for': 0,
+  },
+};

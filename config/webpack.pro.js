@@ -1,13 +1,13 @@
 const path = require('path');
 const { merge } = require('webpack-merge');
-const baseConfig = require('./webpack.base.js');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const baseConfig = require('./webpack.base.js');
 
 const proConfig = {
   mode: 'production',
   entry: path.join(__dirname, '../src/index.tsx'),
   output: {
-    path: path.join(__dirname, '../lib/'),
+    path: path.join(__dirname, '../lib'),
     filename: 'index.js',
     libraryTarget: 'umd',
     libraryExport: 'default',
@@ -24,8 +24,8 @@ const proConfig = {
             options: {
               modules: {
                 mode: 'global',
-              }
-            }
+              },
+            },
           },
           {
             loader: 'postcss-loader',
@@ -33,21 +33,22 @@ const proConfig = {
               postcssOptions: {
                 plugins: [
                   [
-                    'postcss-preset-env', {}, // 其他选项
-                  ]
-                ]
-              }
-            }
+                    'postcss-preset-env',
+                    {}, // 其他选项
+                  ],
+                ],
+              },
+            },
           },
-          { loader: 'sass-loader' }
-        ]
+          { loader: 'sass-loader' },
+        ],
       },
-    ]
+    ],
   },
   plugins: [
     new MiniCssExtractPlugin({
-      filename: 'index.min.css',
-    })
+      filename: 'index.css',
+    }),
   ],
   externals: {
     react: {
@@ -61,8 +62,8 @@ const proConfig = {
       commonjs2: 'react-dom',
       commonjs: 'react-dom',
       amd: 'react-dom',
-    }
-  }
-}
+    },
+  },
+};
 
 module.exports = merge(proConfig, baseConfig);
