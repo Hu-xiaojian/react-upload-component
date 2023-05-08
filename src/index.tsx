@@ -1,4 +1,5 @@
 import React from 'react';
+import BaseUpload from '@/upload';
 import CardUpload from '@/upload-wrapper/card-upload';
 import ListUpload from '@/upload-wrapper/list-upload';
 import DragUpload from '@/upload-wrapper/drag-upload';
@@ -17,10 +18,10 @@ interface UploadProps {
 }
 
 function Upload(props: UploadProps) {
-  const { uploadType = 'card', ...other } = props;
+  const { uploadType, ...other } = props;
   const Com = UPLOAD_COMPS[uploadType];
   if (!Com) {
-    throw new Error('uploadType is not an expected parameter');
+    return <BaseUpload { ...other }/>
   }
   return <Com {...other} />;
 }

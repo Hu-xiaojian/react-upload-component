@@ -1,7 +1,7 @@
 import React from 'react';
 import { emptyFn } from './utils';
 
-interface BaseProps {
+export interface BaseProps {
   /**
    * @desc 样式
    */
