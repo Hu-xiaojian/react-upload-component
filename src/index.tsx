@@ -1,5 +1,5 @@
 import React from 'react';
-import BaseUpload from '@/upload';
+import BaseUpload from '@/upload/original-upload';
 import CardUpload from '@/upload-wrapper/card-upload';
 import ListUpload from '@/upload-wrapper/list-upload';
 import DragUpload from '@/upload-wrapper/drag-upload';
