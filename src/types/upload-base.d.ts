@@ -1,9 +1,12 @@
-import type { ReactNode } from "react";
+import type { ReactNode } from 'react';
+import type { ValueItem } from './helper';
 
 /**
  * @desc upload基础属性
  */
 export interface Base {
+  id: string;
+  
   /**
    * @desc 样式
    */
@@ -84,5 +87,5 @@ export interface Base {
   /**
    * @desc 文件选择回调
    */
-  onSelect: (file) => void;
+  onSelect: (uploadFiles: Array<ValueItem>, allFiles: Array<ValueItem>) => boolean;
 }

@@ -1,4 +1,5 @@
-import { emptyFn } from './utils';
+import { emptyFn } from '@/upload/utils';
+import uuid from '@/upload/uuid';
 import type { UploaderConfig, UploaderInstance } from '@/types';
 /**
  * @desc 上传
@@ -26,8 +27,12 @@ Object.defineProperties(Uploader.prototype, {
     }
   },
   startUpload: {
-    value: function () {
-
+    value: function (fileList) {
+      const filesArr = fileList.length ? Array.prototype.slice.call(fileList) : [fileList];
+      filesArr.forEach(file => {
+        file.uid = file.uid || uuid();
+        this.upload(file);
+      });
     }
   },
   abortUpload: {
@@ -36,8 +41,8 @@ Object.defineProperties(Uploader.prototype, {
     }
   },
   upload: {
-    value: function () {
-
+    value: function (file) {
+      console.log(this)
     }
   },
   post: {

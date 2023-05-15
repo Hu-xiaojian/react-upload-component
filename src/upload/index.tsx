@@ -19,6 +19,8 @@ class Upload extends React.Component<UploadProps, any> {
     beforeUpload,
     customRequest,
     data,
+    fragment,
+    customFragment,
     headers,
     method,
     name,
@@ -32,6 +34,8 @@ class Upload extends React.Component<UploadProps, any> {
     beforeUpload,
     customRequest,
     data,
+    fragment,
+    customFragment,
     headers,
     method,
     name,
@@ -97,9 +101,17 @@ class Upload extends React.Component<UploadProps, any> {
     this.abortUpload();
   }
 
-  abortUpload =(file?) => this.uploader.abortUpload(file);
+  /**
+   * @desc 保留上层使用 Api
+   * @param file
+   */
+  abortUpload = (file?) => this.uploader.abortUpload(file);
 
-  startUpload(fileList) {
+  /**
+   * @desc 保留上层使用 Api
+   * @param fileList
+   */
+  startUpload = (fileList) => {
     this.uploader.startUpload(fileList);
   }
 }

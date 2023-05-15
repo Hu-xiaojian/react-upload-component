@@ -66,6 +66,7 @@ class BaseUpload extends React.Component<Base, null> {
 
   render (): React.ReactNode {
     const {
+      id,
       accept,
       className,
       capture,
@@ -112,6 +113,7 @@ class BaseUpload extends React.Component<Base, null> {
           { ...newProps }
           ref={ this.handleFileRef }
           type="file"
+          id={id}
           name={ name }
           style={ { display: 'none' } }
           accept={ accept }

@@ -10,6 +10,7 @@ function App() {
       <h1>本地测试组件</h1>
       <Upload
         multiple
+        autoUpload
         onChange={e => {
           console.log(e,'--------')
         }}

@@ -15,6 +15,20 @@ module.exports = {
         use: [
           {
             loader: 'babel-loader',
+            options: {
+              presets: [
+                [
+                  '@babel/preset-env',
+                  {
+                    // 支持的浏览器
+                    targets: {
+                      chrome: '90',
+                      ie: '9',
+                    }
+                  }
+                ]
+              ]
+            }
           }
         ],
         exclude: /node_modules/,

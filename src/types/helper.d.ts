@@ -30,10 +30,16 @@ export interface ResponseUpload extends BaseUrl {
   /**
    * @desc 错误信息，success为false展示
    */
+  error?: string;
   message?: string;
+  errorMessage?: string;
+  errorMsg?: string;
 }
 
-type State = 'done' | 'error' | 'loading' | 'select';
+/**
+ * @desc 文件状态
+ */
+type State = 'done' | 'error' | 'uploading' | 'selected';
 
 /**
  * @desc 文件项
@@ -63,6 +69,26 @@ export interface ValueItem {
    * @desc 文件唯一标识
    */
   uid: string;
+
+  /**
+   * @desc 错误信息
+   */
+  error?: string;
+
+  /**
+   * @desc 最后修改时间戳
+   */
+  lastModified: number;
+
+  /**
+   * @desc 最后修改时间
+   */
+  lastModifiedDate?: object,
+
+  /**
+   * @desc 上传百分百
+   */
+  percent: number;
 
   /**
    * @desc 原始file对象

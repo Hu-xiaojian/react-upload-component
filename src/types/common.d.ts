@@ -10,12 +10,6 @@ export interface Common {
   action: string;
 
   /**
-   * @desc 文件上传类型 (image/png, image/jpeg, .jpg, .jpeg, .png, ...)
-   * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/Input#attr-accept
-   */
-  accept: string;
-
-  /**
    * @desc 上传额外参数
    */
   data:  () => object | object;
@@ -53,8 +47,9 @@ export interface Common {
   /**
    * @desc 文件上传失败回调
    * @param {Object} value 上传失败信息、响应信息及文件
+   * @param {files} files 所有文件
    */
-  onError: (value) => void;
+  onError: (value, files) => void;
 
   /**
    * @desc 超时事件（单位ms）
@@ -89,6 +84,18 @@ export interface Common {
  * @desc 共享组件接口
  */
 export interface CommonComponent {
+  /**
+   * @desc 自动上传
+   */
+  autoUpload: boolean;
+
+  /**
+   * @desc 选择文件后，autoUpload为false时调用，为true时调用beforeUpload
+   * @param {ValueItem} file
+   * @return {Boolean} false阻止上传
+   */
+  afterSelect: (file: ValueItem) => boolean;
+
   /**
    * @desc 文件列表最大数量
    */
@@ -136,4 +143,12 @@ export interface CommonComponent {
    * @desc 行为渲染
    */
   actionRender: (value: ValueItem) => ReactNode | ReactNode;
+
+  /**
+   * @desc 文件发生变化
+   * @param value
+   * @param files
+   * @return void
+   */
+  onChange: (value: Array<ValueItem>, files: Array<ValueItem>) => void;
 }
