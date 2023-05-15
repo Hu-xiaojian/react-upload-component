@@ -11,8 +11,9 @@ export interface Common {
 
   /**
    * @desc 上传额外参数
+   * @param {File} file 文件对象
    */
-  data:  () => object | object;
+  data:  (file) => object | object;
 
   /**
    * @desc 上传请求头
@@ -26,30 +27,34 @@ export interface Common {
 
   /**
    * @desc 上传文件前调用
-   * @param {Object} file 文件对象
+   * @param {File} file 文件对象
+   * @param {Object} config 配置信息
    * @return {boolean} false 停止上传
    */
-  beforeUpload: (file) => boolean;
+  beforeUpload: (file, config) => boolean;
 
   /**
    * todo
    * @desc 文件上传中调用
-   * @param {Object} 上传的事件及文件
+   * @param {Object} 上传事件
+   * @param {File} file 文件对象
    */
-  onProgress: () => void;
+  onProgress: (e, file) => void;
 
   /**
    * @desc 文件上传成功回调
-   * @param {Object} value 响应信息及文件
+   * @param {Object} res 响应信息
+   * @param {File} file 文件对象
    */
-  onSuccess: (value) => void;
+  onSuccess: (res, file) => void;
 
   /**
    * @desc 文件上传失败回调
-   * @param {Object} value 上传失败信息、响应信息及文件
-   * @param {files} files 所有文件
+   * @param {Error} error 上传失败信息、响应信息及文件
+   * @param {Object} response 接口错误信息
+   * @param {file} file 文件
    */
-  onError: (value, files) => void;
+  onError: (error, response?, file?) => void;
 
   /**
    * @desc 超时事件（单位ms）

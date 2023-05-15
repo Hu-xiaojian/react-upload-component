@@ -1,6 +1,6 @@
 import React from 'react';
 import Upload from '@/upload';
-import type { OriginalUpload as OriginalUploadX, ValueItem, UploaderInstance } from '@/types';
+import type { OriginalUpload as OriginalUploadX, ValueItem } from '@/types';
 import { fileToObj, checkValue, emptyFn, getTargetFile } from '@/upload/utils';
 
 interface OriginalUploadProps extends OriginalUploadX {
@@ -27,10 +27,15 @@ class OriginalUpload extends React.Component<OriginalUploadProps, OriginalUpload
   }
 
   static defaultProps = {
+    name: 'file',
+    method: 'post',
     onSelect: emptyFn,
     afterSelect: emptyFn,
     onChange: emptyFn,
     onError: emptyFn,
+    onProgress: emptyFn,
+    onSuccess: emptyFn,
+    beforeUpload: emptyFn,
   }
 
   /**

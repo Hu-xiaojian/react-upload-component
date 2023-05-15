@@ -55,3 +55,41 @@ export const getTargetFile = (files, file) => {
   const key = file.uid ? 'uid' : 'name';
   return files.find(it => it[key] === file[key]);
 }
+
+/**
+ * 获取对象的类型
+ * @param  {*} obj
+ * @return {String}
+ */
+export function typeOf(obj) {
+  return Object.prototype.toString.call(obj).replace(/\[object\s|]/g, '');
+}
+
+/**
+ * 是否是纯净对象
+ * @param  {*}  obj
+ * @return {Boolean}
+ * @reference https://github.com/jonschlinkert/is-plain-object
+ */
+export function isPlainObject(obj) {
+  if (typeOf(obj) !== 'Object') {
+    return false;
+  }
+
+  const ctor = obj.constructor;
+
+  if (typeof ctor !== 'function') {
+    return false;
+  }
+
+  const prot = ctor.prototype;
+
+  if (typeOf(prot) !== 'Object') {
+    return false;
+  }
+
+  if (!prot.hasOwnProperty('isPrototypeOf')) {
+    return false;
+  }
+  return true;
+}
