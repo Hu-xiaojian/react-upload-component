@@ -1,3 +1,7 @@
+/**
+ * clone form https://fusion.design/pc/component/upload?themeid=2#Upload%20Selecter
+ */
+
 import React from 'react';
 import Upload from '@/upload';
 import type { OriginalUpload as OriginalUploadX, ValueItem } from '@/types';
