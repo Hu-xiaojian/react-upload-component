@@ -30,16 +30,17 @@ class OriginalUpload extends React.Component<OriginalUploadProps, OriginalUpload
     this.uploadRef = React.createRef();
   }
 
-  static defaultProps = {
-    name: 'file',
-    method: 'post',
-    onSelect: emptyFn,
-    afterSelect: emptyFn,
-    onChange: emptyFn,
-    onError: emptyFn,
-    onProgress: emptyFn,
-    onSuccess: emptyFn,
-    beforeUpload: emptyFn,
+  static defaultProps: object;
+
+
+  static getDerivedStateFromProps (nextProps, prevState) {
+    // 上传中不允许做受控修改
+    if ('value' in nextProps && nextProps.value !== prevState.value && !prevState.uploading) {
+      return {
+        value: !Array.isArray(nextProps.value) ? [] : nextProps.value,
+      };
+    }
+    return null;
   }
 
   /**
@@ -66,12 +67,17 @@ class OriginalUpload extends React.Component<OriginalUploadProps, OriginalUpload
       excessFiles = filesObjArr.slice(diff);
     }
 
+    const _value = [ ...value, ...filesObjArr ]
+
+    // NOTE：不触发更新，文件上传成功后setState
+    this.state.value = _value;
+
     // 自动上传文件
     if (autoUpload) {
       this.uploadFiles(uploadFiles);
     }
 
-    onSelect(uploadFiles, [ ...value, ...filesObjArr ]);
+    onSelect(uploadFiles, _value);
     excessFiles.forEach(it => {
       // 超出最大文件数量
       const err = new Error('EXCESS_MAX_COUNT');
@@ -136,16 +142,17 @@ class OriginalUpload extends React.Component<OriginalUploadProps, OriginalUpload
    */
   onHandleError = (err, response, file) => {
     const value = this.state.value;
-    let targetFile = getTargetFile(value, file);
+    const targetFile = getTargetFile(value, file);
 
     if (!targetFile) return;
 
-    targetFile = {
+    // NOTE：合并会对同一个对象操作，不需要setState更新，重新赋值需要setState更新
+    Object.assign(targetFile, {
       ...targetFile,
       state: 'error',
       error: err,
       response,
-    }
+    });
 
     this.updateFilesState();
 
@@ -164,21 +171,133 @@ class OriginalUpload extends React.Component<OriginalUploadProps, OriginalUpload
     })
   }
 
+  /**
+   * @desc 文件上传成功
+   * @param response 响应数据
+   * @param file 当前文件
+   */
+  onHandleSuccess = (response, file) => {
+    const { formatter } = this.props;
+
+    if (formatter) {
+      response = formatter(response, file);
+    }
+
+    try {
+      if (typeof response === 'string') {
+        response = JSON.parse(response);
+      }
+    } catch (e) {
+      e.code = 'RESPONSE_FAIL';
+      return this.onHandleError(e, response, file);
+    }
+
+    if (response.success === false) {
+      const err = new Error(response.message || 'RESPONSE_FAIL');
+      err.code = 'RESPONSE_FAIL';
+      return this.onHandleError(err, response, file);
+    }
+
+    const value = this.state.value;
+    const targetItem = getTargetFile(value, file);
+    if (!targetItem) return;
+
+    // NOTE：合并会对同一个对象操作，不需要setState更新，重新赋值需要setState更新
+    Object.assign(targetItem, {
+      state: 'done',
+      response,
+      url: response.url,
+      downloadURL: response.downloadURL || response.url, // 下载地址(可选)
+    });
+
+    this.updateFilesState();
+
+    this.onHandleChange(value, targetItem);
+    this.props.onSuccess(targetItem, value);
+  };
+
+  /**
+   * @desc 文件上传进度
+   * @param e 上传事件
+   * @param file 上传文件
+   */
+  onHandleProgress = (e, file) => {
+    this.state.uploading = true;
+
+    const value = this.state.value;
+    const targetItem = getTargetFile(value, file);
+
+    if (!targetItem) {
+      return;
+    }
+
+    // NOTE：合并会对同一个对象操作，不需要setState更新，重新赋值需要setState更新
+    Object.assign(targetItem, {
+      state: '',
+      percent: e.percent,
+    });
+
+    this.setState({
+      value,
+    });
+
+    this.props.onProgress(value, targetItem);
+  };
+
+  /**
+   * @desc 文件投放
+   * @param files
+   */
+  onDrop = files => {
+    this.onHandleSelect(files);
+    this.props.onDrop(files);
+  };
+
   render (): React.ReactNode {
     const {
       children,
+      disabled,
+      draggable,
+      maxCount,
+      beforeUpload,
+      name,
       ...others
     } = this.props;
+    const { value } = this.state;
+
+    const _maxCount = value.length >= maxCount;
     return (<Upload
-      ref={this.uploadRef}
       { ...others }
+      name={name}
+      beforeUpload={beforeUpload}
+      draggable={draggable}
+      disabled={disabled || _maxCount}
       onSelect={this.onHandleSelect}
+      onDrop={this.onDrop}
+      onProgress={this.onHandleProgress}
+      onSuccess={this.onHandleSuccess}
+      onError={this.onHandleError}
+      ref={this.uploadRef}
     >
       {
         children
       }
     </Upload>);
   }
+}
+
+OriginalUpload.defaultProps = {
+  name: 'file',
+  method: 'post',
+  onSelect: emptyFn,
+  afterSelect: emptyFn,
+  onChange: emptyFn,
+  onError: emptyFn,
+  onDrop: emptyFn,
+  onProgress: emptyFn,
+  onSuccess: emptyFn,
+  beforeUpload: emptyFn,
+  withCredentials: false,
 }
 
 export default OriginalUpload;
