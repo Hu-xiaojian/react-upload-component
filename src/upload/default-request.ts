@@ -3,8 +3,8 @@
  */
 import type { UploadRequestOption, UploadRequestError, UploadProgressEvent } from '@/types';
 
-function getError(option: UploadRequestOption, xhr: XMLHttpRequest) {
-  const msg = `cannot ${option.method} ${option.action} ${xhr.status}'`;
+function getError(option: UploadRequestOption, xhr: XMLHttpRequest, errorMsg?: string) {
+  const msg = errorMsg || `cannot ${option.method} ${option.action} ${xhr.status}'`;
   const err = new Error(msg) as UploadRequestError;
   err.status = xhr.status;
   err.method = option.method;
@@ -26,7 +26,6 @@ function getBody(xhr: XMLHttpRequest) {
 }
 
 export default function upload(option: UploadRequestOption) {
-  // eslint-disable-next-line no-undef
   const xhr = new XMLHttpRequest();
 
   if (option.onProgress && xhr.upload) {
@@ -79,7 +78,7 @@ export default function upload(option: UploadRequestOption) {
     return option.onSuccess(getBody(xhr), xhr);
   };
 
-  option.method = option.method || 'POST';
+  option.method = option.method ?? 'POST';
   xhr.open(option.method, option.action, true);
 
   // In Internet Explorer, the timeout property may be set only after calling the open() method and before calling the send() method.

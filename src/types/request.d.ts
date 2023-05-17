@@ -21,6 +21,6 @@ export interface UploadRequestError extends Error, ResponseUpload {
  * @desc 上传请求配置
  */
 export interface UploadRequestOption extends UploaderConfig {
-  filename?: string;
+  filename: string;
   file: BeforeUploadFileType;
 }

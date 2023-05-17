@@ -13,6 +13,7 @@ function App() {
         action='http://127.0.0.1:7001/file'
         multiple
         autoUpload
+        timeout={300}
         onChange={e => {
           console.log(e,'--------onChange')
         }}
