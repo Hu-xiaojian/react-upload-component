@@ -59,7 +59,7 @@ export default function upload(option: UploadRequestOption) {
 
   // eslint-disable-next-line no-undef
   if (option.file instanceof Blob) {
-    formData.append(option.filename, option.file, (option.file as any).name);
+    formData.append(option.filename, option.file, (option.file as File).name);
   } else {
     formData.append(option.filename, option.file);
   }

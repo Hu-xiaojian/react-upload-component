@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import Upload from '../src';
+
 import '../src/index.scss';
 import { Upload as AntdUpload } from 'antd';
 import { Upload as NextUpload } from '@alifd/next';
@@ -9,7 +10,7 @@ function App() {
   return (
     <div>
       <h1>本地测试组件</h1>
-      <Upload
+      <Upload.Dragger
         action='http://127.0.0.1:7001/file'
         multiple
         autoUpload
@@ -20,7 +21,9 @@ function App() {
         onSuccess={(res, file) => {
           console.log(res,'--------onSuccess')
         }}
-      >上传</Upload>
+      >
+        {/*<div className='test'>拖拽</div>*/}
+      </Upload.Dragger>
       <div>========================================================</div>
       <AntdUpload multiple onChange={e=> {
         console.log(e,'-------------')

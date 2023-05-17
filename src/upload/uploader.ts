@@ -1,7 +1,7 @@
 import { emptyFn, isPlainObject } from '@/upload/utils';
 import uuid from '@/upload/uuid';
 import defaultRequest from '@/upload/default-request';
-import type { UploaderConfig, UploaderInstance } from '@/types'
+import type { UploaderConfig, UploaderInstance } from '@/types';
 /**
  * @desc 上传
  * @param config
@@ -18,7 +18,7 @@ function Uploader (config: UploaderConfig): UploaderInstance {
     onError: emptyFn,
     ...config,
   };
-  this.reqs = {};
+  this.reqs = Object.create(null);
   return this;
 }
 // defineProperties 支持>=IE9

@@ -95,6 +95,13 @@ export interface CommonComponent {
   autoUpload: boolean;
 
   /**
+   * @desc 选择文件回调
+   * @param files 当前上传文件列表
+   * @param value 所有文件列表
+   */
+  onSelect: (files: Array<ValueItem>, value: Array<ValueItem>) => void;
+
+  /**
    * @desc 选择文件后，autoUpload为false时调用，为true时调用beforeUpload
    * @param {ValueItem} file
    * @return {Boolean} false阻止上传

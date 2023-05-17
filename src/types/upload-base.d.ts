@@ -1,12 +1,11 @@
 import type { ReactNode } from 'react';
-import type { ValueItem } from './helper';
 
 /**
  * @desc upload基础属性
  */
 export interface Base {
   id: string;
-  
+
   /**
    * @desc 样式
    */
@@ -65,27 +64,7 @@ export interface Base {
   accept: string;
 
   /**
-   * @desc 是否拖拽上传
-   */
-  draggable: boolean;
-
-  /**
-   * @desc 拖过回调
-   */
-  onDragOver: Function;
-
-  /**
-   * @desc 拖拽离开回调
-   */
-  onDragLeave: Function;
-
-  /**
-   * @desc 投放回调
-   */
-  onDrop: Function;
-
-  /**
    * @desc 文件选择回调
    */
-  onSelect: (uploadFiles: Array<ValueItem>, allFiles: Array<ValueItem>) => boolean;
+  onSelect: (uploadFiles: Array<File>) => boolean;
 }

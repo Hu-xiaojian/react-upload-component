@@ -1,8 +1,21 @@
 import React, { Component } from 'react';
+import Upload from '@/upload/original-upload';
+import type { DragUploadProps } from '@/types/drag-upload';
 
-class DragUpload extends Component<any, any> {
-  render() {
-    return <div>拖拽上传</div>;
+const DragChildren = React.memo(({children, className = ''}) => {
+  return children || (<div className={`upload-drag ${className}`}>
+
+  </div>)
+});
+
+class DragUpload extends Component<DragUploadProps, any> {
+  render(): React.ReactNode {
+    const {
+      children,
+      className
+    } = this.props;
+
+    return <Upload><DragChildren className={className}>{children}</DragChildren></Upload>;
   }
 }
 
