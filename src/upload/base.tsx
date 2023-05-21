@@ -1,6 +1,7 @@
 import React from 'react';
 import { emptyFn } from './utils';
 import type { Base } from '@/types';
+import { prefix } from '@/manifest';
 
 /**
  * @desc 底层组件
@@ -53,13 +54,20 @@ class BaseUpload extends React.Component<Base, null> {
   /**
    * @desc 处理拖过
    */
-  onHandleDragOver = () => {
+  onHandleDragOver = e => {
+    e.preventDefault();
+    this.props.onDragOver(e);
   };
 
   /**
    * @decs 处理投放
    */
-  onHandleDrop = () => {
+  onHandleDrop = e => {
+    e.preventDefault();
+    const files = e.dataTransfer.files;
+    // todo
+    const filesArr = Array.prototype.slice.call(files);
+    this.props.onDrop(filesArr);
   };
 
   handleFileRef = ref => (this.fileRef = ref);
@@ -108,7 +116,7 @@ class BaseUpload extends React.Component<Base, null> {
       newProps.capture = capture;
     }
 
-    return (<div className={ `upload-base-container ${className}` } style={ style } { ...eventWrapper }>
+    return (<div className={ `${prefix}-upload-base-container ${className}` } style={ style } { ...eventWrapper }>
         <input
           { ...newProps }
           ref={ this.handleFileRef }

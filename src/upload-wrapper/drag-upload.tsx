@@ -1,22 +1,123 @@
 import React, { Component } from 'react';
 import Upload from '@/upload/original-upload';
-import type { DragUploadProps } from '@/types/drag-upload';
+import type { DragUploadProps } from '@/types';
+import { UploadIcon } from '@/icon';
+import { prefix } from '@/manifest';
+import { emptyFn } from "@/upload/utils";
 
-const DragChildren = React.memo(({children, className = ''}) => {
-  return children || (<div className={`upload-drag ${className}`}>
-
+const DragChildren = React.memo(({
+  children,
+  className = ''
+}) => {
+  return children || (<div className={ `${ prefix }-drag ${ className }` }>
+    <div className={ `${ prefix }-drag-icon` }><UploadIcon/></div>
+    <div className={ `${ prefix }-drag-text` }>点击或者拖动文件到虚线框内上传</div>
+    <div className={ `${ prefix }-drag-hint` }>支持 docx, xls, pdf, rar, zip, png, jpg 等类型的文件</div>
   </div>)
 });
 
-class DragUpload extends Component<DragUploadProps, any> {
-  render(): React.ReactNode {
+interface DragUploadState {
+  dragOver: boolean;
+}
+
+/**
+ * @desc 拖拽上传
+ */
+class DragUpload extends Component<DragUploadProps, DragUploadState> {
+  static displayName: string;
+  static defaultProps: object;
+
+  dragUploadRef: React.Ref<any>;
+
+  constructor (props) {
+    super(props);
+    this.state = {
+      dragOver: false,
+    }
+    this.dragUploadRef = React.createRef();
+  }
+
+
+  /**
+   * @desc 拖拽离开
+   */
+  onHandleDragLeave = e => {
+    this.setState({
+      dragOver: false,
+    });
+    this.props.onDragLeave(e);
+  }
+
+  /**
+   * @desc 处理拖过
+   */
+  onHandleDragOver = e => {
+    if (!this.state.dragOver) {
+      this.setState({
+        dragOver: true,
+      });
+    }
+    this.props.onDragOver(e);
+  }
+
+  /**
+   * @desc 投放
+   */
+  onHandleDrop = e => {
+    this.setState({
+      dragOver: false,
+    });
+    this.props.onDrop(e);
+  }
+
+  /**
+   * @desc 中断上传
+   */
+  abort = (file) => {
+    this.dragUploadRef.abort(file);
+  }
+
+  /**
+   * @desc 开始上传
+   */
+  startUpload = () => {
+    this.dragUploadRef.startUpload();
+  }
+
+  handleDragUploadRef = ref => (this.dragUploadRef = ref);
+
+  render (): React.ReactNode {
     const {
       children,
-      className
+      className = '',
+      onDragLeave,
+      onDrop,
+      onDragOver,
+      ...others
     } = this.props;
 
-    return <Upload><DragChildren className={className}>{children}</DragChildren></Upload>;
+    const { dragOver } = this.state;
+
+    return (<Upload
+      { ...others }
+      className={ `${ prefix }-draggable ${ className }` }
+      draggable
+      onDragLeave={ this.onHandleDragLeave }
+      onDragOver={ this.onHandleDragOver }
+      onDrop={ this.onHandleDrop }
+      ref={ this.handleDragUploadRef }
+    >
+      <DragChildren className={ (dragOver ? `${ prefix }-drag-over` : '') }>{ children }</DragChildren>
+    </Upload>);
   }
 }
+
+DragUpload.defaultProps = {
+  onDragLeave: emptyFn,
+  onDragOver: emptyFn,
+  onDrop: emptyFn,
+}
+
+DragUpload.displayName = 'DragUpload';
 
 export default DragUpload;

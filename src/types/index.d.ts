@@ -3,3 +3,4 @@ export { UploaderConfig, UploaderInstance } from './upload-config';
 export { OriginalUpload } from './original-upload';
 export { ValueItem } from './helper';
 export { UploadRequestError, UploadRequestOption, UploadProgressEvent } from './request';
+export { DragUploadProps } from './drag-upload';

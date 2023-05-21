@@ -1,8 +1,45 @@
-$upload-prefix: '.upload';
+$upload-prefix: '.sine-die';
 // todo
-$upload-drag-prefix: '.upload';
 #{$upload-prefix} {
-  &-base-container {
+  &-upload-base-container {
     display: inline-block;
+  }
+}
+
+#{$upload-prefix} {
+  &-draggable {
+    display: block;
+  }
+
+  // 拖拽样式
+  &-drag {
+    --color: #666;
+    border: 1px dashed #c4c6cf;
+    transition: border-color 100ms linear;
+    cursor: pointer;
+    border-radius: 4px;
+    background-color: transparent;
+    text-align: center;
+    margin-bottom: 4px;
+
+    &-icon {
+      margin-top: 16px;
+    }
+
+    &-text {
+      margin-top: 8px;
+      font-size: 14px;
+      color: var(--color);;
+    }
+
+    &-hint {
+      margin: 4px 0 20px;
+      font-size: 12px;
+      color: #999;;
+    }
+
+    &-over {
+      border-color: #5584ff;
+    }
   }
 }

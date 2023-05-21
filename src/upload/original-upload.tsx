@@ -4,11 +4,10 @@
 
 import React from 'react';
 import Upload from '@/upload';
-import type { OriginalUpload as OriginalUploadX, ValueItem } from '@/types';
+import type { OriginalUpload as OriginalUploadX, ValueItem, DragUploadProps } from '@/types';
 import { fileToObj, checkValue, emptyFn, getTargetFile } from '@/upload/utils';
 
-interface OriginalUploadProps extends OriginalUploadX {
-}
+interface OriginalUploadProps extends OriginalUploadX, DragUploadProps {}
 
 interface OriginalUploadState {
   value: Array<ValueItem>;
@@ -27,7 +26,6 @@ class OriginalUpload extends React.Component<OriginalUploadProps, OriginalUpload
       value,
       uploading: false,
     };
-    this.uploadRef = React.createRef();
   }
 
   static defaultProps: object;
@@ -93,7 +91,7 @@ class OriginalUpload extends React.Component<OriginalUploadProps, OriginalUpload
           this.onHandleError(err, null, it);
         }
       });
-      this.onHandleChange(value, uploadFiles);
+      this.onHandleChange(_value, uploadFiles);
     }
 
   };
@@ -131,7 +129,7 @@ class OriginalUpload extends React.Component<OriginalUploadProps, OriginalUpload
       }).map(file => {
         return file.originalFileObj;
       });
-    fileList.length && this.uploadRef.current.startUpload(fileList);
+    fileList.length && this.uploadRef.startUpload(fileList);
   }
 
   /**
@@ -253,6 +251,30 @@ class OriginalUpload extends React.Component<OriginalUploadProps, OriginalUpload
     this.props.onDrop(files);
   };
 
+  /**
+   * 取消上传
+   * @param {File} file
+   */
+  abort = file => {
+    const fileList = this.state.value;
+    const targetItem = getTargetFile(fileList, file);
+    const index = fileList.indexOf(targetItem);
+    if (index !== -1) {
+      fileList.splice(index, 1);
+      this.onHandleChange(fileList, targetItem);
+    }
+    this.uploadRef.abortUpload(file); // 取消上传时调用组件的 `abort` 方法中断上传
+  };
+
+  /**
+   * @desc 开始上传
+   */
+  startUpload() {
+    this.uploadFiles(this.state.value);
+  }
+
+  handleUploadRef = ref => (this.uploadRef = ref)
+
   render (): React.ReactNode {
     const {
       children,
@@ -263,8 +285,8 @@ class OriginalUpload extends React.Component<OriginalUploadProps, OriginalUpload
       name,
       ...others
     } = this.props;
-    const { value } = this.state;
 
+    const { value } = this.state;
     const _maxCount = value.length >= maxCount;
     return (<Upload
       { ...others }
@@ -277,7 +299,7 @@ class OriginalUpload extends React.Component<OriginalUploadProps, OriginalUpload
       onProgress={this.onHandleProgress}
       onSuccess={this.onHandleSuccess}
       onError={this.onHandleError}
-      ref={this.uploadRef}
+      ref={this.handleUploadRef}
     >
       {
         children
@@ -287,6 +309,7 @@ class OriginalUpload extends React.Component<OriginalUploadProps, OriginalUpload
 }
 
 OriginalUpload.defaultProps = {
+  autoUpload: true,
   name: 'file',
   method: 'post',
   onSelect: emptyFn,
