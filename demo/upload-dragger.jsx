@@ -23,13 +23,20 @@ function UploadDraggable() {
         {/*<div className='test'>拖拽</div>*/}
       </Upload.Dragger>
       <div>========================================================</div>
-      <AntdUpload multiple onChange={e=> {
+      <AntdUpload
+        action='http://127.0.0.1:7001/file'
+        multiple onChange={e=> {
         console.log(e,'-------------')
       }}>
         AntdUpload上传
       </AntdUpload>
       <div>========================================================</div>
-      <NextUpload.Dragger
+      <NextUpload
+        listType='text'
+        limit={10}
+        method={'post'}
+        action='http://127.0.0.1:7001/file'
+
         // autoUpload
         onError={(error, response, file) => {
           console.log('------==========NextUpload-onError', error, response, file)
@@ -37,9 +44,10 @@ function UploadDraggable() {
         onChange={value => {
           // console.log(value,'----=============')
         }}
+        headers={{'X-Requested-With':null}}
       >
-        {/*NextUpload*/}
-      </NextUpload.Dragger>
+        NextUpload
+      </NextUpload>
     </div>
   );
 }

@@ -1,5 +1,5 @@
-import { emptyFn, isPlainObject } from '@/upload/utils';
-import uuid from '@/upload/uuid';
+import { emptyFn, isPlainObject } from '@/utils';
+import uuid from '@/utils/uuid';
 import defaultRequest from '@/upload/default-request';
 import type { UploaderConfig, UploaderInstance } from '@/types';
 /**

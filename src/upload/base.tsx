@@ -1,5 +1,5 @@
 import React from 'react';
-import { emptyFn } from './utils';
+import { emptyFn } from '@/utils';
 import type { Base } from '@/types';
 import { prefix } from '@/manifest';
 

@@ -5,7 +5,7 @@
 import React from 'react';
 import Upload from '@/upload';
 import type { OriginalUpload as OriginalUploadX, ValueItem, DragUploadProps } from '@/types';
-import { fileToObj, checkValue, emptyFn, getTargetFile } from '@/upload/utils';
+import { fileToObj, checkValue, emptyFn, getTargetFile } from '@/utils';
 
 interface OriginalUploadProps extends OriginalUploadX, DragUploadProps {}
 
