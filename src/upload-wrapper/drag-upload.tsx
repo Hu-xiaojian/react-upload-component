@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Upload from '@/upload/original-upload';
 import { UploadIcon } from '@/icon';
 import { prefix } from '@/manifest';
-import { emptyFn } from "@/utils";
+import { emptyFn } from '@/utils';
 import type { DragUploadProps } from '@/types';
 
 const DragChildren = React.memo(({

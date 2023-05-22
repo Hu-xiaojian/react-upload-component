@@ -116,7 +116,7 @@ class BaseUpload extends React.Component<Base, null> {
       newProps.capture = capture;
     }
 
-    return (<div className={ `${prefix}-upload-base-container ${className}` } style={ style } { ...eventWrapper }>
+    return (<div className={ `${prefix}-upload ${className}` } style={ style } { ...eventWrapper }>
         <input
           { ...newProps }
           ref={ this.handleFileRef }

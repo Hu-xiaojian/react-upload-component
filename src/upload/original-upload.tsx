@@ -4,10 +4,11 @@
 
 import React from 'react';
 import Upload from '@/upload';
-import type { OriginalUpload as OriginalUploadX, ValueItem, DragUploadProps } from '@/types';
+import type { OriginalUpload as OriginalUploadX, ValueItem, DragUploadProps, ListProps } from '@/types';
 import { fileToObj, checkValue, emptyFn, getTargetFile } from '@/utils';
+import List from "@/list";
 
-interface OriginalUploadProps extends OriginalUploadX, DragUploadProps {}
+interface OriginalUploadProps extends OriginalUploadX, DragUploadProps, ListProps {}
 
 interface OriginalUploadState {
   value: Array<ValueItem>;
@@ -105,7 +106,6 @@ class OriginalUpload extends React.Component<OriginalUploadProps, OriginalUpload
       this.state.uploading = false;
     }
   }
-
 
   /**
    * @desc 是否在更新
@@ -283,28 +283,39 @@ class OriginalUpload extends React.Component<OriginalUploadProps, OriginalUpload
       maxCount,
       beforeUpload,
       name,
+      // -------------------list
+      listType,
       ...others
     } = this.props;
 
     const { value } = this.state;
     const _maxCount = value.length >= maxCount;
-    return (<Upload
-      { ...others }
-      name={name}
-      beforeUpload={beforeUpload}
-      draggable={draggable}
-      disabled={disabled || _maxCount}
-      onSelect={this.onHandleSelect}
-      onDrop={this.onDrop}
-      onProgress={this.onHandleProgress}
-      onSuccess={this.onHandleSuccess}
-      onError={this.onHandleError}
-      ref={this.handleUploadRef}
-    >
+    return (<div className="sine-die-upload-container">
+      <Upload
+        { ...others }
+        name={name}
+        beforeUpload={beforeUpload}
+        draggable={draggable}
+        disabled={disabled || _maxCount}
+        onSelect={this.onHandleSelect}
+        onDrop={this.onDrop}
+        onProgress={this.onHandleProgress}
+        onSuccess={this.onHandleSuccess}
+        onError={this.onHandleError}
+        ref={this.handleUploadRef}
+      >
+        {
+          children
+        }
+      </Upload>
       {
-        children
+        listType ? (<List
+          value
+        >
+
+        </List>) : null
       }
-    </Upload>);
+    </div>);
   }
 }
 

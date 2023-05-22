@@ -7,7 +7,7 @@ import type { ListProps } from '@/types';
 class List extends React.Component<ListProps, any> {
   static displayName: string;
   render (): React.ReactNode {
-    return (<div>
+    return (<div className="list">
 
       </div>);
   }
