@@ -14,8 +14,8 @@ export interface UploaderConfig extends Common {
  */
 export interface UploaderInstance {
   setConfig(config: UploaderConfig): void;
-  startUpload(fileList): void
-  abortUpload(file): void;
-  upload(): void;
-  post(): void;
+  startUpload(fileList: Array<File>): void
+  abortUpload(file: File): void;
+  upload(file: File): void;
+  post(file: File, config: UploaderConfig): void;
 }

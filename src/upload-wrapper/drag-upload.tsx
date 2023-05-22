@@ -16,6 +16,9 @@ const DragChildren = React.memo(({
   </div>)
 });
 
+/**
+ * @desc state
+ */
 interface DragUploadState {
   dragOver: boolean;
 }

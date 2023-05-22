@@ -5,11 +5,6 @@ import type { Base } from './upload-base';
  */
 export interface DragUploadProps extends Base, Common, CommonComponent {
   /**
-   * @desc 是否拖拽上传
-   */
-  draggable: boolean;
-
-  /**
    * @desc 拖过回调
    */
   onDragOver: Function;
