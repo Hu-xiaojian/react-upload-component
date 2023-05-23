@@ -285,6 +285,16 @@ class OriginalUpload extends React.Component<OriginalUploadProps, OriginalUpload
       name,
       // -------------------list
       listType,
+      onCancel,
+      onProgress,
+      onRemove,
+      actionRender,
+      itemRender,
+      isPreview,
+      onPreview,
+      fileNameRender,
+      reUpload,
+      // -------------------list
       ...others
     } = this.props;
 
@@ -308,12 +318,20 @@ class OriginalUpload extends React.Component<OriginalUploadProps, OriginalUpload
           children
         }
       </Upload>
-      {
-        listType ? (<List
-          value
-        >
-
-        </List>) : null
+      { listType ? (<List
+        value={ value }
+        upload={ this }
+        listType={ listType }
+        onCancel={ onCancel }
+        // onProgress={}
+        onRemove={ onRemove }
+        itemRender={ itemRender }
+        actionRender={ actionRender }
+        reUpload={ reUpload }
+        isPreview={ isPreview }
+        onPreview={ onPreview }
+        fileNameRender={ fileNameRender }
+      />) : null
       }
     </div>);
   }
