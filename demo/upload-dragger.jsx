@@ -11,6 +11,7 @@ function UploadDraggable() {
     <div>
       <h1>本地测试draggable组件</h1>
       <Upload.Dragger
+        listType="text"
         onError={(error, response, file) => {
           console.log('------==========onError', error, response, file)
         }}

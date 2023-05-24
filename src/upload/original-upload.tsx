@@ -4,9 +4,10 @@
 
 import React from 'react';
 import Upload from '@/upload';
-import type { OriginalUpload as OriginalUploadX, ValueItem, DragUploadProps, ListProps } from '@/types';
 import { fileToObj, checkValue, emptyFn, getTargetFile } from '@/utils';
 import List from "@/list";
+import { prefix } from '@/manifest';
+import type { OriginalUpload as OriginalUploadX, ValueItem, DragUploadProps, ListProps } from '@/types';
 
 interface OriginalUploadProps extends OriginalUploadX, DragUploadProps, ListProps {}
 
@@ -277,6 +278,7 @@ class OriginalUpload extends React.Component<OriginalUploadProps, OriginalUpload
 
   render (): React.ReactNode {
     const {
+      className,
       children,
       disabled,
       draggable,
@@ -299,11 +301,13 @@ class OriginalUpload extends React.Component<OriginalUploadProps, OriginalUpload
     } = this.props;
 
     const { value } = this.state;
+    console.log(value,'--------value')
     const _maxCount = value.length >= maxCount;
-    return (<div className="sine-die-upload-container">
+    return (<div className={`${prefix}-upload-container`}>
       <Upload
         { ...others }
         name={name}
+        className={className}
         beforeUpload={beforeUpload}
         draggable={draggable}
         disabled={disabled || _maxCount}
@@ -320,6 +324,7 @@ class OriginalUpload extends React.Component<OriginalUploadProps, OriginalUpload
       </Upload>
       { listType ? (<List
         value={ value }
+        className={className}
         upload={ this }
         listType={ listType }
         onCancel={ onCancel }

@@ -8,6 +8,10 @@ type ListType = 'text' | 'image' | 'card';
  */
 export interface ListProps extends CardUploadProps {
   /**
+   * @desc 类名
+   */
+  className: string;
+  /**
    * @desc 列表类型
    */
   listType: ListType;

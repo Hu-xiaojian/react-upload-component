@@ -93,3 +93,32 @@ export function isPlainObject(obj) {
   }
   return true;
 }
+
+
+/**
+ * @desc 计算size
+ * @param size
+ * @return string 1024K
+ */
+export const sizeCalculator = (size) => {
+  let fileSize = parseFloat(size, 10);
+  // fileSize为浮点数 用 < 0.000001 替代 === 0
+  if (isNaN(fileSize) || fileSize < 0.0000001) {
+    return 0;
+  }
+  const SIZE_SUFFIX = ['B', 'K', 'M', 'G', 'T', 'P'];
+  let suffixIndex = 0;
+
+  // 在Mac上实验发现 取1024造成显示的大小和实际大小不一致
+  // 因为单位制不同 见 https://superuser.com/questions/938234/size-of-files-in-windows-os-its-kb-or-kb
+  const BIT_NUMBER_SYSTEM = 1024;
+  while (fileSize >= BIT_NUMBER_SYSTEM && suffixIndex < SIZE_SUFFIX.length) {
+    suffixIndex++;
+    fileSize /= BIT_NUMBER_SYSTEM;
+  }
+
+  const suffix = SIZE_SUFFIX[suffixIndex];
+  fileSize = fileSize.toFixed(2);
+
+  return `${fileSize}${suffix}`;
+}
