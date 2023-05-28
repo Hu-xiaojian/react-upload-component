@@ -296,6 +296,7 @@ class OriginalUpload extends React.Component<OriginalUploadProps, OriginalUpload
       onPreview,
       fileNameRender,
       reUpload,
+      progressProps,
       // -------------------list
       ...others
     } = this.props;
@@ -323,6 +324,7 @@ class OriginalUpload extends React.Component<OriginalUploadProps, OriginalUpload
         }
       </Upload>
       { listType ? (<List
+        progressProps={progressProps}
         value={ value }
         className={className}
         upload={ this }

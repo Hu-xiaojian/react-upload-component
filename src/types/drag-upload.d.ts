@@ -1,9 +1,10 @@
 import type { Common, CommonComponent } from './common';
 import type { Base } from './upload-base';
+import type { ListProps } from './list';
 /**
  * @desc 拖拽上传
  */
-export interface DragUploadProps extends Base, Common, CommonComponent {
+export interface DragUploadProps extends Base, Common, CommonComponent, ListProps {
   /**
    * @desc 拖过回调
    */

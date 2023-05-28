@@ -1,9 +1,55 @@
 import React from 'react';
 import Upload from '../src';
 
-import '../src/index.scss';
 import { Upload as AntdUpload } from 'antd';
 import { Upload as NextUpload } from '@alifd/next';
+import '../src/index.scss';
+
+const defaultValue = [
+  {
+    uid: "0",
+    name: "0--------------------------------------------------------------------------------------================================================================IMG.png0--------------------------------------------------------------------------------------================================================================IMG.png0--------------------------------------------------------------------------------------================================================================IMG.png",
+    state: "done",
+    url: "https://img.alicdn.com/tps/TB19O79MVXXXXcZXVXXXXXXXXXX-1024-1024.jpg",
+    downloadURL:
+      "https://img.alicdn.com/tps/TB19O79MVXXXXcZXVXXXXXXXXXX-1024-1024.jpg",
+    imgURL:
+      "https://img.alicdn.com/tps/TB19O79MVXXXXcZXVXXXXXXXXXX-1024-1024.jpg",
+    size: 2000
+  },
+  {
+    uid: "1",
+    name: "IMG.png",
+    percent: 50,
+    state: "uploading",
+    url: "https://img.alicdn.com/tps/TB19O79MVXXXXcZXVXXXXXXXXXX-1024-1024.jpg",
+    downloadURL:
+      "https://img.alicdn.com/tps/TB19O79MVXXXXcZXVXXXXXXXXXX-1024-1024.jpg",
+    imgURL:
+      "https://img.alicdn.com/tps/TB19O79MVXXXXcZXVXXXXXXXXXX-1024-1024.jpg"
+  },
+  {
+    uid: "2",
+    name: "IMG.png",
+    state: "error",
+    url: "https://img.alicdn.com/tps/TB19O79MVXXXXcZXVXXXXXXXXXX-1024-1024.jpg",
+    downloadURL:
+      "https://img.alicdn.com/tps/TB19O79MVXXXXcZXVXXXXXXXXXX-1024-1024.jpg",
+    imgURL:
+      "https://img.alicdn.com/tps/TB19O79MVXXXXcZXVXXXXXXXXXX-1024-1024.jpg",
+    errorMsg: "0--------------------------------------------------------------------------------------================================================================IMG.png0--------------------------------------------------------------------------------------================================================================IMG.png0--------------------------------------------------------------------------------------================================================================IMG.pngfail to upload something"
+  },
+  {
+    uid: "3",
+    name: "IMG.png",
+    state: "error",
+    url: "https://img.alicdn.com/tps/TB19O79MVXXXXcZXVXXXXXXXXXX-1024-1024.jpg",
+    downloadURL:
+      "https://img.alicdn.com/tps/TB19O79MVXXXXcZXVXXXXXXXXXX-1024-1024.jpg",
+    imgURL:
+      "https://img.alicdn.com/tps/TB19O79MVXXXXcZXVXXXXXXXXXX-1024-1024.jpg"
+  }
+];
 
 function UploadDraggable() {
   const UploadDraggableRef = React.createRef();
@@ -11,6 +57,10 @@ function UploadDraggable() {
     <div>
       <h1>本地测试draggable组件</h1>
       <Upload.Dragger
+        progressProps={{
+          textRender: (percent) => percent + '%'
+        }}
+        defaultValue={defaultValue}
         listType="text"
         onError={(error, response, file) => {
           console.log('------==========onError', error, response, file)

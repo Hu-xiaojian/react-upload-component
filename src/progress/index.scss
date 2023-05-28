@@ -1,0 +1,81 @@
+$prefix: '.sine-die-progress';
+#{$prefix}-line {
+  & {
+    width: 100%;
+    display: inline-block;
+    position: relative;
+
+    &-container {
+      display: inline-block;
+      width: 100%;
+      vertical-align: middle;
+    }
+
+    &-underlay {
+      border-radius: 20px;
+      height: 8px;
+      position: relative;
+      overflow: hidden;
+      width: 100%;
+      background: #f0f2f5;
+    }
+
+    &-overlay {
+      border-radius: 20px;
+      height: 8px;
+      position: absolute;
+      left: 0;
+      top: 0;
+      transition: all 300ms ease;
+
+      &-normal {
+        background: #5584ff;
+      }
+
+      &-success {
+        background: #46bc15;
+      }
+
+      &-error {
+        background: #ff3000;
+      }
+
+      &-started {
+        background: #ff3000;
+      }
+
+      &-middle {
+        background: #ff9300;
+      }
+
+      &-finishing {
+        background: #46BC15;
+      }
+    }
+  }
+
+  &-show-info {
+    #{$prefix}-line-container {
+      padding-right: 60px;
+      margin-right: -60px;
+    }
+
+    #{$prefix}-line-text {
+      width: 50px;
+      text-align: left;
+      margin-left: 10px;
+      vertical-align: middle;
+      display: inline-block;
+      color: #333;
+    }
+  }
+
+  &-show-border {
+    #{$prefix}-line-underlay {
+      border: 1px solid red;
+    }
+    #{$prefix}-line-overlay {
+      top: -1px;
+    }
+  }
+}

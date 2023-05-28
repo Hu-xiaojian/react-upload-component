@@ -1,21 +1,28 @@
 import React from 'react';
+import classnames from 'classnames';
 import { sizeCalculator } from '@/utils';
 import { prefix } from '@/manifest';
 import Progress from '@/progress';
 import { DeleteIcon } from '@/icon';
 import type { ListProps } from '@/types';
 
-const getInfo = (file) => {
+const getInfo = (file, props) => {
   const downloadURL = file.downloadURL || file.url;
   const imgURL = file.imgURL || file.url;
   const size = sizeCalculator(file.size);
-  return { downloadURL, imgURL, size };
+  const className = classnames({
+    [`${prefix}-list-item`]: true,
+    [`${prefix}-list-item-${file.state}`]: file.state,
+    [` ${prefix}-list-item-${props.listType}`]: true,
+    [`${prefix}-list-item-error-with-msg`]: file.state === 'error' && file.errorMsg,
+  }, props.className);
+  return { downloadURL, imgURL, size, className };
 }
 
 const typeOfFn = fn => typeof fn === 'function';
 
-const getTextList = (file, { itemRender, fileNameRender, actionRender, onRemove, className }) => {
-
+const getTextList = (file, props) => {
+  const { itemRender, fileNameRender, actionRender, onRemove, progressProps } = props;
   let item = null;
 
   if (typeOfFn(itemRender)) {
@@ -23,28 +30,28 @@ const getTextList = (file, { itemRender, fileNameRender, actionRender, onRemove,
     item = itemRender(file, { onRemove });
   }
 
-  const { downloadURL, size } = getInfo(file);
+  const { downloadURL, size, className } = getInfo(file, props);
   // const onClick = () => (file.state === 'uploading' ? this.handleCancel(file) : this.handleClose(file));
   return (
-    <div className={`${prefix}-list ${className}`} key={file.uid || file.name}>
+    <div className={className} key={file.uid || file.name}>
       {
         item ? item : (
           <>
-            <div className={ `${ prefix }-list-item` }>
+            <div className={ `${ prefix }-list-item-name-wrap` }>
               <a
                 href={ downloadURL }
                 target="_blank"
                 rel="noopener noreferrer"
                 style={ { pointerEvents: downloadURL ? '' : 'none' } }
-                className={ `${ prefix }-list-item-name` }
+                className={`${prefix}-list-item-name`}
               >
                 <span>{ typeOfFn(fileNameRender) ? fileNameRender(file) : file.name }</span>
                 { !!size && <span className={ `${ prefix }-list-item-size` }>({ size })</span> }
               </a>
             </div>
-            { file.state === 'uploading' ? (<div className={`${prefix}-list-item-progress`}><Progress percent={file.percent} /></div>) : null }
+            { file.state === 'uploading' ? (<div className={`${prefix}-list-item-progress`}><Progress state="normal" percent={file.percent} { ...progressProps } /></div>) : null }
             { file.state === 'error' && file.errorMsg ? (<div className={`${prefix}-list-item-error-msg`}>{file.errorMsg}</div>) : null }
-            <div className={`${prefix}-list-item-action-render`}>
+            <div className={`${prefix}-list-item-options`}>
               { typeOfFn(actionRender) ? actionRender(file) : <DeleteIcon /> }
             </div>
           </>
@@ -74,6 +81,7 @@ class List extends React.Component<ListProps, any> {
       onProgress,
       reUpload,
       isPreview,
+      progressProps,
     } = this.props;
 
 
@@ -82,9 +90,14 @@ class List extends React.Component<ListProps, any> {
       return null;
     }
 
-    const props = { className, itemRender, fileNameRender, actionRender, onRemove };
+    const props = { className, itemRender, fileNameRender, actionRender, onRemove, listType, progressProps };
 
-    return (<div className={`${prefix}-list-container`}>
+    const classNames = classnames({
+      [`${prefix}-list`]: true,
+      [` ${prefix}-list-${listType}`]: true,
+    });
+
+    return (<div className={classNames}>
       {
         (value || []).map(file => {
           if (!file) {

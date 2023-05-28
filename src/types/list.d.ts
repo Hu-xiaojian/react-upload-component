@@ -2,11 +2,13 @@ import type { ReactNode } from 'react';
 import type { UploaderInstance } from './upload-config';
 import type { ValueItem } from './helper';
 import type { CardUploadProps } from './card-upload';
+import type { ProgressProps } from './progress';
 type ListType = 'text' | 'image' | 'card';
 /**
  * @desc list
  */
 export interface ListProps extends CardUploadProps {
+  progressProps: ProgressProps;
   /**
    * @desc 类名
    */

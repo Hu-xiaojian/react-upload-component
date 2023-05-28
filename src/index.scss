@@ -4,9 +4,7 @@ $upload-prefix: '.sine-die';
   &-upload {
     display: inline-block;
   }
-}
 
-#{$upload-prefix} {
   &-draggable {
     display: block;
   }
@@ -40,6 +38,110 @@ $upload-prefix: '.sine-die';
 
     &-over {
       border-color: #5584ff;
+    }
+  }
+
+  // 文件列表
+  &-list {
+    &-item {
+      position: relative;
+
+      &-name {
+        text-decoration: none;
+      }
+
+    }
+  }
+
+  // 文件文本列表
+  &-list-text {
+    #{$upload-prefix} {
+      &-list-item {
+        background-color: #f4f6f9;
+        padding: 4px 40px 4px 8px;
+        height: 40px;
+        line-height: calc(40px - 8px);
+        font-size: 12px;
+        overflow: hidden;
+        transition: all 100ms linear;
+        border-radius: 0;
+
+        & {
+          margin-bottom: 4px;
+        }
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+
+        &:hover {
+          #{$upload-prefix}-list-item-options {
+            .icon path {
+              fill: #666;
+            }
+          }
+        }
+
+        &-options {
+          position: absolute;
+          top: 0;
+          line-height: 40px;
+          right: 12px;
+        }
+
+        &-name-wrap {
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          overflow: hidden;
+        }
+
+        &-name {
+          color: #333;
+          transition: all 100ms linear;
+        }
+
+        &-size {
+          color: #8d9299;
+          margin-left: 8px;
+        }
+
+        &-done:hover #{$upload-prefix}-list-item-name {
+          color: #5584ff;
+        }
+        &-done:hover #{$upload-prefix}-list-item-name-wrap {
+          color: #5584ff;
+        }
+        &-done:hover #{$upload-prefix}-list-item-size {
+          color: #5584ff;
+        }
+        &-error {
+          background-color: #fff0f0;
+          &#{$upload-prefix}-list-item-error-with-msg {
+            line-height: calc(40px / 2 - 4px);
+          }
+          &-msg {
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+            color: #ff3000;
+          }
+        }
+        &-uploading {
+          line-height: calc(40px / 2 - 4px);
+          //.#{$css-prefix}upload-list-item-progress {
+          //  line-height: 0;
+          //  padding-top: calc((#{$upload-text-list-height} / 2 - #{$s-1} - #{$upload-text-list-progressbar-height}) / 2);
+          //  padding-bottom: calc((#{$upload-text-list-height} / 2 - #{$s-1} - #{$upload-text-list-progressbar-height}) / 2);
+          //  .#{$css-prefix}progress-line-underlay {
+          //    height: $upload-text-list-progressbar-height;
+          //  }
+          //  .#{$css-prefix}progress-line-overlay {
+          //    height: $upload-text-list-progressbar-height;
+          //    margin-top: calc(0px - (#{$upload-text-list-progressbar-height} / 2));
+          //  }
+          //}
+        }
+      }
     }
   }
 }
