@@ -1,4 +1,19 @@
 $prefix: '.sine-die-progress';
+
+@mixin progressive($type: background) {
+  &-normal {
+    #{$type}: #5584ff;
+  }
+
+  &-success {
+    #{$type}: #46bc15;
+  }
+
+  &-error {
+    #{$type}: #ff3000;
+  }
+}
+
 #{$prefix}-line {
   & {
     width: 100%;
@@ -27,30 +42,7 @@ $prefix: '.sine-die-progress';
       left: 0;
       top: 0;
       transition: all 300ms ease;
-
-      &-normal {
-        background: #5584ff;
-      }
-
-      &-success {
-        background: #46bc15;
-      }
-
-      &-error {
-        background: #ff3000;
-      }
-
-      &-started {
-        background: #ff3000;
-      }
-
-      &-middle {
-        background: #ff9300;
-      }
-
-      &-finishing {
-        background: #46BC15;
-      }
+      @include progressive('background');
     }
   }
 
@@ -74,8 +66,45 @@ $prefix: '.sine-die-progress';
     #{$prefix}-line-underlay {
       border: 1px solid red;
     }
+
     #{$prefix}-line-overlay {
       top: -1px;
     }
+  }
+}
+
+
+#{$prefix}-circle {
+  & {
+    position: relative;
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+
+    &-underlay {
+      stroke-width: 8px;
+      stroke: #ebedf0;
+    }
+
+    &-overlay {
+      transition: all 300ms ease;
+      stroke-linecap: round;
+      stroke-width: 8px;
+      @include progressive('stroke');
+    }
+  }
+
+  &-text {
+    display: block;
+    position: absolute;
+    width: 100%;
+    top: 50%;
+    left: 0;
+    text-align: center;
+    line-height: 1;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+    transition: transform 300ms ease;
+    color: #333;
   }
 }

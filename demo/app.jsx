@@ -18,11 +18,21 @@ function App() {
       <button onClick={() => setPercent(prev => prev === 100 ? 100 : prev + 10)}>测试+</button>
       <Progress
         hasBorder
-        state={'success'}
+        state={'normal'}
         backgroundColor={'green'}
         percent={percent}
         progressive
-        // color={'red'}
+        color={'red'}
+        textRender={() => '测试'}
+      />
+      <Progress
+        hasBorder
+        shape={'circle'}
+        state={'normal'}
+        backgroundColor={'green'}
+        percent={percent}
+        progressive
+        color={'red'}
         textRender={() => '测试'}
       />
       <UploadDraggable />
