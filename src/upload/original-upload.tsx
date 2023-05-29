@@ -7,7 +7,7 @@ import Upload from '@/upload';
 import { fileToObj, checkValue, emptyFn, getTargetFile } from '@/utils';
 import List from "@/list";
 import { prefix } from '@/manifest';
-import type { OriginalUpload as OriginalUploadX, ValueItem, DragUploadProps, ListProps } from '@/types';
+import type { OriginalUpload as OriginalUploadX, ValueItem, DragUploadProps, ListProps, UploaderInstance } from '@/types';
 
 interface OriginalUploadProps extends OriginalUploadX, DragUploadProps, ListProps {}
 
@@ -20,7 +20,7 @@ interface OriginalUploadState {
  * @desc 原始上传
  */
 class OriginalUpload extends React.Component<OriginalUploadProps, OriginalUploadState> {
-  uploadRef: React.Ref<any>;
+  uploadRef: UploaderInstance;
   constructor (props) {
     super(props);
     const value = checkValue(props);
@@ -250,6 +250,24 @@ class OriginalUpload extends React.Component<OriginalUploadProps, OriginalUpload
   onDrop = files => {
     this.onHandleSelect(files);
     this.props.onDrop(files);
+  };
+
+  /**
+   * 删除文件
+   * @param {File} file
+   */
+  removeFile = file => {
+    file.state = 'removed';
+    // 删除文件时调用组件的 `abortUpload` 方法中断上传
+    this.uploadRef.abortUpload(file);
+
+    const fileList = this.state.value;
+    const targetItem = getTargetFile(fileList, file);
+    const index = fileList.indexOf(targetItem);
+    if (index !== -1) {
+      fileList.splice(index, 1);
+      this.onHandleChange(fileList, targetItem);
+    }
   };
 
   /**

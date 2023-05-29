@@ -22,16 +22,16 @@ const getInfo = (file, props) => {
 const typeOfFn = fn => typeof fn === 'function';
 
 const getTextList = (file, props) => {
-  const { itemRender, fileNameRender, actionRender, onRemove, progressProps } = props;
+  const { itemRender, fileNameRender, actionRender, progressProps, onHandleCancel, onHandleRemove } = props;
   let item = null;
 
   if (typeOfFn(itemRender)) {
-    // todo
-    item = itemRender(file, { onRemove });
+    item = itemRender(file, { onRemove: onHandleRemove, onCancel: onHandleCancel });
   }
 
   const { downloadURL, size, className } = getInfo(file, props);
-  // const onClick = () => (file.state === 'uploading' ? this.handleCancel(file) : this.handleClose(file));
+  // 上传中为取消，其他情况为删除
+  const onClick = () => (file.state === 'uploading' ? onHandleCancel(file) : onHandleRemove(file));
   return (
     <div className={className} key={file.uid || file.name}>
       {
@@ -52,7 +52,7 @@ const getTextList = (file, props) => {
             { file.state === 'uploading' ? (<div className={`${prefix}-list-item-progress`}><Progress state="normal" percent={file.percent} { ...progressProps } /></div>) : null }
             { file.state === 'error' && file.errorMsg ? (<div className={`${prefix}-list-item-error-msg`}>{file.errorMsg}</div>) : null }
             <div className={`${prefix}-list-item-options`}>
-              { typeOfFn(actionRender) ? actionRender(file) : <DeleteIcon /> }
+              { typeOfFn(actionRender) ? actionRender(file) : <DeleteIcon onClick={onClick} /> }
             </div>
           </>
         )
@@ -66,6 +66,29 @@ const getTextList = (file, props) => {
  */
 class List extends React.Component<ListProps, any> {
   static displayName: string;
+
+
+  /**
+   * @desc 处理取消
+   * @param file
+   */
+  onHandleCancel = file => {
+    const { onCancel, upload } = this.props;
+    if (onCancel && onCancel(file)) {
+      upload.abort(file);
+    }
+  }
+
+  /**
+   * @desc 处理删除
+   * @param file
+   */
+  onHandleRemove = file => {
+    const { onRemove, upload } = this.props;
+    if (onRemove && onRemove(file)) {
+      upload.removeFile(file);
+    }
+  }
 
   render (): React.ReactNode {
     const {
@@ -90,7 +113,17 @@ class List extends React.Component<ListProps, any> {
       return null;
     }
 
-    const props = { className, itemRender, fileNameRender, actionRender, onRemove, listType, progressProps };
+    const props = {
+      className,
+      itemRender,
+      fileNameRender,
+      actionRender,
+      onRemove,
+      listType,
+      progressProps,
+      onHandleCancel: this.onHandleCancel,
+      onHandleRemove: this.onHandleRemove,
+    };
 
     const classNames = classnames({
       [`${prefix}-list`]: true,

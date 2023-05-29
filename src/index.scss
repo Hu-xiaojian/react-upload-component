@@ -115,7 +115,7 @@ $upload-prefix: '.sine-die';
           color: #5584ff;
         }
         &-error {
-          background-color: #fff0f0;
+          background-color: #ffd2d2;
           &#{$upload-prefix}-list-item-error-with-msg {
             line-height: calc(40px / 2 - 4px);
           }
@@ -128,18 +128,6 @@ $upload-prefix: '.sine-die';
         }
         &-uploading {
           line-height: calc(40px / 2 - 4px);
-          //.#{$css-prefix}upload-list-item-progress {
-          //  line-height: 0;
-          //  padding-top: calc((#{$upload-text-list-height} / 2 - #{$s-1} - #{$upload-text-list-progressbar-height}) / 2);
-          //  padding-bottom: calc((#{$upload-text-list-height} / 2 - #{$s-1} - #{$upload-text-list-progressbar-height}) / 2);
-          //  .#{$css-prefix}progress-line-underlay {
-          //    height: $upload-text-list-progressbar-height;
-          //  }
-          //  .#{$css-prefix}progress-line-overlay {
-          //    height: $upload-text-list-progressbar-height;
-          //    margin-top: calc(0px - (#{$upload-text-list-progressbar-height} / 2));
-          //  }
-          //}
         }
       }
     }

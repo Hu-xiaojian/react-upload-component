@@ -1,5 +1,4 @@
 import type { ReactNode } from 'react';
-import type { UploaderInstance } from './upload-config';
 import type { ValueItem } from './helper';
 import type { CardUploadProps } from './card-upload';
 import type { ProgressProps } from './progress';
@@ -24,9 +23,12 @@ export interface ListProps extends CardUploadProps {
   value: Array<ValueItem>;
 
   /**
-   * @desc upload
+   * @desc upload original-upload this
    */
-  upload: UploaderInstance;
+  upload: {
+    abort(file: ValueItem): void;
+    removeFile(file: ValueItem): void;
+  };
 
   /**
    * @desc 是否预览
@@ -62,9 +64,9 @@ export interface ListProps extends CardUploadProps {
   actionRender: (file: ValueItem) => ReactNode;
 
   /**
-   * @desc 取消上传
+   * @desc 取消上传，true中断上传
    */
-  onCancel: () => void;
+  onCancel: (file: ValueItem) => boolean;
 
   /**
    * @desc 选择新文件上传并替换
