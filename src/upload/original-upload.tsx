@@ -315,12 +315,12 @@ class OriginalUpload extends React.Component<OriginalUploadProps, OriginalUpload
       fileNameRender,
       reUpload,
       progressProps,
+      onImageError,
       // -------------------list
       ...others
     } = this.props;
 
     const { value } = this.state;
-    console.log(value,'--------value')
     const _maxCount = value.length >= maxCount;
     return (<div className={`${prefix}-upload-container`}>
       <Upload
@@ -348,6 +348,7 @@ class OriginalUpload extends React.Component<OriginalUploadProps, OriginalUpload
         upload={ this }
         listType={ listType }
         onCancel={ onCancel }
+        onImageError={onImageError}
         // onProgress={}
         onRemove={ onRemove }
         itemRender={ itemRender }
@@ -369,7 +370,11 @@ OriginalUpload.defaultProps = {
   onSelect: emptyFn,
   afterSelect: emptyFn,
   onChange: emptyFn,
+  onRemove: emptyFn,
+  onCancel: emptyFn,
   onError: emptyFn,
+  onPreview: emptyFn,
+  onImageError: emptyFn,
   onDrop: emptyFn,
   onProgress: emptyFn,
   onSuccess: emptyFn,

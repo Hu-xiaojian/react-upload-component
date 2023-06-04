@@ -3,7 +3,7 @@ import classnames from 'classnames';
 import { sizeCalculator } from '@/utils';
 import { prefix } from '@/manifest';
 import Progress from '@/progress';
-import { DeleteIcon } from '@/icon';
+import { DeleteIcon, LoadingErrIcon, PictureIcon } from '@/icon';
 import type { ListProps } from '@/types';
 
 const getInfo = (file, props) => {
@@ -13,7 +13,7 @@ const getInfo = (file, props) => {
   const className = classnames({
     [`${prefix}-list-item`]: true,
     [`${prefix}-list-item-${file.state}`]: file.state,
-    [` ${prefix}-list-item-${props.listType}`]: true,
+    [`${prefix}-list-item-${props.listType}`]: true,
     [`${prefix}-list-item-error-with-msg`]: file.state === 'error' && file.errorMsg,
   }, props.className);
   return { downloadURL, imgURL, size, className };
@@ -21,7 +21,7 @@ const getInfo = (file, props) => {
 
 const typeOfFn = fn => typeof fn === 'function';
 
-const getTextList = (file, props) => {
+const getTextAndImageList = (file, props, children?) => {
   const { itemRender, fileNameRender, actionRender, progressProps, onHandleCancel, onHandleRemove } = props;
   let item = null;
 
@@ -29,7 +29,8 @@ const getTextList = (file, props) => {
     item = itemRender(file, { onRemove: onHandleRemove, onCancel: onHandleCancel });
   }
 
-  const { downloadURL, size, className } = getInfo(file, props);
+  const fileInfo = getInfo(file, props);
+  const { downloadURL, size, className } = fileInfo;
   // 上传中为取消，其他情况为删除
   const onClick = () => (file.state === 'uploading' ? onHandleCancel(file) : onHandleRemove(file));
   return (
@@ -37,6 +38,7 @@ const getTextList = (file, props) => {
       {
         item ? item : (
           <>
+            { children && children(file, fileInfo, props) }
             <div className={ `${ prefix }-list-item-name-wrap` }>
               <a
                 href={ downloadURL }
@@ -61,6 +63,28 @@ const getTextList = (file, props) => {
   );
 }
 
+const getImageChildren = (file, fileInfo, props) => {
+  const { onHandleImageError, onPreview } = props;
+  const { imgURL } = fileInfo;
+
+  let img = null;
+  if (file.state === 'uploading' || (file.state === 'selected' && !imgURL)) {
+    img = <PictureIcon />;
+  } else if (file.state === 'error') {
+    img = <LoadingErrIcon />;
+  } else {
+    img = (
+      <img
+        src={imgURL}
+        onError={error => onHandleImageError(file, error)}
+        tabIndex="0"
+        onClick={() => onPreview(file)}
+      />
+    );
+  }
+  return <div className={`${prefix}-list-item-image-thumbnail`}>{ img }</div>;
+}
+
 /**
  * @desc
  */
@@ -74,7 +98,7 @@ class List extends React.Component<ListProps, any> {
    */
   onHandleCancel = file => {
     const { onCancel, upload } = this.props;
-    if (onCancel && onCancel(file)) {
+    if (onCancel(file) !== false) {
       upload.abort(file);
     }
   }
@@ -85,10 +109,20 @@ class List extends React.Component<ListProps, any> {
    */
   onHandleRemove = file => {
     const { onRemove, upload } = this.props;
-    if (onRemove && onRemove(file)) {
+    if (onRemove(file) !== false) {
       upload.removeFile(file);
     }
   }
+
+  /**
+   * @desc 图片加载失败
+   * @param file
+   * @param obj
+   */
+  onHandleImageError = (file, obj) => {
+    obj.onerror = null;
+    this.props.onImageError(file, obj);
+  };
 
   render (): React.ReactNode {
     const {
@@ -97,8 +131,6 @@ class List extends React.Component<ListProps, any> {
       listType,
       itemRender,
       fileNameRender,
-      onRemove,
-      onCancel,
       actionRender,
       onPreview,
       onProgress,
@@ -118,11 +150,12 @@ class List extends React.Component<ListProps, any> {
       itemRender,
       fileNameRender,
       actionRender,
-      onRemove,
       listType,
       progressProps,
+      onPreview,
       onHandleCancel: this.onHandleCancel,
       onHandleRemove: this.onHandleRemove,
+      onHandleImageError: this.onHandleImageError,
     };
 
     const classNames = classnames({
@@ -137,10 +170,9 @@ class List extends React.Component<ListProps, any> {
             return null;
           }
           if (listType === 'text') {
-            return getTextList(file, props);
+            return getTextAndImageList(file, props);
           } else if (listType === 'image') {
-            return getTextList(file, props);
-            // return this.getImageList(file);
+            return getTextAndImageList(file, props, getImageChildren);
           } else if (listType === 'card') {
             // return this.getPictureCardList(file);
           }

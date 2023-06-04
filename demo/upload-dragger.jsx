@@ -56,14 +56,20 @@ function UploadDraggable() {
   return (
     <div>
       <h1>本地测试draggable组件</h1>
-      <Upload.Dragger
+      <Upload.List
         progressProps={{
           textRender: (percent) => percent + '%'
         }}
         defaultValue={defaultValue}
-        listType="text"
+        listType="image"
+        onImageError={(file, error) => {
+          console.log(file,'---------------file, error', error)
+        }}
         onError={(error, response, file) => {
           console.log('------==========onError', error, response, file)
+        }}
+        onPreview={(file) => {
+          console.log(file,'-------file')
         }}
         onChange={value => {
           // console.log(value,'----=============')
@@ -72,7 +78,7 @@ function UploadDraggable() {
         ref={UploadDraggableRef}
       >
         {/*<div className='test'>拖拽</div>*/}
-      </Upload.Dragger>
+      </Upload.List>
       <div>========================================================</div>
       <AntdUpload
         action='http://127.0.0.1:7001/file'

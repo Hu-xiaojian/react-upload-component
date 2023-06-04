@@ -37,8 +37,9 @@ export interface ListProps extends CardUploadProps {
 
   /**
    * @desc 删除文件回调
+   * @return {boolean} true删除
    */
-  onRemove: (file: File) => void;
+  onRemove: (file: File) => boolean;
 
   /**
    * @desc 自定义文件名称渲染
