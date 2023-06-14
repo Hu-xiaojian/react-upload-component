@@ -6,3 +6,4 @@ export { UploadRequestError, UploadRequestOption, UploadProgressEvent } from './
 export { DragUploadProps } from './drag-upload';
 export { ListProps } from './list';
 export { ProgressProps } from './progress';
+export { ListUploadProps } from './list-upload';

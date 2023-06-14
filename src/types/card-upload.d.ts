@@ -15,5 +15,5 @@ export interface CardUploadProps {
    * @param file 文件
    * @param error 错误信息
    */
-  onImageError: (file: ValueItem, error: object) => void
+  onImageError: (file: ValueItem, error: object) => void;
 }

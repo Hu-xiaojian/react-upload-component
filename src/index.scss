@@ -12,6 +12,10 @@ $upload-prefix: '.sine-die';
     top: $optionsTop;
     line-height: $optionsLineHeight;
     right: 12px;
+
+    .icon {
+      cursor: pointer;
+    }
   }
 
   &-name {
@@ -84,8 +88,27 @@ $upload-prefix: '.sine-die';
     }
   }
 
+  // 列表样式
+  &-list-upload {
+    .upload-btn {
+      border: 0 solid transparent;
+      padding: 0 16px;
+      cursor: pointer;
+      height: 28px;
+      background-color: #5584ff;
+      border-radius: 4px;
+      color: #fff;
+
+      &:hover {
+        background-color: #3e71f7;
+      }
+    }
+  }
+
+
   // 文件列表
   &-list {
+    margin-top: 8px;
     &-item {
       position: relative;
 
@@ -157,6 +180,7 @@ $upload-prefix: '.sine-die';
       @include listItemStyle(8px, 48px);
 
       &-image-thumbnail {
+        cursor: pointer;
         float: left;
         width: 48px;
         height: 48px;
@@ -189,22 +213,26 @@ $upload-prefix: '.sine-die';
       &-uploading {
         line-height: calc(48px / 2);
       }
+
       &-uploading, &-error {
         #{$upload-prefix}-list-item-image-thumbnail {
           border: 1px solid #dcdfe6;
           background-color: #f4f6f9;
           text-align: center;
         }
+
         .icon {
           margin-top: calc(50% - (24px / 2));
         }
       }
 
       &-error {
-      border-color: #f52743;
+        border-color: #f52743;
+
         .icon {
           margin-top: calc(50% - (36px / 2));
         }
+
         &#{$upload-prefix}-list-item-error-with-msg {
           line-height: calc(40px / 2);
         }
