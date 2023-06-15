@@ -322,7 +322,7 @@ class OriginalUpload extends React.Component<OriginalUploadProps, OriginalUpload
 
     const { value } = this.state;
     const _maxCount = value.length >= maxCount;
-    return (<div className={`${prefix}-upload-container`}>
+    return (<>
       <Upload
         { ...others }
         name={name}
@@ -359,7 +359,7 @@ class OriginalUpload extends React.Component<OriginalUploadProps, OriginalUpload
         fileNameRender={ fileNameRender }
       />) : null
       }
-    </div>);
+    </>);
   }
 }
 

@@ -82,8 +82,45 @@ const getImageChildren = (file, fileInfo, props) => {
       />
     );
   }
-  return <div className={`${prefix}-list-item-image-thumbnail`}>{ img }</div>;
+  return <div className={`${prefix}-list-item-image-thumbnail`} key='img'>{ img }</div>;
 }
+
+const getCardList = (file, props, children?) => {
+  const { itemRender, fileNameRender, actionRender, progressProps, onHandleCancel, onHandleRemove, isPreview } = props;
+  let item = null;
+
+
+  const fileInfo = getInfo(file, props);
+  const { downloadURL, className } = fileInfo;
+  const state = isPreview ? '' : file.state;
+  const img = children && children(file, fileInfo, props);
+  if (state === 'uploading') {
+    item = [
+      img,
+      <Progress state="normal" percent={file.percent} { ...progressProps } />,
+    ];
+  } else {
+    if (typeOfFn(itemRender)) {
+      // todo
+      item = itemRender(file, { onRemove: onHandleRemove, onCancel: onHandleCancel });
+    } else {
+      item = [
+        img,
+        <div className={`${prefix}-tool`} key='tool'>
+          {
+            typeOfFn(actionRender) ? actionRender(file) : 'todo操作按钮'
+          }
+        </div>
+      ]
+    }
+  }
+  return (
+    <div className={className} key={file.uid || file.name}>
+      <div className={`${prefix}-list-item-wrapper`}>{ item }</div>
+      <div className={`${prefix}-list-item-name`}>{ typeOfFn(fileNameRender) ? itemRender(file) : file.name}</div>
+    </div>
+  )
+};
 
 /**
  * @desc
@@ -127,6 +164,7 @@ class List extends React.Component<ListProps, any> {
   render (): React.ReactNode {
     const {
       className,
+      children,
       value,
       listType,
       itemRender,
@@ -174,11 +212,12 @@ class List extends React.Component<ListProps, any> {
           } else if (listType === 'image') {
             return getTextAndImageList(file, props, getImageChildren);
           } else if (listType === 'card') {
-            // return this.getPictureCardList(file);
+            return getCardList(file, props, getImageChildren);
           }
           return null;
         })
       }
+      { children }
     </div>);
   }
 }

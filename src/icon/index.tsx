@@ -33,7 +33,7 @@ export const DeleteIcon = props => (
  * @param props
  */
 export const PictureIcon = props => (
-  <svg { ...props } t="1685860935628" className="icon" viewBox="0 0 1024 1024" version="1.1"
+  <svg { ...props } t="1685860935628" className="icon picture" viewBox="0 0 1024 1024" version="1.1"
        xmlns="http://www.w3.org/2000/svg"
        p-id="9430" width="24" height="24">
     <path

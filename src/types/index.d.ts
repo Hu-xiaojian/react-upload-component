@@ -7,3 +7,4 @@ export { DragUploadProps } from './drag-upload';
 export { ListProps } from './list';
 export { ProgressProps } from './progress';
 export { ListUploadProps } from './list-upload';
+export { CardUploadProps } from './card-upload';
