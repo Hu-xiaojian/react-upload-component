@@ -1,9 +1,10 @@
 import type { ValueItem } from './helper';
+import type { CommonComponent } from './common';
 
 /**
  * @desc 列表上传
  */
-export interface ListUploadProps {
+export interface ListUploadProps extends CommonComponent {
   /**
    * @desc 点击图片回调
    * @param file 文件

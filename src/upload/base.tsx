@@ -1,20 +1,20 @@
 import React from 'react';
-import { emptyFn } from '@/utils';
 import type { Base } from '@/types';
 import { prefix } from '@/manifest';
+
+interface BaseUploadProps extends Base {
+  /**
+   * @desc 文件选择回调
+   */
+  onSelect: (uploadFiles: Array<File>) => boolean;
+}
 
 /**
  * @desc 底层组件
  * @return React.ReactNode
  */
-class BaseUpload extends React.Component<Base, null> {
+class BaseUpload extends React.Component<BaseUploadProps, null> {
   static displayName: string;
-  static defaultProps = {
-    onSelect: emptyFn,
-    onDragLeave: emptyFn,
-    onDrop: emptyFn,
-    onDragOver: emptyFn,
-  }
 
   fileRef: HTMLInputElement;
 

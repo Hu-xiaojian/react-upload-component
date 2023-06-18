@@ -56,29 +56,31 @@ function UploadDraggable() {
   return (
     <div>
       <h1>本地测试draggable组件</h1>
-      <Upload.Card
-        progressProps={{
-          textRender: (percent) => percent + '%'
-        }}
-        defaultValue={defaultValue}
-        // listType="text"
-        onImageError={(file, error) => {
-          console.log(file,'---------------file, error', error)
-        }}
-        onError={(error, response, file) => {
-          console.log('------==========onError', error, response, file)
-        }}
-        onPreview={(file) => {
-          console.log(file,'-------file')
-        }}
-        onChange={value => {
-          // console.log(value,'----=============')
-        }}
-        action='http://127.0.0.1:7001/file'
-        ref={UploadDraggableRef}
+      <Upload.List
+        listType="text"
+        // onPreview={(file) => {
+        //   console.log(file,'-------file')
+        // }}
+        // progressProps={{
+        //   textRender: (percent) => percent + '%'
+        // }}
+        // defaultValue={defaultValue}
+        // // listType="text"
+        // onImageError={(file, error) => {
+        //   console.log(file,'---------------file, error', error)
+        // }}
+        // onError={(error, response, file) => {
+        //   console.log('------==========onError', error, response, file)
+        // }}
+        //
+        // onChange={value => {
+        //   // console.log(value,'----=============')
+        // }}
+        // action='http://127.0.0.1:7001/file'
+        // ref={UploadDraggableRef}
       >
         {/*<div className='test'>拖拽</div>*/}
-      </Upload.Card>
+      </Upload.List>
       <div>========================================================</div>
       <AntdUpload
         action='http://127.0.0.1:7001/file'

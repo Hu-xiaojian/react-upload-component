@@ -7,15 +7,6 @@ export interface Base {
   id: string;
 
   /**
-   * @desc 样式
-   */
-  style: object;
-  /**
-   * @desc 类名
-   */
-  className: string;
-
-  /**
    * @desc 文件大小，字节为单位（8bit -> 1byte, 1024byte -> 1kb, 1kb -> 1024mb, ...）
    */
   size: number;
@@ -62,9 +53,4 @@ export interface Base {
    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/Input#attr-accept
    */
   accept: string;
-
-  /**
-   * @desc 文件选择回调
-   */
-  onSelect: (uploadFiles: Array<File>) => boolean;
 }

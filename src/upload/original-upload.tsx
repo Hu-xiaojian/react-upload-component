@@ -6,10 +6,8 @@ import React from 'react';
 import Upload from '@/upload';
 import { fileToObj, checkValue, emptyFn, getTargetFile } from '@/utils';
 import List from "@/list";
-import { prefix } from '@/manifest';
-import type { OriginalUpload as OriginalUploadX, ValueItem, DragUploadProps, ListProps, UploaderInstance } from '@/types';
+import type { OriginalUploadProps, UploaderInstance, ValueItem } from '@/types';
 
-interface OriginalUploadProps extends OriginalUploadX, DragUploadProps, ListProps {}
 
 interface OriginalUploadState {
   value: Array<ValueItem>;
@@ -20,7 +18,10 @@ interface OriginalUploadState {
  * @desc 原始上传
  */
 class OriginalUpload extends React.Component<OriginalUploadProps, OriginalUploadState> {
+  static defaultProps: object;
+
   uploadRef: UploaderInstance;
+
   constructor (props) {
     super(props);
     const value = checkValue(props);
@@ -29,9 +30,6 @@ class OriginalUpload extends React.Component<OriginalUploadProps, OriginalUpload
       uploading: false,
     };
   }
-
-  static defaultProps: object;
-
 
   static getDerivedStateFromProps (nextProps, prevState) {
     // 上传中不允许做受控修改
@@ -360,9 +358,7 @@ class OriginalUpload extends React.Component<OriginalUploadProps, OriginalUpload
         onError={this.onHandleError}
         ref={this.handleUploadRef}
       >
-        {
-          children
-        }
+        { children }
       </Upload>
       { listType ? (<List
         progressProps={progressProps}
@@ -390,19 +386,29 @@ OriginalUpload.defaultProps = {
   autoUpload: true,
   name: 'file',
   method: 'post',
+  withCredentials: false,
+  isPreview: false,
+  reUpload: true,
+  children: '文件上传',
+  listType: 'image',
   onSelect: emptyFn,
-  afterSelect: emptyFn,
   onChange: emptyFn,
+
+  beforeUpload: emptyFn,
+  afterSelect: emptyFn,
   onRemove: emptyFn,
   onCancel: emptyFn,
-  onError: emptyFn,
+
   onPreview: emptyFn,
   onImageError: emptyFn,
+
+  onDragLeave: emptyFn,
+  onDragOver: emptyFn,
   onDrop: emptyFn,
+
   onProgress: emptyFn,
   onSuccess: emptyFn,
-  beforeUpload: emptyFn,
-  withCredentials: false,
+  onError: emptyFn,
 }
 
 export default OriginalUpload;

@@ -1,7 +1,7 @@
-import type { Base } from './upload-base';
-import type { CommonComponent, Common } from './common';
+import { ListUploadProps } from './list-upload';
+import { DragUploadProps } from './drag-upload';
 
 /**
  * @desc 原始上传
  */
-export interface OriginalUpload extends Base, Common, CommonComponent {}
+export interface OriginalUploadProps extends ListUploadProps, DragUploadProps {}

@@ -1,9 +1,12 @@
-import type { ReactNode } from 'react';
+import type { ReactNode, CSSProperties } from 'react';
 import type { ResponseUpload, ValueItem } from './helper';
+import type { ProgressProps } from './progress';
+import type { Base } from './upload-base';
 /**
- * @desc 共享接口
+ * @desc base 共享接口
  */
 export interface Common {
+
   /**
    * @desc 上传地址
    */
@@ -24,14 +27,6 @@ export interface Common {
    * @desc 请求携带 cookie
    */
   withCredentials: boolean;
-
-  /**
-   * @desc 上传文件前调用
-   * @param {File} file 文件对象
-   * @param {Object} config 配置信息
-   * @return {boolean} false 停止上传
-   */
-  beforeUpload: (file, config) => boolean;
 
   /**
    * todo
@@ -85,21 +80,30 @@ export interface Common {
   customFragment: Function;
 }
 
+
+export interface CommonComponentHelper {
+  className: string;
+  style: CSSProperties;
+}
+
 /**
  * @desc 共享组件接口
  */
-export interface CommonComponent {
+export interface CommonComponent extends CommonComponentHelper, Base, Common {
+  progressProps: ProgressProps;
+
   /**
-   * @desc 自动上传
+   * @desc 自动上传 ture = beforeUpload
    */
   autoUpload: boolean;
 
   /**
-   * @desc 选择文件回调
-   * @param files 当前上传文件列表
-   * @param value 所有文件列表
+   * @desc 上传文件前调用
+   * @param {File} file 文件对象
+   * @param {Object} config 配置信息
+   * @return {boolean} false 停止上传
    */
-  onSelect: (files: Array<ValueItem>, value: Array<ValueItem>) => void;
+  beforeUpload: (file, config) => boolean;
 
   /**
    * @desc 选择文件后，autoUpload为false时调用，为true时调用beforeUpload
@@ -132,11 +136,6 @@ export interface CommonComponent {
   formatter: (response: ResponseUpload, file: File) => ValueItem;
 
   /**
-   * @desc 是否为预览态
-   */
-  preview: boolean;
-
-  /**
    * todo
    * @desc 渲染预览态
    * @param value 文件项
@@ -146,7 +145,7 @@ export interface CommonComponent {
 
   /**
    * todo
-   * @desc 文件项渲染
+   * @desc 自定义文件项渲染
    */
   itemRender: (value: ValueItem) => ReactNode | ReactNode;
 
@@ -163,4 +162,38 @@ export interface CommonComponent {
    * @return void
    */
   onChange: (value: Array<ValueItem>, files: Array<ValueItem>) => void;
+
+  /**
+   * @desc 选择新文件上传并替换
+   */
+  reUpload: boolean;
+
+  /**
+   * @desc 自定义文件名称渲染
+   * @return ReactNode
+   */
+  fileNameRender: (file: ValueItem) => ReactNode;
+
+  /**
+   * @desc 删除文件回调
+   * @return {boolean} true删除
+   */
+  onRemove: (file: File) => boolean;
+
+  /**
+   * @desc 取消上传，true中断上传
+   */
+  onCancel: (file: ValueItem) => boolean;
+
+  /**
+   * @desc 是否预览
+   */
+  isPreview: boolean;
+
+  /**
+   * @desc 选择文件回调
+   * @param files 当前上传文件列表
+   * @param value 所有文件列表
+   */
+  onSelect: (files: Array<ValueItem>, value: Array<ValueItem>) => void;
 }

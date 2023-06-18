@@ -7,6 +7,8 @@ export interface UploaderConfig extends Common {
    * @desc 文件名称
    */
   name: string;
+
+  beforeUpload: Function;
 }
 
 /**
