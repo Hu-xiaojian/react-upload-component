@@ -3,7 +3,8 @@ import classnames from 'classnames';
 import { sizeCalculator } from '@/utils';
 import { prefix } from '@/manifest';
 import Progress from '@/progress';
-import { DeleteIcon, LoadingErrIcon, PictureIcon } from '@/icon';
+import Base from '@/upload/base';
+import { DeleteIcon, DownLoadIcon, EditorIcon, LoadingErrIcon, PictureIcon } from '@/icon';
 import type { ListProps } from '@/types';
 
 const getInfo = (file, props) => {
@@ -86,7 +87,8 @@ const getImageChildren = (file, fileInfo, props) => {
 }
 
 const getCardList = (file, props, children?) => {
-  const { itemRender, fileNameRender, actionRender, progressProps, onHandleCancel, onHandleRemove, isPreview } = props;
+  // todo name accept
+  const { itemRender, fileNameRender, actionRender, progressProps, onHandleCancel, onSelect, onHandleRemove, isPreview, reUpload, accept, name } = props;
   let item = null;
 
 
@@ -97,7 +99,8 @@ const getCardList = (file, props, children?) => {
   if (state === 'uploading') {
     item = [
       img,
-      <Progress state="normal" percent={file.percent} { ...progressProps } />,
+      <div key='cancel' className="card-cancel" onClick={() => onHandleCancel(file)}>取消</div>,
+      <Progress key='progress' state="normal" percent={file.percent} { ...progressProps } />,
     ];
   } else {
     if (typeOfFn(itemRender)) {
@@ -108,7 +111,35 @@ const getCardList = (file, props, children?) => {
         img,
         <div className={`${prefix}-tool`} key='tool'>
           {
-            typeOfFn(actionRender) ? actionRender(file) : 'todo操作按钮'
+            typeOfFn(actionRender) ? actionRender(file) : (
+              <div className={`${prefix}-tool-btns`}>
+                {
+                  state !== 'error' ? (
+                    <a
+                      href={downloadURL}
+                      target="_blank"
+                      style={ { pointerEvents: downloadURL ? '' : 'none' } }
+                      rel="noopener noreferrer"
+                      className={`${prefix}-tool-btns-item`}
+                    >
+                      <DownLoadIcon />
+                    </a>
+                  ) : null
+                }
+                {
+                  reUpload && !isPreview ? (
+                    <Base
+                      accept={accept}
+                      name={name}
+                      onSelect={files => onSelect(file, files)}
+                    >
+                      <EditorIcon />
+                    </Base>
+                  ) : null
+                }
+                <div><DeleteIcon className="card-del" onClick={() => onHandleRemove(file)}  /></div>
+              </div>
+            )
           }
         </div>
       ]
@@ -161,6 +192,16 @@ class List extends React.Component<ListProps, any> {
     this.props.onImageError(file, obj);
   };
 
+  /**
+   * @desc 重新选择
+   * @param oldFile 旧file
+   * @param files 新file Array<File>
+   */
+  onHandleSelect = (oldFile, files) => {
+    const { uploader } = this.props;
+    uploader && files.length && uploader.replaceWithNewFile(oldFile, files[0]);
+  }
+
   render (): React.ReactNode {
     const {
       className,
@@ -172,7 +213,7 @@ class List extends React.Component<ListProps, any> {
       actionRender,
       onPreview,
       onProgress,
-      reUpload,
+      reUpload = true,
       isPreview,
       progressProps,
     } = this.props;
@@ -190,7 +231,9 @@ class List extends React.Component<ListProps, any> {
       actionRender,
       listType,
       progressProps,
+      reUpload,
       onPreview,
+      onSelect: this.onHandleSelect,
       onHandleCancel: this.onHandleCancel,
       onHandleRemove: this.onHandleRemove,
       onHandleImageError: this.onHandleImageError,

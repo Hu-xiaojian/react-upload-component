@@ -18,6 +18,7 @@ class CardUpload extends React.Component<CardUploadProps, any> {
 
     this.state = {
       value: !Array.isArray(value) ? [] : value,
+      uploaderRef: this.cardUploadRef,
     };
   }
 
@@ -64,6 +65,7 @@ class CardUpload extends React.Component<CardUploadProps, any> {
       >
         <div className={`${prefix}-list-item`}>
           <Upload
+            className={`${prefix}-list-card-upload`}
             disabled={disabled}
             action={action}
             timeout={timeout}
@@ -79,6 +81,22 @@ class CardUpload extends React.Component<CardUploadProps, any> {
       </List>
     );
   }
+
+
+  componentDidMount() {
+    this.updateUploaderRef(this.cardUploadRef);
+  }
+
+  componentDidUpdate() {
+    const { uploaderRef } = this.state;
+    if (!uploaderRef && this.cardUploadRef) {
+      this.updateUploaderRef(this.cardUploadRef);
+    }
+  }
+  updateUploaderRef(uploaderRef) {
+    this.setState({ uploaderRef });
+  }
+
 }
 
 export default CardUpload;

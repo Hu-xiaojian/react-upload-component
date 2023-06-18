@@ -292,7 +292,30 @@ class OriginalUpload extends React.Component<OriginalUploadProps, OriginalUpload
     this.uploadFiles(this.state.value);
   }
 
-  handleUploadRef = ref => (this.uploadRef = ref)
+  handleUploadRef = ref => (this.uploadRef = ref);
+
+  /**
+   * @desc 替换掉[]里面的文件
+   * @param old
+   * @param current
+   */
+  replaceWithNewFile = (old, current) => {
+    const newFile = fileToObj(current);
+    newFile.state = 'selected';
+
+    const matchKey = old.uid !== undefined ? 'uid' : 'name';
+
+    const fileList = this.state.value;
+    for (let i = 0; i < fileList.length; i++) {
+      const item = fileList[i];
+      if (item[matchKey] === old[matchKey]) {
+        fileList.splice(i, 1, newFile);
+        break;
+      }
+    }
+    this.uploadFiles([newFile]);
+    return newFile;
+  };
 
   render (): React.ReactNode {
     const {
