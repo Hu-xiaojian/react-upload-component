@@ -3,6 +3,7 @@ import type { CommonComponent } from './common';
  * @desc 拖拽上传
  */
 export interface DragUploadProps extends CommonComponent {
+  listType: 'image' | 'text';
   /**
    * @desc 拖过回调
    */

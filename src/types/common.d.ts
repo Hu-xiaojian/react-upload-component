@@ -141,19 +141,19 @@ export interface CommonComponent extends CommonComponentHelper, Base, Common {
    * @param value 文件项
    * @return ReactNode
    */
-  renderPreview: (value: ValueItem) => ReactNode | ReactNode;
+  renderPreview: (value: ValueItem) => ReactNode;
 
   /**
    * todo
    * @desc 自定义文件项渲染
    */
-  itemRender: (value: ValueItem) => ReactNode | ReactNode;
+  itemRender: (value: ValueItem) => ReactNode;
 
   /**
    * todo
    * @desc 行为渲染
    */
-  actionRender: (value: ValueItem) => ReactNode | ReactNode;
+  actionRender: (value: ValueItem) => ReactNode;
 
   /**
    * @desc 文件发生变化
@@ -178,7 +178,7 @@ export interface CommonComponent extends CommonComponentHelper, Base, Common {
    * @desc 删除文件回调
    * @return {boolean} true删除
    */
-  onRemove: (file: File) => boolean;
+  onRemove: (file: ValueItem) => boolean;
 
   /**
    * @desc 取消上传，true中断上传

@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react';
 import type { ValueItem } from './helper';
 import type { CommonComponent } from './common';
 type ListType = 'text' | 'image' | 'card';
@@ -32,4 +33,50 @@ export interface ListProps extends CommonComponent {
    * @param error 错误信息
    */
   onImageError: (file: ValueItem, error: object) => void;
+}
+
+/**
+ * @desc 文字和图片列表道具
+ */
+export interface TextAndImageListProps {
+  // 通用
+  className: string;
+  file: ValueItem;
+  listType: ListType;
+  itemRender: (value: ValueItem) => ReactNode;
+  fileNameRender: (file: ValueItem) => ReactNode;
+  actionRender: (value: ValueItem) => ReactNode;
+  progressProps: object;
+  onHandleCancel: (file: ValueItem) => boolean;
+  onHandleRemove: (file: ValueItem) => boolean;
+
+  // 预览
+  isPreview: boolean;
+  renderPreview: (value: ValueItem) => ReactNode;
+
+
+  // 渲染图片节点
+  renderImageChildren?: ReactNode;
+}
+
+/**
+ * @desc 渲染图片道具
+ */
+export interface RenderImageProps {
+  file: ValueItem;
+  isPreview: boolean;
+  onPreview: (file: ValueItem) => void;
+  onHandleImageError: (file: ValueItem, error: object) => void;
+}
+
+/**
+ * @desc 卡片列表道具
+ */
+export interface CardListProps extends TextAndImageListProps {
+  // 编辑
+  onSelect: (oldFile: ValueItem, files: Array<File>) => void;
+  reUpload: boolean;
+  // todo name accept
+  accept: string;
+  name: string;
 }

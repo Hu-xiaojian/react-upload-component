@@ -66,7 +66,7 @@ function UploadDraggable() {
         // progressProps={{
         //   textRender: (percent) => percent + '%'
         // }}
-        isPreview
+        // isPreview
         defaultValue={defaultValue}
         // // listType="text"
         // onImageError={(file, error) => {

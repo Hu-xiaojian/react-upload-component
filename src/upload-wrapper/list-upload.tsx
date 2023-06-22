@@ -36,10 +36,15 @@ class ListUpload extends Component<ListUploadProps, any> {
     const {
       children,
       className = '',
+      listType,
+      isPreview,
       ...others
     } = this.props;
     return (<Upload
       { ...others }
+      isPreview={isPreview}
+      // 非预览态只能text/image
+      listType={!isPreview && listType === 'card' ? 'text' : listType}
       className={ `${ prefix }-list-upload ${ className }` }
       ref={ this.handleDragUploadRef }
     >

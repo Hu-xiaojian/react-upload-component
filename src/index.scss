@@ -251,10 +251,10 @@ $upload-prefix: '.sine-die';
   }
 
   // 卡片列表
-  &-list-card {
+  &-list-card, &-list-preview-card {
     overflow: hidden;
 
-    #{$upload-prefix}-list-item {
+    #{$upload-prefix}-list-item, &-item {
       float: left;
       margin-right: 16px;
 
@@ -475,6 +475,12 @@ $upload-prefix: '.sine-die';
         margin-bottom: 0;
       }
 
+    }
+  }
+  // 卡片预览
+  &-list-preview-card {
+    &-item {
+      width: 100px;
     }
   }
 }

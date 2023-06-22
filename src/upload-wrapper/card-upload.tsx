@@ -42,6 +42,7 @@ class CardUpload extends React.Component<CardUploadProps, any> {
       onCancel,
       onPreview,
       isPreview,
+      onImageError,
       reUpload,
       disabled,
       itemRender,
@@ -62,9 +63,11 @@ class CardUpload extends React.Component<CardUploadProps, any> {
         isPreview={isPreview}
         uploader={this.cardUploadRef}
         reUpload={reUpload}
+        onImageError={onImageError}
       >
         <div className={`${prefix}-list-item`}>
           <Upload
+            listType={false} // list不渲染
             className={`${prefix}-list-card-upload`}
             disabled={disabled}
             action={action}

@@ -392,17 +392,12 @@ OriginalUpload.defaultProps = {
   isPreview: false,
   reUpload: true,
   children: '文件上传',
-  listType: 'image',
+  listType: 'text',
   onSelect: emptyFn,
   onChange: emptyFn,
 
   beforeUpload: emptyFn,
   afterSelect: emptyFn,
-  onRemove: emptyFn,
-  onCancel: emptyFn,
-
-  onPreview: emptyFn,
-  onImageError: emptyFn,
 
   onDragLeave: emptyFn,
   onDragOver: emptyFn,

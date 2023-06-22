@@ -100,7 +100,7 @@ export function isPlainObject(obj) {
  * @param size
  * @return string 1024K
  */
-export const sizeCalculator = (size) => {
+export const sizeCalculator = (size): string => {
   let fileSize = parseFloat(size, 10);
   // fileSize为浮点数 用 < 0.000001 替代 === 0
   if (isNaN(fileSize) || fileSize < 0.0000001) {

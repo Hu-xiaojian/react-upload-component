@@ -93,6 +93,8 @@ class DragUpload extends Component<DragUploadProps, DragUploadState> {
     const {
       children,
       className = '',
+      listType,
+      isPreview,
       onDragLeave,
       onDrop,
       onDragOver,
@@ -103,6 +105,9 @@ class DragUpload extends Component<DragUploadProps, DragUploadState> {
 
     return (<Upload
       { ...others }
+      isPreview={isPreview}
+      // 非预览态只能text/image
+      listType={!isPreview && listType === 'card' ? 'text' : listType}
       className={ `${ prefix }-draggable ${ className }` }
       draggable
       onDragLeave={ this.onHandleDragLeave }
