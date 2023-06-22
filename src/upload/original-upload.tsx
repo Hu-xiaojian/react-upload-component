@@ -344,22 +344,24 @@ class OriginalUpload extends React.Component<OriginalUploadProps, OriginalUpload
     const { value } = this.state;
     const _maxCount = value.length >= maxCount;
     return (<>
-      <Upload
-        { ...others }
-        name={name}
-        className={className}
-        beforeUpload={beforeUpload}
-        draggable={draggable}
-        disabled={disabled || _maxCount}
-        onSelect={this.onHandleSelect}
-        onDrop={this.onDrop}
-        onProgress={this.onHandleProgress}
-        onSuccess={this.onHandleSuccess}
-        onError={this.onHandleError}
-        ref={this.handleUploadRef}
-      >
-        { children }
-      </Upload>
+      {
+        !isPreview ? <Upload
+          { ...others }
+          name={name}
+          className={className}
+          beforeUpload={beforeUpload}
+          draggable={draggable}
+          disabled={disabled || _maxCount}
+          onSelect={this.onHandleSelect}
+          onDrop={this.onDrop}
+          onProgress={this.onHandleProgress}
+          onSuccess={this.onHandleSuccess}
+          onError={this.onHandleError}
+          ref={this.handleUploadRef}
+        >
+          { children }
+        </Upload> : null
+      }
       { listType ? (<List
         progressProps={progressProps}
         value={ value }

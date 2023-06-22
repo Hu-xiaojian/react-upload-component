@@ -19,8 +19,12 @@ $upload-prefix: '.sine-die';
   }
 
   &-name {
-    color: #333;
     transition: all 100ms linear;
+
+    &:link, &:visited, &:hover, &:active {
+      text-decoration: none;
+      color: #333;
+    }
   }
 
   &-size {
@@ -170,12 +174,10 @@ $upload-prefix: '.sine-die';
   // 文件图片列表
   &-list-image {
     #{$upload-prefix}-list-item {
-      box-sizing: content-box;
       padding: 8px 40px 8px 8px;
       border: 1px solid #dcdfe6;
       position: relative;
-      display: flow-root;
-      height: 48px;
+      overflow: hidden;
       line-height: 48px;
 
       @include listItemStyle(8px, 48px);
@@ -280,6 +282,7 @@ $upload-prefix: '.sine-die';
           bottom: 8px; // progress height
           left: 0;
           color: #585d66;
+
           &:hover {
             cursor: pointer;
             color: #03c1fd;
@@ -296,6 +299,7 @@ $upload-prefix: '.sine-die';
           height: 28px;
           left: 0;
           bottom: 0;
+
           &-btns {
             display: flex;
             align-items: center;
@@ -306,15 +310,18 @@ $upload-prefix: '.sine-die';
               line-height: 28px;
               text-align: center;
               border-right: 1px solid #fff;
+
               & > * {
                 vertical-align: middle;
               }
             }
+
             & .card-del {
               path {
                 fill: #ffffff;
               }
             }
+
             & :last-child {
               border: none;
             }
@@ -328,6 +335,7 @@ $upload-prefix: '.sine-die';
           bottom: 0;
           left: 0;
           width: 100%;
+
           &-underlay, &-overlay {
             border-radius: 0;
           }
@@ -349,11 +357,13 @@ $upload-prefix: '.sine-die';
           left: 0;
           margin: auto;
         }
+
         .icon {
           width: 100%;
           height: 70%;
           margin-top: calc((100px - 70%) / 2)
         }
+
         .picture {
           height: 50%;
           margin-top: calc((100px - 50%) / 2)
@@ -370,6 +380,7 @@ $upload-prefix: '.sine-die';
         overflow: hidden;
         white-space: nowrap;
       }
+
       &-error #{$upload-prefix}-list-item-wrapper {
         border-color: #ff3000;
       }
@@ -386,10 +397,84 @@ $upload-prefix: '.sine-die';
       display: table-cell;
       vertical-align: middle;
       font-size: 14px;
+
       &:hover {
         border-color: #03c1fd;
         color: #03c1fd;
       }
+    }
+  }
+
+  // 文字预览
+  &-list-preview-text {
+    &-item {
+      background-color: #f4f6f9;
+      padding: 4px 8px;
+      height: 40px;
+      line-height: calc(40px - 8px);
+      font-size: 12px;
+      overflow: hidden;
+      transition: all 100ms linear;
+      border-radius: 0;
+      cursor: pointer;
+
+      @include listItemStyle();
+
+      & {
+        margin-bottom: 4px;
+      }
+
+      &:hover {
+        color: #5584ff;
+      }
+      &:hover &-name {
+        color: #5584ff;
+      }
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+  // 图片预览
+  &-list-preview-image {
+    &-item {
+      padding: 8px 40px 8px 8px;
+      border: 1px solid #dcdfe6;
+      line-height: 48px;
+
+      @include listItemStyle(8px, 48px);
+
+      #{$upload-prefix}-list-item-image-thumbnail {
+        cursor: pointer;
+        float: left;
+        width: 48px;
+        height: 48px;
+        margin-right: 12px;
+
+        & > img {
+          max-width: 100%;
+          max-height: 100%;
+        }
+      }
+
+      & {
+        margin-bottom: 4px;
+      }
+
+      &:hover {
+        color: #5584ff;
+        border-color: #5584ff;
+      }
+
+      &:hover &-name {
+        color: #5584ff;
+      }
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+
     }
   }
 }

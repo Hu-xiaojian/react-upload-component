@@ -14,7 +14,7 @@ const defaultValue = [
     downloadURL:
       "https://img.alicdn.com/tps/TB19O79MVXXXXcZXVXXXXXXXXXX-1024-1024.jpg",
     imgURL:
-      "https://img.alicdn.com/tps/TB19O79MVXXXXcZXVXXXXXXXXXX-1024-1024.jpg",
+      "https://im.alicdn.com/tps/TB19O79MVXXXXcZXVXXXXXXXXXX-1024-1024.jpg",
     size: 2000
   },
   {
@@ -26,7 +26,8 @@ const defaultValue = [
     downloadURL:
       "https://img.alicdn.com/tps/TB19O79MVXXXXcZXVXXXXXXXXXX-1024-1024.jpg",
     imgURL:
-      "https://img.alicdn.com/tps/TB19O79MVXXXXcZXVXXXXXXXXXX-1024-1024.jpg"
+      "https://img.alicdn.com/tps/TB19O79MVXXXXcZXVXXXXXXXXXX-1024-1024.jpg",
+    size: 2000
   },
   {
     uid: "2",
@@ -47,7 +48,8 @@ const defaultValue = [
     downloadURL:
       "https://img.alicdn.com/tps/TB19O79MVXXXXcZXVXXXXXXXXXX-1024-1024.jpg",
     imgURL:
-      "https://img.alicdn.com/tps/TB19O79MVXXXXcZXVXXXXXXXXXX-1024-1024.jpg"
+      "https://img.alicdn.com/tps/TB19O79MVXXXXcZXVXXXXXXXXXX-1024-1024.jpg",
+    size: 2000
   }
 ];
 
@@ -57,14 +59,15 @@ function UploadDraggable() {
     <div>
       <h1>本地测试draggable组件</h1>
       <Upload.List
-        listType="text"
+        listType="image"
         // onPreview={(file) => {
         //   console.log(file,'-------file')
         // }}
         // progressProps={{
         //   textRender: (percent) => percent + '%'
         // }}
-        // defaultValue={defaultValue}
+        isPreview
+        defaultValue={defaultValue}
         // // listType="text"
         // onImageError={(file, error) => {
         //   console.log(file,'---------------file, error', error)

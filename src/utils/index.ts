@@ -122,3 +122,10 @@ export const sizeCalculator = (size) => {
 
   return `${fileSize}${suffix}`;
 }
+
+/**
+ * @desc 是否是函数
+ * @param fn 函数
+ * @return {boolean}
+ */
+export const typeOfFn = fn => typeof fn === 'function';

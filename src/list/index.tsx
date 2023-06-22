@@ -1,26 +1,26 @@
 import React from 'react';
 import classnames from 'classnames';
-import { sizeCalculator } from '@/utils';
+import { sizeCalculator, typeOfFn } from '@/utils';
 import { prefix } from '@/manifest';
 import Progress from '@/progress';
 import Base from '@/upload/base';
 import { DeleteIcon, DownLoadIcon, EditorIcon, LoadingErrIcon, PictureIcon } from '@/icon';
 import type { ListProps } from '@/types';
 
-const getInfo = (file, props) => {
+const getInfo = (file, props?) => {
   const downloadURL = file.downloadURL || file.url;
   const imgURL = file.imgURL || file.url;
   const size = sizeCalculator(file.size);
   const className = classnames({
     [`${prefix}-list-item`]: true,
     [`${prefix}-list-item-${file.state}`]: file.state,
-    [`${prefix}-list-item-${props.listType}`]: true,
+    [`${prefix}-list-item-${props?.listType}`]: true,
     [`${prefix}-list-item-error-with-msg`]: file.state === 'error' && file.errorMsg,
-  }, props.className);
-  return { downloadURL, imgURL, size, className };
+  }, props?.className);
+  return { downloadURL, imgURL, size, className, name: file.name };
 }
 
-const typeOfFn = fn => typeof fn === 'function';
+
 
 const getTextAndImageList = (file, props, children?) => {
   const { itemRender, fileNameRender, actionRender, progressProps, onHandleCancel, onHandleRemove } = props;
@@ -65,13 +65,16 @@ const getTextAndImageList = (file, props, children?) => {
 }
 
 const getImageChildren = (file, fileInfo, props) => {
-  const { onHandleImageError, onPreview } = props;
+  const { onHandleImageError, onPreview, isPreview } = props;
   const { imgURL } = fileInfo;
 
   let img = null;
-  if (file.state === 'uploading' || (file.state === 'selected' && !imgURL)) {
+
+  const state = isPreview ? '' : file.state;
+
+  if (state === 'uploading' || (state === 'selected' && !imgURL)) {
     img = <PictureIcon />;
-  } else if (file.state === 'error') {
+  } else if (state === 'error') {
     img = <LoadingErrIcon />;
   } else {
     img = (
@@ -206,7 +209,7 @@ class List extends React.Component<ListProps, any> {
     const {
       className,
       children,
-      value,
+      value = [],
       listType,
       itemRender,
       fileNameRender,
@@ -215,13 +218,69 @@ class List extends React.Component<ListProps, any> {
       onProgress,
       reUpload = true,
       isPreview,
+      renderPreview,
       progressProps,
     } = this.props;
 
 
     // todo 预览
     if (isPreview) {
-      return null;
+      const classNames = classnames({
+        [`${prefix}-list-preview`]: true,
+        [`${prefix}-list-preview-${listType}`]: true,
+        [className]: !!className,
+      });
+      return (<div className={classNames}>
+        {
+          value.map(file => {
+            if (!file) {
+              return null;
+            }
+            const { downloadURL, imgURL, name, size } = getInfo(file);
+            let item = typeOfFn(renderPreview) ? renderPreview(file) : '';
+
+            if (item) {
+              return item;
+            } else {
+              if (listType === 'text') {
+                item = (<div className={ `${ prefix }-list-preview-text-item-name-wrap` }>
+                  <a
+                    href={ downloadURL }
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={ { pointerEvents: downloadURL ? '' : 'none' } }
+                    className={`${prefix}-list-preview-text-item-name`}
+                  >
+                    <span>{ typeOfFn(fileNameRender) ? fileNameRender(file) : name }</span>
+                    { !!size && <span className={ `${ prefix }-list-preview-text-item-size` }>({ size })</span> }
+                  </a>
+                </div>);
+              } else if (listType === 'image') {
+                item = (
+                  <>
+                    { getImageChildren(file, { imgURL }, { onHandleImageError: this.onHandleImageError, onPreview, isPreview }) }
+                    <div className={ `${ prefix }-list-preview-image-item-name-wrap` }>
+                      <a
+                        href={ downloadURL }
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={ { pointerEvents: downloadURL ? '' : 'none' } }
+                        className={`${prefix}-list-preview-image-item-name`}
+                      >
+                        <span>{ typeOfFn(fileNameRender) ? fileNameRender(file) : name }</span>
+                        { !!size && <span className={ `${ prefix }-list-preview-image-item-size` }>({ size })</span> }
+                      </a>
+                    </div>
+                  </>
+                )
+              } else if (listType === 'card') {
+
+              }
+            }
+            return <div className={`${prefix}-list-preview-${listType}-item`} key={file.uid || file.name}>{ item }</div>;
+          })
+        }
+      </div>)
     }
 
     const props = {
@@ -246,7 +305,7 @@ class List extends React.Component<ListProps, any> {
 
     return (<div className={classNames}>
       {
-        (value || []).map(file => {
+        value.map(file => {
           if (!file) {
             return null;
           }
