@@ -5,7 +5,7 @@ import type { CommonComponent } from './common';
  * @desc 列表上传
  */
 export interface ListUploadProps extends CommonComponent {
-  listType: 'image' | 'text';
+  listType: 'image' | 'text' | 'icon';
   /**
    * @desc 点击图片回调
    * @param file 文件

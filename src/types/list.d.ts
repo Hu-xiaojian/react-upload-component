@@ -80,3 +80,10 @@ export interface CardListProps extends TextAndImageListProps {
   accept: string;
   name: string;
 }
+
+/**
+ * @desc icon列表道具
+ */
+export interface IconListProps extends TextAndImageListProps {
+
+}

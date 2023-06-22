@@ -59,14 +59,14 @@ function UploadDraggable() {
     <div>
       <h1>本地测试draggable组件</h1>
       <Upload.List
-        listType="image"
+        listType="icon"
         // onPreview={(file) => {
         //   console.log(file,'-------file')
         // }}
         // progressProps={{
         //   textRender: (percent) => percent + '%'
         // }}
-        // isPreview
+        isPreview
         defaultValue={defaultValue}
         // // listType="text"
         // onImageError={(file, error) => {

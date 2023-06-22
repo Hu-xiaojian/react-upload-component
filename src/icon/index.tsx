@@ -1,36 +1,32 @@
 import React from 'react';
 
+export { default as fileIcons, FILE } from './icon';
 /**
  * @desc 上传icon
- * @param props
  */
-export const UploadIcon = props => (
-  <svg t="1684646739659" className="icon" viewBox="0 0 1024 1024" version="1.1"
-       xmlns="http://www.w3.org/2000/svg"
-       p-id="2405" width="32" height="32" { ...props }>
-    <path
-      d="M856.448 606.72v191.744a31.552 31.552 0 0 1-31.488 31.488H194.624a31.552 31.552 0 0 1-31.488-31.488V606.72a31.488 31.488 0 1 1 62.976 0v160.256h567.36V606.72a31.488 31.488 0 1 1 62.976 0zM359.872 381.248c-8.192 0-10.56-5.184-5.376-11.392L500.48 193.152a11.776 11.776 0 0 1 18.752 0l145.856 176.704c5.184 6.272 2.752 11.392-5.376 11.392H359.872z"
-      fill="#707070" p-id="2406"></path>
-    <path d="M540.288 637.248a30.464 30.464 0 1 1-61.056 0V342.656a30.464 30.464 0 1 1 61.056 0v294.592z" fill="#707070"
-          p-id="2407"></path>
-  </svg>);
+export const UploadIcon = props => (<svg t="1684646739659" className="icon" viewBox="0 0 1024 1024" version="1.1"
+                                         xmlns="http://www.w3.org/2000/svg"
+                                         p-id="2405" width="32" height="32" { ...props }>
+  <path
+    d="M856.448 606.72v191.744a31.552 31.552 0 0 1-31.488 31.488H194.624a31.552 31.552 0 0 1-31.488-31.488V606.72a31.488 31.488 0 1 1 62.976 0v160.256h567.36V606.72a31.488 31.488 0 1 1 62.976 0zM359.872 381.248c-8.192 0-10.56-5.184-5.376-11.392L500.48 193.152a11.776 11.776 0 0 1 18.752 0l145.856 176.704c5.184 6.272 2.752 11.392-5.376 11.392H359.872z"
+    fill="#707070" p-id="2406"></path>
+  <path d="M540.288 637.248a30.464 30.464 0 1 1-61.056 0V342.656a30.464 30.464 0 1 1 61.056 0v294.592z" fill="#707070"
+        p-id="2407"></path>
+</svg>);
 
 /**
  * @desc 删除icon
- * @param props
  */
-export const DeleteIcon = props => (
-  <svg t="1684937248918" className="icon" viewBox="0 0 1024 1024" version="1.1"
-       xmlns="http://www.w3.org/2000/svg"
-       p-id="6648" width="12" height="12" { ...props }>
-    <path
-      d="M568.6 512l346.6-346.6c15.6-15.6 15.6-40.9 0-56.6-15.6-15.6-40.9-15.6-56.6 0L512 455.4 165.4 108.9c-15.6-15.6-40.9-15.6-56.6 0-15.6 15.6-15.6 40.9 0 56.6L455.4 512 108.9 858.6c-15.6 15.6-15.6 40.9 0 56.6 7.8 7.8 18 11.7 28.3 11.7s20.5-3.9 28.3-11.7L512 568.6l346.6 346.6c7.8 7.8 18 11.7 28.3 11.7s20.5-3.9 28.3-11.7c15.6-15.6 15.6-40.9 0-56.6L568.6 512z"
-      fill="#8d9299" p-id="6649"></path>
-  </svg>);
+export const DeleteIcon = props => (<svg t="1684937248918" className="icon" viewBox="0 0 1024 1024" version="1.1"
+                                         xmlns="http://www.w3.org/2000/svg"
+                                         p-id="6648" width="12" height="12" { ...props }>
+  <path
+    d="M568.6 512l346.6-346.6c15.6-15.6 15.6-40.9 0-56.6-15.6-15.6-40.9-15.6-56.6 0L512 455.4 165.4 108.9c-15.6-15.6-40.9-15.6-56.6 0-15.6 15.6-15.6 40.9 0 56.6L455.4 512 108.9 858.6c-15.6 15.6-15.6 40.9 0 56.6 7.8 7.8 18 11.7 28.3 11.7s20.5-3.9 28.3-11.7L512 568.6l346.6 346.6c7.8 7.8 18 11.7 28.3 11.7s20.5-3.9 28.3-11.7c15.6-15.6 15.6-40.9 0-56.6L568.6 512z"
+    fill="#8d9299" p-id="6649"></path>
+</svg>);
 
 /**
  * @desc 上传中图片
- * @param props
  */
 export const PictureIcon = props => (
   <svg t="1685860935628" className="icon picture" viewBox="0 0 1024 1024" version="1.1"
@@ -46,7 +42,6 @@ export const PictureIcon = props => (
 
 /**
  * @desc 加载失败
- * @param props
  */
 export const LoadingErrIcon = props => (
   <svg t="1685865113969" className="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
@@ -61,7 +56,6 @@ export const LoadingErrIcon = props => (
 
 /**
  * @desc 下载
- * @param props
  */
 export const DownLoadIcon = props => (
   <svg t="1687079164618" className="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
@@ -80,11 +74,10 @@ export const DownLoadIcon = props => (
 
 /**
  * @desc 编辑
- * @param props
  */
 export const EditorIcon = props => (
   <svg t="1687079409982" className="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
-       p-id="56544" width="16" height="16" { ...props}>
+       p-id="56544" width="16" height="16" { ...props }>
     <path
       d="M187.2 872.5c-7.4 0-14.5-2.9-19.8-8.1-7.5-7.4-10.3-18.4-7.2-28.5 70.1-226.3 70.3-226.4 76.7-233l423.8-435.1c10.7-11 25.1-17.1 40.5-17.1 15.4 0 29.7 6.1 40.4 17.1l106.5 109.4c21.5 22.1 21.5 56.7 0 78.8L423.3 792.2c-6.8 6.8-6.9 6.9-227.4 78.9-2.7 0.9-5.7 1.4-8.7 1.4zM281.6 638c-6.7 20-30.4 95.5-51.2 162.4 64.6-21.2 137.1-45.2 156.8-52.1l420.5-431.7-106.5-109.4L281.6 638z m120.7 134.9h0.1-0.1z m0 0"
       fill="#ffffff" p-id="56545"></path>
@@ -94,3 +87,19 @@ export const EditorIcon = props => (
     <path d="M840.8 785.6H502V828c0 15.6 12.6 28.2 28.2 28.2h282.3c15.6 0 28.2-12.6 28.2-28.2v-42.4z m0 0"
           fill="#ffffff" p-id="56547"></path>
   </svg>);
+
+/**
+ * @desc icon列表错误文件
+ */
+export const IconListError = props => (
+  <svg t="1687440837986" className="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+       p-id="57890" width="40" height="40" {...props}>
+    <path
+      d="M160 0h512l256 256v704c0 35.3472-28.6528 64-64 64H160c-35.3472 0-64-28.6528-64-64V64c0-35.3472 28.6528-64 64-64z"
+      fill="#f52743" p-id="57891" data-spm-anchor-id="a313x.7781069.0.i55" className="selected"></path>
+    <path d="M339.2 678.4 640 377.6l44.8 44.8L384 723.2 339.2 678.4z" fill="#ffffff" p-id="125301"></path>
+    <path d="M339.2 422.4 384 377.6l300.8 300.8L640 723.2 339.2 422.4z" fill="#ffffff" p-id="125302"></path>
+    <path d="M672 0l256 256h-192c-35.3472 0-64-28.6528-64-64V0z" fill="#f52743" p-id="57893"
+          data-spm-anchor-id="a313x.7781069.0.i53" className="selected"></path>
+    <path d="M672 0l256 256h-192c-35.3472 0-64-28.6528-64-64V0z" fill="#FFF" opacity=".32"/>
+  </svg>)

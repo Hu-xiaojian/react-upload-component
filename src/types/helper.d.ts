@@ -94,4 +94,14 @@ export interface ValueItem {
    * @desc 原始file对象
    */
   originalFileObj: File;
+
+  /**
+   * @desc 文件类型
+   */
+  mimeType?: string;
+
+  /**
+   * @desc 文件后缀
+   */
+  suffix?: string;
 }

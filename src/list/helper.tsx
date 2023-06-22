@@ -3,9 +3,36 @@ import classnames from "classnames";
 import Progress from '@/progress';
 import Base from '@/upload/base';
 import { sizeCalculator, typeOfFn } from '@/utils';
-import { DeleteIcon, DownLoadIcon, EditorIcon, LoadingErrIcon, PictureIcon } from '@/icon';
+import { DeleteIcon, DownLoadIcon, EditorIcon, LoadingErrIcon, PictureIcon, FILE, fileIcons, IconListError } from '@/icon';
 import { prefix } from '@/manifest';
-import type { TextAndImageListProps, RenderImageProps, CardListProps } from '@/types';
+import type { TextAndImageListProps, RenderImageProps, CardListProps, IconListProps } from '@/types';
+
+/**
+ * @desc 根据类型获取对应svg
+ * @param type 文件类型
+ * @param mimeType 文件类型
+ * @param suffix 文件后缀
+ */
+function getFileSvg(type: string, mimeType: string, suffix: string, name: string): React.FunctionComponent {
+  let res: React.FunctionComponent = FILE;
+
+  let _name: any = name ?? '';
+  _name = _name.lastIndexOf('.');
+  _name = (name ?? '').slice(_name + 1);
+
+  const mimeTypeFn = (k, t) => (fileIcons[k].mimeType.indexOf(t) !== -1 );
+  const suffixFn = (k, t) => (fileIcons[k].suffix.indexOf(t) !== -1 );
+  for (const key in fileIcons) {
+    // 找到icon退出循环
+    if (res !== FILE) {
+      break;
+    }
+    if (mimeTypeFn(key, type) || mimeTypeFn(key, mimeType) || suffixFn(key, suffix) || suffixFn(key, _name)) {
+      res = fileIcons[key];
+    }
+  }
+  return res;
+}
 
 /**
  * @desc 文件信息
@@ -70,8 +97,8 @@ const TextAndImageList: React.FunctionComponent<TextAndImageListProps> = (props:
 
   const { downloadURL, size, classNames } = getFileInfo(file, { className, listType, isPreview });
 
-  // 上传中为取消，其他情况为删除
   const state = isPreview ? '' : file.state;
+  // 上传中为取消，其他情况为删除
   const onClick = () => (state === 'uploading' ? onHandleCancel(file) : onHandleRemove(file));
 
   const previewCls = isPreview ? `preview-${listType}-`  : '';
@@ -165,7 +192,6 @@ const CardList: React.FunctionComponent<CardListProps> = (props: CardListProps):
 
   let item = null;
 
-
   const { downloadURL, classNames } = getFileInfo(file, { className, listType, isPreview });
   const state = isPreview ? '' : file.state;
   if (state === 'uploading') {
@@ -225,10 +251,75 @@ const CardList: React.FunctionComponent<CardListProps> = (props: CardListProps):
   return (
     <div className={classNames} key={file.uid || file.name}>
       <div className={`${prefix}-list-${previewCls}item-wrapper`}>{ item }</div>
-      <div className={`${prefix}-list-${previewCls}item-name`}>{ typeOfFn(fileNameRender) ? itemRender(file) : file.name}</div>
+      <div className={`${prefix}-list-${previewCls}item-name`}>{ typeOfFn(fileNameRender) ? fileNameRender(file) : file.name}</div>
     </div>
   );
 };
+
+/**
+ * @desc icon列表
+ */
+export const IconList: React.FunctionComponent<IconListProps> = (props: IconListProps): React.ReactElement => {
+  const {
+    className,
+    file,
+    listType,
+    itemRender,
+    fileNameRender,
+    actionRender,
+    progressProps,
+    onHandleCancel,
+    onHandleRemove,
+
+    isPreview,
+    renderPreview,
+
+  } = props;
+
+  let item = null;
+
+  const state = isPreview ? '' : file.state;
+  // 上传中为取消，其他情况为删除
+  const onClick = () => (state === 'uploading' ? onHandleCancel(file) : onHandleRemove(file));
+
+  if (state === 'uploading') {
+    item = <Progress key='progress' shape="circle" state="normal" percent={file.percent} { ...progressProps } />;
+  } else if (state === 'error') {
+    item = <IconListError />;
+  } else {
+    if (isPreview && typeOfFn(renderPreview)) {
+      item = renderPreview(file);
+    } else if (!isPreview && typeOfFn(itemRender)) {
+      // todo
+      item = itemRender(file, { onRemove: onHandleRemove, onCancel: onHandleCancel });
+    } else {
+      item = React.createElement(getFileSvg(file.type, file.mimeType, file.suffix, file.name), { className: 'icon' })
+    }
+  }
+
+  const previewCls = isPreview ? `preview-${listType}-`  : '';
+
+  const { downloadURL, classNames } = getFileInfo(file, { className, listType, isPreview });
+  return (<div className={classNames} key={file.uid || file.name}>
+    <a
+      href={downloadURL}
+      target="_blank"
+      style={ { pointerEvents: downloadURL ? '' : 'none' } }
+      rel="noopener noreferrer"
+      className={`${prefix}-list-${previewCls}item-wrapper`}
+    >
+      <div className={`${prefix}-list-${previewCls}item-wrapper-icon`}>{ item }</div>
+      <div className={`${prefix}-list-${previewCls}item-wrapper-name`}>
+        { typeOfFn(fileNameRender) ? fileNameRender(file) : file.name}
+        { state === 'error' && file.errorMsg ? (<div className={`${prefix}-list-item-error-msg`}>{file.errorMsg}</div>) : null }
+      </div>
+
+      <div className={`${prefix}-list-item-wrapper-options`}>
+        { !isPreview ? typeOfFn(actionRender) ? actionRender(file) : <DeleteIcon onClick={onClick} /> : null }
+      </div>
+    </a>
+  </div>)
+}
 
 export {
   TextAndImageList,

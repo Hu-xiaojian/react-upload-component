@@ -2,7 +2,7 @@ import React from 'react';
 import classnames from 'classnames';
 import { prefix } from '@/manifest';
 import type { ListProps, RenderImageProps, TextAndImageListProps } from '@/types';
-import { RenderImage, TextAndImageList, CardList } from "@/list/helper";
+import { RenderImage, TextAndImageList, CardList, IconList } from "@/list/helper";
 import { emptyFn } from "@/utils";
 
 /**
@@ -71,7 +71,6 @@ class List extends React.Component<ListProps, any> {
       progressProps,
     } = this.props;
 
-
     const props = {
       className,
       listType,
@@ -110,7 +109,9 @@ class List extends React.Component<ListProps, any> {
           } else if (listType === 'image') {
             return (<TextAndImageList {...props} file={file} renderImageChildren={<RenderImage { ...renderImageChildrenProps } file={file} />} />);
           } else if (listType === 'card') {
-            return <CardList { ...props } file={file} onSelect={this.onHandleSelect} reUpload={reUpload} renderImageChildren={<RenderImage { ...renderImageChildrenProps } file={file} />} />
+            return <CardList {...props} file={file} onSelect={this.onHandleSelect} reUpload={reUpload} renderImageChildren={<RenderImage { ...renderImageChildrenProps } file={file} />} />
+          } else if (listType === 'icon') {
+            return <IconList {...props} file={file} />
           }
           return null;
         })
