@@ -20,7 +20,7 @@
     "component"
   ],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "@alifd/next": "^1.26.19",
     "@babel/cli": "^7.21.0",
