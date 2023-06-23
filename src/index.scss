@@ -129,6 +129,7 @@ $s-2: $size-base * 2;
 
   // 文件列表
   &-list {
+    font-size: 12px;
     margin-top: 8px;
 
     &-item {
@@ -142,13 +143,14 @@ $s-2: $size-base * 2;
       background-color: #f4f6f9;
       padding: $size-base 40px $size-base $s-2;
       height: 40px;
-      line-height: calc(40px - 8px);
+      line-height: 40px;
       font-size: 12px;
       overflow: hidden;
       transition: all 100ms linear;
       border-radius: 0;
 
-      @include listItemStyle();
+      // padding-top
+      @include listItemStyle(4px);
 
       & {
         margin-bottom: $size-base;
@@ -166,7 +168,7 @@ $s-2: $size-base * 2;
         background-color: #ffd2d2;
 
         &-with-msg {
-          line-height: calc(40px / 2 - 4px);
+          line-height: calc(48px / 2 - 4px);
         }
 
         &-msg {
@@ -176,7 +178,7 @@ $s-2: $size-base * 2;
       }
 
       &-uploading {
-        line-height: calc(40px / 2 - 4px);
+        line-height: calc(48px / 2 - 4px);
       }
     }
   }
@@ -220,7 +222,7 @@ $s-2: $size-base * 2;
 
       &-progress {
         // image width + margin-left
-        margin-left: 60px;
+        margin-left: 62px;
       }
 
       &-uploading {
