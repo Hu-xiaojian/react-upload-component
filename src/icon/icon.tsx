@@ -6,7 +6,7 @@ import React from 'react';
  */
 export const DOC = (props) => (<svg width="40" height="40" xmlns="http://www.w3.org/2000/svg" { ...props }>
   <defs>
-    <linearGradient x1="0%" y1="0%" x2="0%" y2="100%" id="a">
+    <linearGradient x1="0%" y1="0%" x2="0%" y2="100%" id="DOC">
       <stop stop-color="#15BC83" offset="0%"/>
       <stop stop-color="#0DB078" offset="100%"/>
     </linearGradient>
@@ -14,7 +14,7 @@ export const DOC = (props) => (<svg width="40" height="40" xmlns="http://www.w3.
   <g fill="none" fill-rule="evenodd">
     <path
       d="M32.615 37.637A2.363 2.363 0 0 1 30.252 40H2.363A2.363 2.363 0 0 1 0 37.637V2.363A2.363 2.363 0 0 1 2.363 0h20.652l9.6 9.6v28.037Z"
-      fill="url(#a)" transform="translate(3.692)"/>
+      fill="url(#DOC)" transform="translate(3.692)"/>
     <text font-family="PingFangSC-Semibold, PingFang SC" font-size="11" font-weight="500" fill="#FFF"
           transform="translate(3.692)">
       <tspan x="4.308" y="28">DOC</tspan>
@@ -32,7 +32,7 @@ DOC.suffix = [ 'doc', 'docx' ];
 export const EXL = (props) => (<svg width="40" height="40" xmlns="http://www.w3.org/2000/svg" { ...props }>
   <defs>
     <radialGradient cx="84.588%" cy="71.963%" fx="84.588%" fy="71.963%" r="79.981%"
-                    gradientTransform="matrix(-.8185 -.46845 .5764 -.66956 1.123 1.598)" id="a">
+                    gradientTransform="matrix(-.8185 -.46845 .5764 -.66956 1.123 1.598)" id="EXL">
       <stop stop-color="#FFAB00" offset="0%"/>
       <stop stop-color="#FF7E33" offset="100%"/>
     </radialGradient>
@@ -40,7 +40,7 @@ export const EXL = (props) => (<svg width="40" height="40" xmlns="http://www.w3.
   <g fill="none" fill-rule="evenodd">
     <path
       d="M32.615 38.11a1.89 1.89 0 0 1-1.89 1.89H1.89A1.89 1.89 0 0 1 0 38.11V1.89A1.89 1.89 0 0 1 1.89 0h21.125l9.6 9.6v28.51Z"
-      fill="url(#a)" transform="translate(3.692)"/>
+      fill="url(#EXL)" transform="translate(3.692)"/>
     <text font-family="PingFangSC-Semibold, PingFang SC" font-size="11" font-weight="500" letter-spacing="1"
           fill="#FFF" transform="translate(3.692)">
       <tspan x="5.308" y="28">EXL</tspan>
@@ -57,7 +57,7 @@ EXL.suffix = [ 'exl' ];
  */
 export const JPG = (props) => (<svg width="40" height="40" xmlns="http://www.w3.org/2000/svg" { ...props }>
   <defs>
-    <linearGradient x1="0%" y1="0%" x2="0%" y2="100%" id="a">
+    <linearGradient x1="0%" y1="0%" x2="0%" y2="100%" id="JPG">
       <stop stop-color="#F25643" offset="0%"/>
       <stop stop-color="#EC4C38" offset="100%"/>
     </linearGradient>
@@ -65,7 +65,7 @@ export const JPG = (props) => (<svg width="40" height="40" xmlns="http://www.w3.
   <g fill="none" fill-rule="evenodd">
     <path
       d="M32.615 38.11a1.89 1.89 0 0 1-1.89 1.89H1.89A1.89 1.89 0 0 1 0 38.11V1.89A1.89 1.89 0 0 1 1.89 0h21.125l9.6 9.6v28.51Z"
-      fill="url(#a)" transform="translate(3.692)"/>
+      fill="url(#JPG)" transform="translate(3.692)"/>
     <text font-family="PingFangSC-Semibold, PingFang SC" font-size="11" font-weight="500" fill="#FFF"
           transform="translate(3.692)">
       <tspan x="5.308" y="28">JPG</tspan>
@@ -83,11 +83,11 @@ JPG.suffix = [ 'jpg' ];
 export const PDF = (props) => (
   <svg width="40" height="40" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" { ...props }>
     <defs>
-      <linearGradient x1="0%" y1="0%" x2="0%" y2="100%" id="a">
+      <linearGradient x1="0%" y1="0%" x2="0%" y2="100%" id="PDF">
         <stop stop-color="#F25643" offset="0%"/>
         <stop stop-color="#EC4C38" offset="100%"/>
       </linearGradient>
-      <linearGradient x1="20.385%" y1="21.145%" x2="20.385%" y2="80.375%" id="c">
+      <linearGradient x1="20.385%" y1="21.145%" x2="20.385%" y2="80.375%" id="PDF_A">
         <stop stop-color="#FFF" offset="0%"/>
         <stop stop-color="#FAFAFA" offset="100%"/>
       </linearGradient>
@@ -98,10 +98,10 @@ export const PDF = (props) => (
     <g fill="none" fill-rule="evenodd">
       <path
         d="M32.615 38.11a1.89 1.89 0 0 1-1.89 1.89H1.89A1.89 1.89 0 0 1 0 38.11V1.89A1.89 1.89 0 0 1 1.89 0h21.125l9.6 9.6v28.51Z"
-        fill="url(#a)" transform="translate(3.692)"/>
+        fill="url(#PDF)" transform="translate(3.692)"/>
       <g transform="translate(3.692)">
         <use fill="#FFF" xlinkHref="#b"/>
-        <use fill="url(#c)" xlinkHref="#b"/>
+        <use fill="url(#PDF_A)" xlinkHref="#b"/>
       </g>
       <path d="M36.308 9.6h-7.71a1.89 1.89 0 0 1-1.89-1.89V0l9.6 9.6Z" fill="#F25643"/>
       <path d="M36.308 9.6h-7.71a1.89 1.89 0 0 1-1.89-1.89V0l9.6 9.6Z" fill="#FFF" opacity=".32"/>
@@ -116,7 +116,7 @@ PDF.suffix = [ 'pdf' ];
 export const PNG = (props) => (<svg width="40" height="40" xmlns="http://www.w3.org/2000/svg" { ...props }>
   <defs>
     <radialGradient cx="84.588%" cy="71.963%" fx="84.588%" fy="71.963%" r="79.981%"
-                    gradientTransform="matrix(-.8185 -.46845 .5764 -.66956 1.123 1.598)" id="a">
+                    gradientTransform="matrix(-.8185 -.46845 .5764 -.66956 1.123 1.598)" id="PNG">
       <stop stop-color="#457AFF" offset="0%"/>
       <stop stop-color="#1B58F4" offset="100%"/>
     </radialGradient>
@@ -124,7 +124,7 @@ export const PNG = (props) => (<svg width="40" height="40" xmlns="http://www.w3.
   <g fill="none" fill-rule="evenodd">
     <path
       d="M32.615 38.11a1.89 1.89 0 0 1-1.89 1.89H1.89A1.89 1.89 0 0 1 0 38.11V1.89A1.89 1.89 0 0 1 1.89 0h21.125l9.6 9.6v28.51Z"
-      fill="url(#a)" transform="translate(3.692)"/>
+      fill="url(#PNG)" transform="translate(3.692)"/>
     <text font-family="PingFangSC-Semibold, PingFang SC" font-size="11" font-weight="500" fill="#FFF"
           transform="translate(3.692)">
       <tspan x="5.308" y="28">PNG</tspan>
@@ -142,7 +142,7 @@ PNG.suffix = [ 'png' ];
 export const PPT = (props) => (<svg width="40" height="40" xmlns="http://www.w3.org/2000/svg" { ...props }>
   <defs>
     <radialGradient cx="84.588%" cy="71.963%" fx="84.588%" fy="71.963%" r="79.981%"
-                    gradientTransform="matrix(-.8185 -.46845 .5764 -.66956 1.123 1.598)" id="a">
+                    gradientTransform="matrix(-.8185 -.46845 .5764 -.66956 1.123 1.598)" id="PPT">
       <stop stop-color="#FFAB00" offset="0%"/>
       <stop stop-color="#FF7E33" offset="100%"/>
     </radialGradient>
@@ -150,7 +150,7 @@ export const PPT = (props) => (<svg width="40" height="40" xmlns="http://www.w3.
   <g fill="none" fill-rule="evenodd">
     <path
       d="M32.615 38.11a1.89 1.89 0 0 1-1.89 1.89H1.89A1.89 1.89 0 0 1 0 38.11V1.89A1.89 1.89 0 0 1 1.89 0h21.125l9.6 9.6v28.51Z"
-      fill="url(#a)" transform="translate(3.692)"/>
+      fill="url(#PPT)" transform="translate(3.692)"/>
     <text font-family="PingFangSC-Semibold, PingFang SC" font-size="11" font-weight="500" fill="#FFF"
           transform="translate(3.692)">
       <tspan x="6.308" y="28">PPT</tspan>
@@ -167,7 +167,7 @@ PPT.suffix = [ 'ppt', 'pptx' ];
  */
 export const XLS = (props) => (<svg width="40" height="40" xmlns="http://www.w3.org/2000/svg" { ...props }>
   <defs>
-    <linearGradient x1="0%" y1="0%" x2="0%" y2="100%" id="a">
+    <linearGradient x1="0%" y1="0%" x2="0%" y2="100%" id="XLS">
       <stop stop-color="#15BC83" offset="0%"/>
       <stop stop-color="#0DB078" offset="100%"/>
     </linearGradient>
@@ -175,7 +175,7 @@ export const XLS = (props) => (<svg width="40" height="40" xmlns="http://www.w3.
   <g fill="none" fill-rule="evenodd">
     <path
       d="M32.615 37.637A2.363 2.363 0 0 1 30.252 40H2.363A2.363 2.363 0 0 1 0 37.637V2.363A2.363 2.363 0 0 1 2.363 0h20.652l9.6 9.6v28.037Z"
-      fill="url(#a)" transform="translate(3.692)"/>
+      fill="url(#XLS)" transform="translate(3.692)"/>
     <text font-family="PingFangSC-Semibold, PingFang SC" font-size="11" font-weight="500" letter-spacing="1"
           fill="#FFF" transform="translate(3.692)">
       <tspan x="4.308" y="28">XLS</tspan>
@@ -192,7 +192,7 @@ XLS.suffix = [ 'xls', 'xlsx' ];
  */
 export const ZIP = (props) => (<svg width="40" height="40" xmlns="http://www.w3.org/2000/svg" { ...props }>
   <defs>
-    <linearGradient x1="0%" y1="0%" x2="0%" y2="100%" id="a">
+    <linearGradient x1="0%" y1="0%" x2="0%" y2="100%" id="ZIP">
       <stop stop-color="#F25643" offset="0%"/>
       <stop stop-color="#EC4C38" offset="100%"/>
     </linearGradient>
@@ -200,7 +200,7 @@ export const ZIP = (props) => (<svg width="40" height="40" xmlns="http://www.w3.
   <g fill="none" fill-rule="evenodd">
     <path
       d="M32.615 38.11a1.89 1.89 0 0 1-1.89 1.89H1.89A1.89 1.89 0 0 1 0 38.11V1.89A1.89 1.89 0 0 1 1.89 0h21.125l9.6 9.6v28.51Z"
-      fill="url(#a)" transform="translate(3.692)"/>
+      fill="url(#ZIP)" transform="translate(3.692)"/>
     <text font-family="PingFangSC-Semibold, PingFang SC" font-size="11" font-weight="500" letter-spacing="1"
           fill="#FFF" transform="translate(3.692)">
       <tspan x="7.308" y="28">ZIP</tspan>
@@ -217,15 +217,15 @@ ZIP.suffix = [ 'zip' ];
  */
 export const FILE = (props) => (<svg width="40" height="40" xmlns="http://www.w3.org/2000/svg" { ...props }>
     <defs>
-      <linearGradient x1="125.027%" y1="50%" x2="29.375%" y2="50%" id="a">
+      <linearGradient x1="125.027%" y1="50%" x2="29.375%" y2="50%" id="FILE_A">
         <stop stop-color="#FEFEFE" stop-opacity="0" offset="0%"/>
         <stop stop-color="#FCFCFC" offset="100%"/>
       </linearGradient>
-      <linearGradient x1="125.027%" y1="50%" x2="29.375%" y2="50%" id="b">
+      <linearGradient x1="125.027%" y1="50%" x2="29.375%" y2="50%" id="FILE_B">
         <stop stop-color="#FEFEFE" stop-opacity="0" offset="0%"/>
         <stop stop-color="#FCFCFC" offset="100%"/>
       </linearGradient>
-      <linearGradient x1="125.027%" y1="50%" x2="29.375%" y2="50%" id="c">
+      <linearGradient x1="125.027%" y1="50%" x2="29.375%" y2="50%" id="FILE_C">
         <stop stop-color="#FEFEFE" stop-opacity="0" offset="0%"/>
         <stop stop-color="#FCFCFC" offset="100%"/>
       </linearGradient>
@@ -236,10 +236,10 @@ export const FILE = (props) => (<svg width="40" height="40" xmlns="http://www.w3
         <path
           d="M32.615 37.637A2.363 2.363 0 0 1 30.252 40H2.363A2.363 2.363 0 0 1 0 37.637V2.363A2.363 2.363 0 0 1 2.363 0h20.652l9.6 9.6v28.037Z"
           fill="#F25643"/>
-        <rect fill="url(#a)" x="8.308" y="15" width="16" height="2" rx="1"/>
-        <rect fill="url(#a)" x="8.308" y="21" width="16" height="2" rx="1"/>
-        <rect fill="url(#b)" x="8.308" y="27" width="10" height="2" rx="1"/>
-        <rect fill="url(#c)" x="20.308" y="27" width="4" height="2" rx="1"/>
+        <rect fill="url(#FILE_A)" x="8.308" y="15" width="16" height="2" rx="1"/>
+        <rect fill="url(#FILE_A)" x="8.308" y="21" width="16" height="2" rx="1"/>
+        <rect fill="url(#FILE_B)" x="8.308" y="27" width="10" height="2" rx="1"/>
+        <rect fill="url(#FILE_C)" x="20.308" y="27" width="4" height="2" rx="1"/>
         <path d="M32.615 9.6H25.38a2.363 2.363 0 0 1-2.364-2.363V0l9.6 9.6Z" fill="#F25643"/>
         <path d="M32.615 9.6H25.38a2.363 2.363 0 0 1-2.364-2.363V0l9.6 9.6Z" fill="#FFF" opacity=".32"/>
       </g>
