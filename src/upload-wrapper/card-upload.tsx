@@ -52,7 +52,6 @@ class CardUpload extends React.Component<CardUploadProps, any> {
     } = this.props;
     return (
       <List
-        className={className}
         style={style}
         listType="card"
         value={this.state.value}
@@ -68,7 +67,7 @@ class CardUpload extends React.Component<CardUploadProps, any> {
         <div className={`${prefix}-list-item`}>
           <Upload
             listType={false} // list不渲染
-            className={`${prefix}-list-card-upload`}
+            className={`${prefix}-list-card-upload ${className || ''}`}
             disabled={disabled}
             action={action}
             timeout={timeout}

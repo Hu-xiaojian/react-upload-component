@@ -1,4 +1,22 @@
 $upload-prefix: '.sine-die';
+// 列表高亮色
+$list-item-element-hover-color: #5584ff;
+// 列表项错误
+$list-item-element-error-color: #f52743;
+// 列表项错误信息
+$list-item-element-error-msg-color: #ff3000;
+// 列表项大小
+$list-item-element-size-color: #8d9299;
+// 基础尺寸
+$size-base: 4px !default;
+// s-2 text image icon
+$s-2: $size-base * 2;
+
+@mixin singleLineTextOverflow () {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
 
 @mixin clearAStyle() {
   &:link, &:visited, &:hover, &:active {
@@ -9,9 +27,7 @@ $upload-prefix: '.sine-die';
 
 @mixin listItemStyle($optionsTop: 0, $optionsLineHeight: 40px) {
   &-name-wrap {
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
+    @include singleLineTextOverflow();
   }
 
   &-options {
@@ -31,7 +47,7 @@ $upload-prefix: '.sine-die';
   }
 
   &-size {
-    color: #8d9299;
+    color: $list-item-element-size-color;
     margin-left: 8px;
   }
 
@@ -44,16 +60,15 @@ $upload-prefix: '.sine-die';
   }
 
   &-done:hover #{$upload-prefix}-list-item-name {
-    color: #5584ff;
+    color: $list-item-element-hover-color;
   }
 
   &-done:hover #{$upload-prefix}-list-item-name-wrap {
-    color: #5584ff;
+    color: $list-item-element-hover-color;
   }
 
 }
 
-// todo
 #{$upload-prefix} {
   &-upload {
     display: inline-block;
@@ -65,14 +80,13 @@ $upload-prefix: '.sine-die';
 
   // 拖拽样式
   &-drag {
-    --color: #666;
     border: 1px dashed #c4c6cf;
     transition: border-color 100ms linear;
     cursor: pointer;
-    border-radius: 4px;
+    border-radius: $size-base;
     background-color: transparent;
     text-align: center;
-    margin-bottom: 4px;
+    margin-bottom: $size-base;
 
     &-icon {
       margin-top: 16px;
@@ -81,17 +95,17 @@ $upload-prefix: '.sine-die';
     &-text {
       margin-top: 8px;
       font-size: 14px;
-      color: var(--color);;
+      color: #666;;
     }
 
     &-hint {
-      margin: 4px 0 20px;
+      margin: $size-base 0 20px;
       font-size: 12px;
       color: #999;;
     }
 
     &-over {
-      border-color: #5584ff;
+      border-color: $list-item-element-hover-color;
     }
   }
 
@@ -103,8 +117,8 @@ $upload-prefix: '.sine-die';
       cursor: pointer;
       height: 28px;
       line-height: 28px;
-      background-color: #5584ff;
-      border-radius: 4px;
+      background-color: $list-item-element-hover-color;
+      border-radius: $size-base;
       color: #fff;
 
       &:hover {
@@ -119,19 +133,14 @@ $upload-prefix: '.sine-die';
 
     &-item {
       position: relative;
-
-      &-name {
-        text-decoration: none;
-      }
-
     }
   }
 
-  // 文件文本列表
-  &-list-text {
+  // 文本列表
+  &-list-text, &-list-text-preview {
     #{$upload-prefix}-list-item {
       background-color: #f4f6f9;
-      padding: 4px 40px 4px 8px;
+      padding: $size-base 40px $size-base $s-2;
       height: 40px;
       line-height: calc(40px - 8px);
       font-size: 12px;
@@ -142,29 +151,27 @@ $upload-prefix: '.sine-die';
       @include listItemStyle();
 
       & {
-        margin-bottom: 4px;
+        margin-bottom: $size-base;
       }
 
       &:last-child {
         margin-bottom: 0;
       }
 
-      &-done:hover #{$upload-prefix}-list-item-size {
-        color: #5584ff;
+      &-done:hover &-size {
+        color: $list-item-element-hover-color;
       }
 
       &-error {
         background-color: #ffd2d2;
 
-        &#{$upload-prefix}-list-item-error-with-msg {
+        &-with-msg {
           line-height: calc(40px / 2 - 4px);
         }
 
         &-msg {
-          text-overflow: ellipsis;
-          white-space: nowrap;
-          overflow: hidden;
-          color: #ff3000;
+          @include singleLineTextOverflow();
+          color: $list-item-element-error-msg-color;
         }
       }
 
@@ -174,16 +181,16 @@ $upload-prefix: '.sine-die';
     }
   }
 
-  // 文件图片列表
-  &-list-image {
+  // 图片列表 图片预览
+  &-list-image, &-list-image-preview {
     #{$upload-prefix}-list-item {
-      padding: 8px 40px 8px 8px;
+      padding: $s-2 40px $s-2 $s-2;
       border: 1px solid #dcdfe6;
       position: relative;
       overflow: hidden;
       line-height: 48px;
 
-      @include listItemStyle(8px, 48px);
+      @include listItemStyle($s-2, 48px);
 
       &-image-thumbnail {
         cursor: pointer;
@@ -199,11 +206,11 @@ $upload-prefix: '.sine-die';
       }
 
       & {
-        margin-bottom: 4px;
+        margin-bottom: $size-base;
       }
 
       &-done:hover {
-        border-color: #5584ff;
+        border-color: $list-item-element-hover-color;
       }
 
 
@@ -233,42 +240,35 @@ $upload-prefix: '.sine-die';
       }
 
       &-error {
-        border-color: #f52743;
+        border-color: $list-item-element-error-color;
 
         .icon {
           margin-top: calc(50% - (36px / 2));
         }
 
-        &#{$upload-prefix}-list-item-error-with-msg {
+        &-with-msg {
           line-height: calc(40px / 2);
         }
 
         &-msg {
-          text-overflow: ellipsis;
-          white-space: nowrap;
-          overflow: hidden;
-          color: #ff3000;
+          @include singleLineTextOverflow();
+          color: $list-item-element-error-msg-color;
         }
       }
     }
   }
 
   // 卡片列表
-  &-list-card, &-list-preview-card {
+  &-list-card, &-list-card-preview {
     overflow: hidden;
 
     #{$upload-prefix}-list-item, &-item {
       float: left;
       margin-right: 16px;
+      width: 100px;
 
-      &-card {
-        width: 100px;
-      }
-
-      &:hover {
-        #{$upload-prefix}-tool {
-          opacity: .8;
-        }
+      &:hover #{$upload-prefix}-list-item-tool {
+        opacity: .8;
       }
 
       &-wrapper {
@@ -292,45 +292,6 @@ $upload-prefix: '.sine-die';
           }
         }
 
-        #{$upload-prefix}-tool {
-          position: absolute;
-          z-index: 1;
-          background-color: rgba(0, 0, 0, .7);
-          transition: all 100ms linear;
-          opacity: 0;
-          width: 100%;
-          height: 28px;
-          left: 0;
-          bottom: 0;
-
-          &-btns {
-            display: flex;
-            align-items: center;
-
-            & > * {
-              cursor: pointer;
-              width: 100%;
-              line-height: 28px;
-              text-align: center;
-              border-right: 1px solid #fff;
-
-              & > * {
-                vertical-align: middle;
-              }
-            }
-
-            & .card-del {
-              path {
-                fill: #ffffff;
-              }
-            }
-
-            & :last-child {
-              border: none;
-            }
-          }
-        }
-
         // 上传
         #{$upload-prefix}-progress-line {
           position: absolute;
@@ -341,6 +302,46 @@ $upload-prefix: '.sine-die';
 
           &-underlay, &-overlay {
             border-radius: 0;
+          }
+        }
+      }
+
+      // action
+      &-tool {
+        position: absolute;
+        z-index: 1;
+        background-color: rgba(0, 0, 0, .7);
+        transition: all 100ms linear;
+        opacity: 0;
+        width: 100%;
+        height: 28px;
+        left: 0;
+        bottom: 0;
+
+        &-btns {
+          display: flex;
+          align-items: center;
+
+          & > * {
+            cursor: pointer;
+            width: 100%;
+            line-height: 28px;
+            text-align: center;
+            border-right: 1px solid #fff;
+
+            & > * {
+              vertical-align: middle;
+            }
+          }
+
+          & .card-del {
+            path {
+              fill: #ffffff;
+            }
+          }
+
+          & :last-child {
+            border: none;
           }
         }
       }
@@ -376,20 +377,18 @@ $upload-prefix: '.sine-die';
       &-name {
         width: 100%;
         text-align: center;
-        margin-top: 4px;
+        margin-top: $size-base;
         font-size: 12px;
         color: #585d66;
-        text-overflow: ellipsis;
-        overflow: hidden;
-        white-space: nowrap;
+        @include singleLineTextOverflow();
       }
 
       &-error #{$upload-prefix}-list-item-wrapper {
-        border-color: #ff3000;
+        border-color: $list-item-element-error-msg-color;
       }
     }
 
-    #{$upload-prefix}-list-card-upload {
+    &-upload {
       width: 100px;
       height: 100px;
       border: 1px dashed #d9dbde;
@@ -409,63 +408,52 @@ $upload-prefix: '.sine-die';
   }
 
   // icon列表
-  &-list-icon, &-list-preview-icon {
+  &-list-icon, &-list-icon-preview {
     overflow: hidden;
 
-    #{$upload-prefix}-list-item, #{$upload-prefix}-list-preview {
+    #{$upload-prefix}-list-item {
+      float: left;
+      width: 240px;
+      background-color: transparent;
+      border: 1px solid #dcdfe6;
+      padding: $s-2;
+      margin-right: 16px;
+      border-radius: $size-base;
 
-      &-icon, &-icon-item {
-        float: left;
-        width: 240px;
-        background-color: transparent;
-        border: 1px solid #dcdfe6;
-        padding: 8px;
-        margin-right: 16px;
-        border-radius: 4px;
+      @include listItemStyle(8px);
 
-        &:last-child {
-          margin-right: 0;
+      &:last-child {
+        margin-right: 0;
+      }
+
+      &-wrapper {
+        overflow: hidden;
+        width: 100%;
+        line-height: calc(48px - 8px);
+        display: block;
+
+        @include clearAStyle();
+
+        & > * {
+          float: left;
         }
 
-        #{$upload-prefix}-list-item-wrapper, &-wrapper {
-          overflow: hidden;
-          width: 100%;
-          line-height: calc(48px - 8px);
-          display: block;
+        &-icon {
+          width: 40px;
+          height: 40px;
+        }
 
-          @include clearAStyle();
+        &-name {
+          margin: 0 12px;
+          width: 138px;
+          @include singleLineTextOverflow();
+        }
 
-          & > * {
-            float: left;
-          }
-
-          &-icon {
-            width: 40px;
-            height: 40px;
-          }
-
-          &-name {
-            margin: 0 12px;
-            width: 138px;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            overflow: hidden;
-          }
-
-          &-options {
-            width: 20px;
-          }
+        &-options {
+          width: 20px;
         }
       }
 
-      // todo color
-      &-icon-item:hover {
-        border-color: #5584ff;
-
-        & &-wrapper {
-          color: #5584ff;
-        }
-      }
       &:hover {
         #{$upload-prefix}-list-item-wrapper-options {
           .icon path {
@@ -475,15 +463,15 @@ $upload-prefix: '.sine-die';
       }
 
       &-done:hover {
-        border-color: #5584ff;
+        border-color: $list-item-element-hover-color;
       }
 
       &-done:hover #{$upload-prefix}-list-item-wrapper {
-        color: #5584ff;
+        color: $list-item-element-hover-color;
       }
 
       &-error {
-        &#{$upload-prefix}-list-item-error-with-msg {
+        &-with-msg {
           #{$upload-prefix}-list-item-wrapper {
             line-height: calc((48px - 8px) / 2);
 
@@ -493,97 +481,45 @@ $upload-prefix: '.sine-die';
           }
         }
 
-        border-color: #f52743;
+        border-color: $list-item-element-error-color;
 
         &-msg {
-          text-overflow: ellipsis;
-          white-space: nowrap;
-          overflow: hidden;
-          color: #ff3000;
+          @include singleLineTextOverflow();
+          color: $list-item-element-error-msg-color;
         }
       }
     }
   }
 
-  // 文字预览
-  &-list-preview-text {
-    &-item {
-      background-color: #f4f6f9;
-      padding: 4px 8px;
-      height: 40px;
-      line-height: calc(40px - 8px);
-      font-size: 12px;
-      overflow: hidden;
-      transition: all 100ms linear;
-      border-radius: 0;
-      cursor: pointer;
+  // 图片预览 文字预览 icon预览
+  &-list-image-preview, &-list-text-preview, &-list-icon-preview {
+    #{$upload-prefix}-list-item {
+      // 图片 文字
+      &-image-preview, &-text-preview, &-icon-preview {
+        padding: $s-2;
 
-      @include listItemStyle();
-
-      & {
-        margin-bottom: 4px;
-      }
-
-      &:hover {
-        color: #5584ff;
-      }
-
-      &:hover &-name {
-        color: #5584ff;
-      }
-
-      &:last-child {
-        margin-bottom: 0;
-      }
-    }
-  }
-
-  // 图片预览
-  &-list-preview-image {
-    &-item {
-      padding: 8px 40px 8px 8px;
-      border: 1px solid #dcdfe6;
-      line-height: 48px;
-
-      @include listItemStyle(8px, 48px);
-
-      #{$upload-prefix}-list-item-image-thumbnail {
-        cursor: pointer;
-        float: left;
-        width: 48px;
-        height: 48px;
-        margin-right: 12px;
-
-        & > img {
-          max-width: 100%;
-          max-height: 100%;
+        &:hover {
+          color: $list-item-element-hover-color;
+          border-color: $list-item-element-hover-color;
         }
-      }
 
-      & {
-        margin-bottom: 4px;
-      }
+        &:hover #{$upload-prefix}-list-item-name {
+          color: $list-item-element-hover-color;
+        }
 
-      &:hover {
-        color: #5584ff;
-        border-color: #5584ff;
       }
-
-      &:hover &-name {
-        color: #5584ff;
-      }
-
-      &:last-child {
-        margin-bottom: 0;
-      }
-
     }
   }
 
-  // 卡片预览
-  &-list-preview-card {
-    &-item {
-      width: 100px;
+  &-list-icon-preview {
+    #{$upload-prefix}-list-item {
+      &-wrapper-name {
+        margin-right: 0;
+        width: 170px;
+      }
+      &-icon-preview:hover #{$upload-prefix}-list-item-wrapper-name {
+        color: $list-item-element-hover-color;
+      }
     }
   }
 }

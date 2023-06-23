@@ -8,7 +8,7 @@ import '../src/index.scss';
 const defaultValue = [
   {
     uid: "0",
-    name: "0--------------------------------------------------------------------------------------================================================================IMG.png0--------------------------------------------------------------------------------------================================================================IMG.png0--------------------------------------------------------------------------------------================================================================IMG.png",
+    name: "0------------测试测试测试测试测试测试测试测试测试测试测试测==IMG.png0--------------------------------------------------------------------------------------================================================================IMG.png0--------------------------------------------------------------------------------------================================================================IMG.png",
     state: "done",
     url: "https://img.alicdn.com/tps/TB19O79MVXXXXcZXVXXXXXXXXXX-1024-1024.jpg",
     downloadURL:
@@ -21,6 +21,7 @@ const defaultValue = [
     uid: "1",
     name: "IMG.png",
     percent: 50,
+    suffix: 'jpg',
     state: "uploading",
     url: "https://img.alicdn.com/tps/TB19O79MVXXXXcZXVXXXXXXXXXX-1024-1024.jpg",
     downloadURL:
@@ -33,6 +34,7 @@ const defaultValue = [
     uid: "2",
     name: "IMG.png",
     state: "error",
+    size: 2000,
     url: "https://img.alicdn.com/tps/TB19O79MVXXXXcZXVXXXXXXXXXX-1024-1024.jpg",
     downloadURL:
       "https://img.alicdn.com/tps/TB19O79MVXXXXcZXVXXXXXXXXXX-1024-1024.jpg",
@@ -43,6 +45,7 @@ const defaultValue = [
   {
     uid: "3",
     name: "IMG.png",
+    suffix: 'zip',
     state: "error",
     url: "https://img.alicdn.com/tps/TB19O79MVXXXXcZXVXXXXXXXXXX-1024-1024.jpg",
     downloadURL:

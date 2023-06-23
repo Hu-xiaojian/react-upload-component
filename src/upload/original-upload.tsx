@@ -365,7 +365,6 @@ class OriginalUpload extends React.Component<OriginalUploadProps, OriginalUpload
       { listType ? (<List
         progressProps={progressProps}
         value={ value }
-        className={className}
         upload={ this }
         listType={ listType }
         onCancel={ onCancel }

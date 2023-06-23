@@ -44,7 +44,7 @@ const Progress: React.FunctionComponent<InteriorProgressProps> = (props: Interio
     hasBorder,
     ...others
   } = props;
-  const suffixText = textRender ? textRender(percent) : `${percent}%`;
+  const suffixText = textRender ? textRender(percent) : '';
 
   const cls = React.useMemo(() => {
     let type = 'line';

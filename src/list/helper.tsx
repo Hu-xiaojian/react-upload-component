@@ -47,7 +47,7 @@ const getFileInfo = (file, props?): {
   name: string;
 } => {
   const { downloadURL, url, imgURL, state, errorMsg, name, size } = file;
-  const { listType = '', className = '', isPreview } = props || {};
+  const { listType = '', isPreview } = props || {};
 
   // 预览
   const _imgURL = imgURL || url;
@@ -58,11 +58,10 @@ const getFileInfo = (file, props?): {
 
   const classNames = classnames({
     [`${prefix}-list-item`]: true,
-    [`${prefix}-list-preview-${listType}-item`]: isPreview,
     [`${prefix}-list-item-${state}`]: !isPreview && state,
-    [`${prefix}-list-item-${listType}`]: !isPreview && !!listType,
+    [`${prefix}-list-item-${listType}-preview`]: isPreview,
     [`${prefix}-list-item-error-with-msg`]: !isPreview && state === 'error' && errorMsg,
-  }, className);
+  });
   return { downloadURL: _downloadURL, imgURL: _imgURL, size: _size, classNames, name };
 }
 
@@ -71,7 +70,6 @@ const getFileInfo = (file, props?): {
  */
 const TextAndImageList: React.FunctionComponent<TextAndImageListProps> = (props: TextAndImageListProps): React.ReactElement => {
   const {
-    className,
     file,
     listType,
     itemRender,
@@ -95,13 +93,11 @@ const TextAndImageList: React.FunctionComponent<TextAndImageListProps> = (props:
     item = itemRender(file, { onRemove: onHandleRemove, onCancel: onHandleCancel });
   }
 
-  const { downloadURL, size, classNames } = getFileInfo(file, { className, listType, isPreview });
+  const { downloadURL, size, classNames } = getFileInfo(file, { listType, isPreview });
 
   const state = isPreview ? '' : file.state;
   // 上传中为取消，其他情况为删除
   const onClick = () => (state === 'uploading' ? onHandleCancel(file) : onHandleRemove(file));
-
-  const previewCls = isPreview ? `preview-${listType}-`  : '';
 
   return (
     <div className={classNames} key={file.uid || file.name}>
@@ -109,16 +105,16 @@ const TextAndImageList: React.FunctionComponent<TextAndImageListProps> = (props:
         item ? item : (
           <>
             { renderImageChildren }
-            <div className={ `${ prefix }-list-${previewCls}item-name-wrap` }>
+            <div className={ `${ prefix }-list-item-name-wrap` }>
               <a
                 href={ downloadURL }
                 target="_blank"
                 rel="noopener noreferrer"
                 style={ { pointerEvents: downloadURL ? '' : 'none' } }
-                className={`${prefix}-list-${previewCls}item-name`}
+                className={`${prefix}-list-item-name`}
               >
                 <span>{ typeOfFn(fileNameRender) ? fileNameRender(file) : file.name }</span>
-                { !!size && <span className={ `${ prefix }-list-${previewCls}item-size` }>({ size })</span> }
+                { !!size && <span className={ `${ prefix }-list-item-size` }>({ size })</span> }
               </a>
             </div>
             { state === 'uploading' ? (<div className={`${prefix}-list-item-progress`}><Progress state="normal" percent={file.percent} { ...progressProps } /></div>) : null }
@@ -167,7 +163,6 @@ const RenderImage = (props: RenderImageProps) => {
  */
 const CardList: React.FunctionComponent<CardListProps> = (props: CardListProps): React.ReactElement => {
   const {
-    className,
     file,
     listType,
     itemRender,
@@ -192,7 +187,7 @@ const CardList: React.FunctionComponent<CardListProps> = (props: CardListProps):
 
   let item = null;
 
-  const { downloadURL, classNames } = getFileInfo(file, { className, listType, isPreview });
+  const { downloadURL, classNames } = getFileInfo(file, { listType, isPreview });
   const state = isPreview ? '' : file.state;
   if (state === 'uploading') {
     item = [
@@ -209,10 +204,10 @@ const CardList: React.FunctionComponent<CardListProps> = (props: CardListProps):
     } else {
       item = [
         renderImageChildren,
-        <div className={`${prefix}-tool`} key='tool'>
+        <div className={`${prefix}-list-item-tool`} key='tool'>
           {
             !isPreview && typeOfFn(actionRender) ? actionRender(file) : (
-              <div className={`${prefix}-tool-btns`}>
+              <div className={`${prefix}-list-item-tool-btns`}>
                 {
                   state !== 'error' ? (
                     <a
@@ -220,7 +215,7 @@ const CardList: React.FunctionComponent<CardListProps> = (props: CardListProps):
                       target="_blank"
                       style={ { pointerEvents: downloadURL ? '' : 'none' } }
                       rel="noopener noreferrer"
-                      className={`${prefix}-tool-btns-item`}
+                      className={`${prefix}-list-item-tool-btns-item`}
                     >
                       <DownLoadIcon />
                     </a>
@@ -246,12 +241,10 @@ const CardList: React.FunctionComponent<CardListProps> = (props: CardListProps):
     }
   }
 
-  const previewCls = isPreview ? `preview-${listType}-`  : '';
-
   return (
     <div className={classNames} key={file.uid || file.name}>
-      <div className={`${prefix}-list-${previewCls}item-wrapper`}>{ item }</div>
-      <div className={`${prefix}-list-${previewCls}item-name`}>{ typeOfFn(fileNameRender) ? fileNameRender(file) : file.name}</div>
+      <div className={`${prefix}-list-item-wrapper`}>{ item }</div>
+      <div className={`${prefix}-list-item-name`}>{ typeOfFn(fileNameRender) ? fileNameRender(file) : file.name}</div>
     </div>
   );
 };
@@ -261,7 +254,6 @@ const CardList: React.FunctionComponent<CardListProps> = (props: CardListProps):
  */
 export const IconList: React.FunctionComponent<IconListProps> = (props: IconListProps): React.ReactElement => {
   const {
-    className,
     file,
     listType,
     itemRender,
@@ -283,7 +275,7 @@ export const IconList: React.FunctionComponent<IconListProps> = (props: IconList
   const onClick = () => (state === 'uploading' ? onHandleCancel(file) : onHandleRemove(file));
 
   if (state === 'uploading') {
-    item = <Progress key='progress' shape="circle" state="normal" percent={file.percent} { ...progressProps } />;
+    item = <Progress key='progress' shape="circle" state="normal" textRender={v => `${v}%`} percent={file.percent} { ...progressProps } />;
   } else if (state === 'error') {
     item = <IconListError />;
   } else {
@@ -297,26 +289,24 @@ export const IconList: React.FunctionComponent<IconListProps> = (props: IconList
     }
   }
 
-  const previewCls = isPreview ? `preview-${listType}-`  : '';
-
-  const { downloadURL, classNames } = getFileInfo(file, { className, listType, isPreview });
+  const { downloadURL, classNames, size } = getFileInfo(file, { listType, isPreview });
   return (<div className={classNames} key={file.uid || file.name}>
     <a
       href={downloadURL}
       target="_blank"
       style={ { pointerEvents: downloadURL ? '' : 'none' } }
       rel="noopener noreferrer"
-      className={`${prefix}-list-${previewCls}item-wrapper`}
+      className={`${prefix}-list-item-wrapper`}
     >
-      <div className={`${prefix}-list-${previewCls}item-wrapper-icon`}>{ item }</div>
-      <div className={`${prefix}-list-${previewCls}item-wrapper-name`}>
+      <div className={`${prefix}-list-item-wrapper-icon`}>{ item }</div>
+      <div className={`${prefix}-list-item-wrapper-name`}>
         { typeOfFn(fileNameRender) ? fileNameRender(file) : file.name}
+        { !!size && <span className={ `${ prefix }-list-item-size` }>({ size })</span> }
         { state === 'error' && file.errorMsg ? (<div className={`${prefix}-list-item-error-msg`}>{file.errorMsg}</div>) : null }
       </div>
-
-      <div className={`${prefix}-list-item-wrapper-options`}>
-        { !isPreview ? typeOfFn(actionRender) ? actionRender(file) : <DeleteIcon onClick={onClick} /> : null }
-      </div>
+      { !isPreview ? (<div className={ `${ prefix }-list-item-options` }>
+        { typeOfFn(actionRender) ? actionRender(file) : <DeleteIcon onClick={ onClick }/> }
+      </div>) : null }
     </a>
   </div>)
 }

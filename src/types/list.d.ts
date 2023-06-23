@@ -40,7 +40,6 @@ export interface ListProps extends CommonComponent {
  */
 export interface TextAndImageListProps {
   // 通用
-  className: string;
   file: ValueItem;
   listType: ListType;
   itemRender: (value: ValueItem) => ReactNode;
