@@ -5,7 +5,7 @@
 </div>
 
 # 项目名称
-react-upload-component
+React上传组件
 # 描述
 
 React上传组件是一个专门为React框架设计的软件模块，它使用户能够将文件从他们的设备上传到基于React构建的网站或应用程序。使用React的数据流架构构建，这个组件可以很容易地集成到任何基于React的项目中。
