@@ -4,7 +4,7 @@ import Upload from '../src';
 import Progress from '../src/progress';
 
 import { Upload as AntdUpload } from 'antd';
-import { Upload as NextUpload } from '@alifd/next';
+// import { Upload as NextUpload } from '@alifd/next';
 import UploadDraggable from "./upload-dragger";
 import '@alifd/next/index.scss'
 import '../src/index.scss';
