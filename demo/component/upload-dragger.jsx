@@ -1,17 +1,16 @@
 import React from 'react';
-import Upload from '../src';
-import '../src/index.scss';
+import Upload from '../../src';
 
 const defaultValue = [
   {
     uid: "0",
-    name: "0------------测试测试测试测试测试测试测试测试测试测试测试测==IMG.png0--------------------------------------------------------------------------------------================================================================IMG.png0--------------------------------------------------------------------------------------================================================================IMG.png",
+    name: "IMG.png",
     state: "done",
     url: "https://img.alicdn.com/tps/TB19O79MVXXXXcZXVXXXXXXXXXX-1024-1024.jpg",
     downloadURL:
       "https://img.alicdn.com/tps/TB19O79MVXXXXcZXVXXXXXXXXXX-1024-1024.jpg",
     imgURL:
-      "https://im.alicdn.com/tps/TB19O79MVXXXXcZXVXXXXXXXXXX-1024-1024.jpg",
+      "https://img.alicdn.com/tps/TB19O79MVXXXXcZXVXXXXXXXXXX-1024-1024.jpg",
     size: 2000
   },
   {
@@ -57,17 +56,16 @@ function UploadDraggable() {
   const UploadDraggableRef = React.createRef();
   return (
     <div>
-      <h1>本地测试draggable组件</h1>
-      <Upload.List
-        listType="icon"
+
+      <Upload.Dragger
+        listType="image"
+        defaultValue={defaultValue}
         // onPreview={(file) => {
         //   console.log(file,'-------file')
         // }}
         // progressProps={{
         //   textRender: (percent) => percent + '%'
         // }}
-        isPreview
-        defaultValue={defaultValue}
         // // listType="text"
         // onImageError={(file, error) => {
         //   console.log(file,'---------------file, error', error)
@@ -82,8 +80,7 @@ function UploadDraggable() {
         // action='http://127.0.0.1:7001/file'
         // ref={UploadDraggableRef}
       >
-        {/*<div className='test'>拖拽</div>*/}
-      </Upload.List>
+      </Upload.Dragger>
     </div>
   );
 }

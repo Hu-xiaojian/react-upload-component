@@ -1,37 +1,32 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import Progress from '../src/progress';
-import UploadDraggable from "./upload-dragger";
+import navs from './nav';
 import './clear.scss';
 import '../src/index.scss';
 
 function App() {
-  const [percent, setPercent] = React.useState(0);
 
   return (
-    <div>
-      <button onClick={() => setPercent(prev => prev === 0 ? 0 : prev - 10)}>测试-</button>
-      <button onClick={() => setPercent(prev => prev === 100 ? 100 : prev + 10)}>测试+</button>
-      <Progress
-        hasBorder
-        state={'normal'}
-        backgroundColor={'green'}
-        percent={percent}
-        progressive
-        color={'red'}
-        textRender={() => '测试'}
-      />
-      <Progress
-        hasBorder
-        shape={'circle'}
-        state={'normal'}
-        backgroundColor={'green'}
-        percent={percent}
-        progressive
-        color={'red'}
-        textRender={() => '测试'}
-      />
-      <UploadDraggable />
+    <div className="app">
+      <div className="content">
+        <h1>Upload</h1>
+        <p>文件选择上传和拖拽上传控件。</p>
+        <h2>代码演示</h2>
+        {
+          navs.map((it, index) => {
+            return <div key={index} name={index} id={index}>{ React.createElement(it.component) }</div>;
+          })
+        }
+      </div>
+      <div className="nav">
+        <div className="nav-container">
+          {
+            navs.map((it, index) => {
+              return <div key={index}><a href={`#${index}`}>{ it.title }</a></div>;
+            })
+          }
+        </div>
+      </div>
     </div>
   );
 }

@@ -12,6 +12,7 @@
 *    IE on Windows Phone and in iOS.
 */
 html {
+  scroll-behavior: smooth;
   line-height: 1.15;
   /* 1 */
   -ms-text-size-adjust: 100%;
@@ -191,6 +192,41 @@ img {
 }
 
 // test
-.sine-die-progress-line-container {
-  width: 90%;
+//.sine-die-progress-line-container {
+//  width: 90%;
+//}
+
+.app {
+  display: flex;
+  .content {
+    padding: 0 40px;
+    width: 80%;
+    & > div {
+      border: 1px solid #aaa;
+      padding: 24px;
+      margin-bottom: 24px;
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+  .nav {
+
+    width: 20%;
+    &-container {
+      border-left: 1px solid #ccc;
+      width: 18%;
+      top: 60px;
+      position: fixed;
+      & div {
+        text-align: center;
+        padding: 4px 0;
+      }
+      & a {
+        font-size: 12px;
+        text-decoration: none;
+        color: #666;
+      }
+    }
+  }
 }

@@ -105,9 +105,9 @@ class List extends React.Component<ListProps, any> {
           if (listType === 'text') {
             return (<TextAndImageList key={key} file={file} {...props} />);
           } else if (listType === 'image') {
-            return (<TextAndImageList key={key} {...props} file={file} renderImageChildren={<RenderImage { ...renderImageChildrenProps } file={file} />} />);
+            return (<TextAndImageList key={key} {...props} file={file} renderImageChildren={<RenderImage key="img" { ...renderImageChildrenProps } file={file} />} />);
           } else if (listType === 'card') {
-            return <CardList key={key} {...props} file={file} onSelect={this.onHandleSelect} reUpload={reUpload} renderImageChildren={<RenderImage { ...renderImageChildrenProps } file={file} />} />
+            return <CardList key={key} {...props} file={file} onSelect={this.onHandleSelect} reUpload={reUpload} renderImageChildren={<RenderImage key="img" { ...renderImageChildrenProps } file={file} />} />
           } else if (listType === 'icon') {
             return <IconList key={key} {...props} file={file} />
           }
