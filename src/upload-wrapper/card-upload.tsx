@@ -1,10 +1,18 @@
 import React from 'react';
 import List from '@/list';
 import Upload from '@/upload/original-upload';
-import type { CardUploadProps } from '@/types';
-import { prefix } from "@/manifest";
+import type { CardUploadProps, ValueItem } from '@/types';
+import { prefix } from '@/manifest';
+import { emptyFn } from "@/utils";
 
-class CardUpload extends React.Component<CardUploadProps, any> {
+interface CardUploadState {
+  value: Array<ValueItem>
+}
+
+class CardUpload extends React.Component<CardUploadProps, CardUploadState> {
+  static displayName: string;
+  defaultProps: object;
+
   cardUploadRef: React.RefObject<any>;
 
   constructor (props) {
@@ -31,8 +39,10 @@ class CardUpload extends React.Component<CardUploadProps, any> {
 
   }
 
-  onHandleChange = () => {
-
+  onHandleChange = (value, file) => {
+    this.setState({ value }, () => {
+      this.props.onChange(value, file);
+    });
   }
   render(): React.ReactNode {
     const {
@@ -48,8 +58,11 @@ class CardUpload extends React.Component<CardUploadProps, any> {
       itemRender,
       action,
       timeout,
-      children
+      children,
+      maxCount,
     } = this.props;
+    const { value } = this.state;
+    const _maxCount = value.length >= maxCount;
     return (
       <List
         style={style}
@@ -64,7 +77,7 @@ class CardUpload extends React.Component<CardUploadProps, any> {
         reUpload={reUpload}
         onImageError={onImageError}
       >
-        <div className={`${prefix}-list-item`}>
+        <div className={`${prefix}-list-item ${_maxCount ? `${prefix}-hidden` : ""}`}>
           <Upload
             listType={false} // list不渲染
             className={`${prefix}-list-card-upload ${className || ''}`}
@@ -100,5 +113,11 @@ class CardUpload extends React.Component<CardUploadProps, any> {
   }
 
 }
+
+CardUpload.defaultProps = {
+  onChange: emptyFn,
+}
+
+CardUpload.displayName = 'CardUpload';
 
 export default CardUpload;

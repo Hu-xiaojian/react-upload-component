@@ -73,6 +73,12 @@ $s-2: $size-base * 2;
   &-upload {
     display: inline-block;
   }
+  &-hidden {
+    display: none;
+    & > * {
+      display: none;
+    }
+  }
 
   &-draggable {
     display: block;

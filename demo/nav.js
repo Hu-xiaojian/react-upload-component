@@ -1,4 +1,4 @@
-import { TextList, CardList, ImageList, IconList, UploadDraggable } from './component';
+import { TextList, CardList, ImageList, IconList, UploadDraggable, MaxCount } from './component';
 
 const navs = [
   {
@@ -20,6 +20,10 @@ const navs = [
   {
     title: '拖拽上传',
     component: UploadDraggable,
+  },
+  {
+    title: '限制数量',
+    component: MaxCount,
   },
 ];
 

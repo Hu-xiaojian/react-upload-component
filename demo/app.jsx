@@ -14,7 +14,11 @@ function App() {
         <h2>代码演示</h2>
         {
           navs.map((it, index) => {
-            return <div key={index} name={index} id={index}>{ React.createElement(it.component) }</div>;
+            return <div key={index} name={index} id={index}>
+              <h1>{ it.title }</h1>
+              { it.content ? <p>{ it.content }</p> : null }
+              { React.createElement(it.component) }
+            </div>;
           })
         }
       </div>

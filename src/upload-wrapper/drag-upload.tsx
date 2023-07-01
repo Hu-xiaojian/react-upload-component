@@ -110,7 +110,6 @@ class DragUpload extends Component<DragUploadProps, DragUploadState> {
     } = this.props;
 
     const { dragOver, value } = this.state;
-    console.log(value,'-------value')
     return (<Upload
       { ...others }
       value={value}

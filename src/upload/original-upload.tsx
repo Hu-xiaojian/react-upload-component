@@ -6,6 +6,7 @@ import React from 'react';
 import Upload from '@/upload';
 import { fileToObj, checkValue, emptyFn, getTargetFile } from '@/utils';
 import List from "@/list";
+import { prefix } from '@/manifest';
 import type { OriginalUploadProps, UploaderInstance, ValueItem } from '@/types';
 
 
@@ -348,7 +349,7 @@ class OriginalUpload extends React.Component<OriginalUploadProps, OriginalUpload
         !isPreview ? <Upload
           { ...others }
           name={name}
-          className={className}
+          className={`${_maxCount ? `${prefix}-hidden` : ''} ${className}`}
           beforeUpload={beforeUpload}
           draggable={draggable}
           disabled={disabled || _maxCount}
