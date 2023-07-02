@@ -5,7 +5,7 @@ import type { ValueItem } from '@/types';
  * @desc 空函数
  * @return void
  */
-export const emptyFn = () => {};
+export const emptyFn = (value?: any) => {};
 
 /**
  * @desc File to Object
@@ -129,3 +129,41 @@ export const sizeCalculator = (size): string => {
  * @return {boolean}
  */
 export const typeOfFn = fn => typeof fn === 'function';
+
+/**
+ * 判断对象是否是一个promise，即是否可以用.then
+ * @param  {*}  obj
+ * @return {Boolean}
+ */
+export function isPromise(obj) {
+  return !!obj && (typeof obj === 'object' || typeof obj === 'function') && typeof obj.then === 'function';
+}
+
+/**
+ * 用于执行回调方法后的逻辑
+ * @param  {*} ret            回调方法执行结果
+ * @param  {Function} success 执行结果返回非false的回调
+ * @param  {Function} [failure=noop] 执行结果返回false的回调
+ */
+export function promiseCall(ret, success, failure = emptyFn) {
+  if (isPromise(ret)) {
+    return ret
+      .then(result => {
+        success(result);
+        return result;
+      })
+      .catch(e => {
+        failure(e);
+        // throw e;
+      });
+  }
+
+  return ret !== false ? success(ret) : failure(ret);
+}
+
+
+export const errorCode = {
+  EXCESS_MAX_COUNT: 'EXCESS_MAX_COUNT',
+  BEFORE_UPLOAD_ERROR: 'BEFORE_UPLOAD_ERROR',
+  RESPONSE_FAIL: 'RESPONSE_FAIL',
+};

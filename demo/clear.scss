@@ -202,6 +202,10 @@ img {
     padding: 0 40px;
     width: 80%;
     & > div {
+      & > p {
+        font-size: 14px;
+        color: #666;
+      }
       border: 1px solid #aaa;
       padding: 24px;
       margin-bottom: 24px;

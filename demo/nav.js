@@ -1,4 +1,4 @@
-import { TextList, CardList, ImageList, IconList, UploadDraggable, MaxCount } from './component';
+import { TextList, CardList, ImageList, IconList, UploadDraggable, MaxCount, FileSize } from './component';
 
 const navs = [
   {
@@ -24,6 +24,11 @@ const navs = [
   {
     title: '限制数量',
     component: MaxCount,
+  },
+  {
+    title: '文件大小、宽高限制',
+    content: '设置图片最大宽度为 1200，最大占据磁盘空间大小为2M。思路是在 beforeUpload 这个阶段，获取到文件对象，判断文件对象是否符合要求。',
+    component: FileSize,
   },
 ];
 

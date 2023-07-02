@@ -1,4 +1,4 @@
-import { emptyFn, isPlainObject } from '@/utils';
+import { emptyFn, isPlainObject ,promiseCall, errorCode } from '@/utils';
 import uuid from '@/utils/uuid';
 import defaultRequest from '@/upload/default-request';
 import type { UploaderConfig, UploaderInstance } from '@/types';
@@ -71,23 +71,28 @@ Object.defineProperties(Uploader.prototype, {
         method,
         data,
       });
-      if (before !== false) {
-        if (before === false) {
-          const err = new Error('BEFORE_UPLOAD_ERROR');
-          err.code = 'BEFORE_UPLOAD_ERROR';
-          return onError(err, null, file);
+
+      promiseCall(
+        before,
+        options => {
+          if (options === false) {
+            const err = new Error(errorCode.BEFORE_UPLOAD_ERROR);
+            err.code = errorCode.BEFORE_UPLOAD_ERROR;
+            return this.options.onError(err, null, file);
+          }
+          this.post(file, isPlainObject(options) ? options : undefined);
+        },
+        error => {
+          let err;
+          if (error) {
+            err = error;
+          } else {
+            err = new Error(errorCode.BEFORE_UPLOAD_ERROR);
+            err.code = errorCode.BEFORE_UPLOAD_ERROR;
+          }
+          onError(err, null, file);
         }
-        this.post(file, isPlainObject(before) ? before : undefined);
-      } else {
-        let err;
-        if (before) {
-          err = before;
-        } else {
-          err = new Error('BEFORE_UPLOAD_ERROR');
-          err.code = 'BEFORE_UPLOAD_ERROR';
-        }
-        onError(err, null, file);
-      }
+      );
     }
   },
   post: {

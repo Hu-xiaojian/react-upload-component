@@ -4,7 +4,7 @@
 
 import React from 'react';
 import Upload from '@/upload';
-import { fileToObj, checkValue, emptyFn, getTargetFile } from '@/utils';
+import { fileToObj, checkValue, emptyFn, getTargetFile, promiseCall, errorCode } from '@/utils';
 import List from "@/list";
 import { prefix } from '@/manifest';
 import type { OriginalUploadProps, UploaderInstance, ValueItem } from '@/types';
@@ -79,18 +79,17 @@ class OriginalUpload extends React.Component<OriginalUploadProps, OriginalUpload
     onSelect(uploadFiles, _value);
     excessFiles.forEach(it => {
       // 超出最大文件数量
-      const err = new Error('EXCESS_MAX_COUNT');
-      err.code = 'EXCESS_MAX_COUNT';
+      const err = new Error(errorCode.EXCESS_MAX_COUNT);
+      err.code = errorCode.EXCESS_MAX_COUNT;
       this.onHandleError(err, null, it);
     });
 
     if (!autoUpload) {
       uploadFiles.forEach(it => {
         const validateResult = afterSelect(it);
-        if (!validateResult) {
-          const err = new Error('CHECk_FAILURE');
-          this.onHandleError(err, null, it);
-        }
+        promiseCall(validateResult, emptyFn, error => {
+          this.onHandleError(error, null, it);
+        });
       });
       this.onHandleChange(_value, uploadFiles);
     }
@@ -385,6 +384,8 @@ class OriginalUpload extends React.Component<OriginalUploadProps, OriginalUpload
 }
 
 OriginalUpload.defaultProps = {
+  headers: {},
+  timeout: 0,
   autoUpload: true,
   name: 'file',
   method: 'post',
