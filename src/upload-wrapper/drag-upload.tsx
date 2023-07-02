@@ -116,7 +116,7 @@ class DragUpload extends Component<DragUploadProps, DragUploadState> {
       isPreview={isPreview}
       // 非预览态只能text/image
       listType={!isPreview && listType === 'card' ? 'text' : listType}
-      className={ `${ prefix }-draggable ${ className }` }
+      className={className}
       draggable
       onDragLeave={ this.onHandleDragLeave }
       onDragOver={ this.onHandleDragOver }

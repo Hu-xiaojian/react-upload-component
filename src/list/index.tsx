@@ -56,6 +56,8 @@ class List extends React.Component<ListProps, any> {
 
   render (): React.ReactNode {
     const {
+      style,
+      className,
       children,
       value = [],
       listType,
@@ -71,6 +73,7 @@ class List extends React.Component<ListProps, any> {
     } = this.props;
 
     const props = {
+      style,
       listType,
       itemRender,
       fileNameRender,
@@ -93,7 +96,7 @@ class List extends React.Component<ListProps, any> {
       [`${prefix}-list`]: true,
       [`${prefix}-list-${listType}`]: !isPreview,
       [`${prefix}-list-${listType}-preview`]: isPreview,
-    });
+    }, className);
 
     return (<div className={classNames}>
       {

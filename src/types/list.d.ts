@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import type { ReactNode, CSSProperties } from 'react';
 import type { ValueItem } from './helper';
 import type { CommonComponent } from './common';
 type ListType = 'text' | 'image' | 'card';
@@ -40,6 +40,7 @@ export interface ListProps extends CommonComponent {
  */
 export interface TextAndImageListProps {
   // 通用
+  style: CSSProperties;
   file: ValueItem;
   listType: ListType;
   itemRender: (value: ValueItem) => ReactNode;

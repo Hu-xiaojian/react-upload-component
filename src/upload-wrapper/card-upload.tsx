@@ -60,12 +60,15 @@ class CardUpload extends React.Component<CardUploadProps, CardUploadState> {
       timeout,
       children,
       maxCount,
+      ...others
     } = this.props;
     const { value } = this.state;
     const _maxCount = value.length >= maxCount;
     return (
       <List
+        { ...others }
         style={style}
+        className={className}
         listType="card"
         value={this.state.value}
         onRemove={onRemove}
@@ -80,7 +83,7 @@ class CardUpload extends React.Component<CardUploadProps, CardUploadState> {
         <div className={`${prefix}-list-item ${_maxCount ? `${prefix}-hidden` : ""}`}>
           <Upload
             listType={false} // list不渲染
-            className={`${prefix}-list-card-upload ${className || ''}`}
+            className={`${prefix}-list-card-upload`}
             disabled={disabled}
             action={action}
             timeout={timeout}

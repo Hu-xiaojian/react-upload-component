@@ -60,7 +60,7 @@ class ListUpload extends Component<ListUploadProps, ListUploadState> {
       isPreview={isPreview}
       // 非预览态只能text/image
       listType={!isPreview && listType === 'card' ? 'text' : listType}
-      className={ `${ prefix }-list-upload ${ className }` }
+      className={className}
       ref={ this.handleDragUploadRef }
     >
       {

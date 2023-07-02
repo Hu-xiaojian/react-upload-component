@@ -70,6 +70,7 @@ const getFileInfo = (file, props?): {
  */
 const TextAndImageList: React.FunctionComponent<TextAndImageListProps> = (props: TextAndImageListProps): React.ReactElement => {
   const {
+    style,
     file,
     listType,
     itemRender,
@@ -100,7 +101,7 @@ const TextAndImageList: React.FunctionComponent<TextAndImageListProps> = (props:
   const onClick = () => (state === 'uploading' ? onHandleCancel(file) : onHandleRemove(file));
 
   return (
-    <div className={classNames} key={file.uid || file.name}>
+    <div className={classNames} key={file.uid || file.name} style={style}>
       {
         item ? item : (
           <>
@@ -163,6 +164,7 @@ const RenderImage = (props: RenderImageProps) => {
  */
 const CardList: React.FunctionComponent<CardListProps> = (props: CardListProps): React.ReactElement => {
   const {
+    style,
     file,
     listType,
     itemRender,
@@ -242,7 +244,7 @@ const CardList: React.FunctionComponent<CardListProps> = (props: CardListProps):
   }
 
   return (
-    <div className={classNames} key={file.uid || file.name}>
+    <div className={classNames} key={file.uid || file.name} style={style}>
       <div className={`${prefix}-list-item-wrapper`}>{ item }</div>
       <div className={`${prefix}-list-item-name`}>{ typeOfFn(fileNameRender) ? fileNameRender(file) : file.name}</div>
     </div>
@@ -254,6 +256,7 @@ const CardList: React.FunctionComponent<CardListProps> = (props: CardListProps):
  */
 export const IconList: React.FunctionComponent<IconListProps> = (props: IconListProps): React.ReactElement => {
   const {
+    style,
     file,
     listType,
     itemRender,
@@ -290,7 +293,7 @@ export const IconList: React.FunctionComponent<IconListProps> = (props: IconList
   }
 
   const { downloadURL, classNames, size } = getFileInfo(file, { listType, isPreview });
-  return (<div className={classNames} key={file.uid || file.name}>
+  return (<div className={classNames} key={file.uid || file.name} style={style}>
     <a
       href={downloadURL}
       target="_blank"

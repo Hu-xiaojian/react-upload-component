@@ -4,6 +4,7 @@
 
 import React from 'react';
 import Upload from '@/upload';
+import classNames from 'classnames';
 import { fileToObj, checkValue, emptyFn, getTargetFile, promiseCall, errorCode } from '@/utils';
 import List from "@/list";
 import { prefix } from '@/manifest';
@@ -338,17 +339,26 @@ class OriginalUpload extends React.Component<OriginalUploadProps, OriginalUpload
       progressProps,
       onImageError,
       // -------------------list
+      style,
       ...others
     } = this.props;
 
     const { value } = this.state;
     const _maxCount = value.length >= maxCount;
+
+    const innerCls = classNames({
+      [`${ prefix }-draggable`]: draggable,
+      [`${prefix}-hidden`]: _maxCount,
+      [`${ prefix }-list-upload`]: listType,
+      [className]: !listType,
+    });
+
     return (<>
       {
         !isPreview ? <Upload
           { ...others }
           name={name}
-          className={`${_maxCount ? `${prefix}-hidden` : ''} ${className}`}
+          className={innerCls}
           beforeUpload={beforeUpload}
           draggable={draggable}
           disabled={disabled || _maxCount}
@@ -363,6 +373,8 @@ class OriginalUpload extends React.Component<OriginalUploadProps, OriginalUpload
         </Upload> : null
       }
       { listType ? (<List
+        className={className}
+        style={style}
         progressProps={progressProps}
         value={ value }
         upload={ this }
