@@ -1,0 +1,8 @@
+.sine-die-list-item-options {
+  .action-render > * {
+    margin-right: 4px;
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}

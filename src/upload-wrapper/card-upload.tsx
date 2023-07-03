@@ -30,6 +30,15 @@ class CardUpload extends React.Component<CardUploadProps, CardUploadState> {
     };
   }
 
+  static getDerivedStateFromProps (nextProps, prevState) {
+    if ('value' in nextProps && nextProps.value !== prevState.value) {
+      return {
+        value: !Array.isArray(nextProps.value) ? [] : nextProps.value,
+      };
+    }
+    return null;
+  }
+
   handleCardUploadRef = ref => (this.cardUploadRef = ref);
 
   /**

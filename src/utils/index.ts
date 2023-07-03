@@ -161,6 +161,57 @@ export function promiseCall(ret, success, failure = emptyFn) {
   return ret !== false ? success(ret) : failure(ret);
 }
 
+/**
+ * 对象浅比较
+ * @param  {Object} objA
+ * @param  {Object} objB
+ * @param  {Function}  [compare] 手动调用方法比较
+ * @return {Boolean}      对象浅比较是否相等
+ *
+ * @example
+ * object.shallowEqual({a: 100}, {a: 100}); // true
+ */
+export function shallowEqual(objA, objB, compare) {
+  if (objA === objB) {
+    return true;
+  }
+
+  // 其中一个不是object，则不相等
+  if (!objA || !objB || typeof objA + typeof objB !== 'objectobject') {
+    return false;
+  }
+
+  const keyA = Object.keys(objA);
+  const keyB = Object.keys(objB);
+  const len = keyA.length;
+
+  // key 数量不一致则不相等
+  if (len !== keyB.length) {
+    return false;
+  }
+
+  const hasCallback = typeof compare === 'function';
+
+  for (let i = 0; i < len; i++) {
+    const key = keyA[i];
+
+    if (!Object.prototype.hasOwnProperty.call(objB, key)) {
+      return false;
+    }
+
+    const valA = objA[key];
+    const valB = objB[key];
+
+    const ret = hasCallback ? compare(valA, valB, key) : void 0;
+
+    if (ret === false || (ret === void 0 && valA !== valB)) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
 
 export const errorCode = {
   EXCESS_MAX_COUNT: 'EXCESS_MAX_COUNT',

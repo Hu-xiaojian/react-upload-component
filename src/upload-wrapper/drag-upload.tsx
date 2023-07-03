@@ -48,6 +48,14 @@ class DragUpload extends Component<DragUploadProps, DragUploadState> {
     this.dragUploadRef = React.createRef();
   }
 
+  static getDerivedStateFromProps (nextProps, prevState) {
+    if ('value' in nextProps && nextProps.value !== prevState.value) {
+      return {
+        value: !Array.isArray(nextProps.value) ? [] : nextProps.value,
+      };
+    }
+    return null;
+  }
 
   /**
    * @desc 拖拽离开

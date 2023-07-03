@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import type { ListUploadProps, ValueItem } from '@/types';
-import { prefix } from '@/manifest';
 import Upload from '@/upload/original-upload';
+import { shallowEqual } from '@/utils';
+import type { ListUploadProps, ValueItem } from '@/types';
 
 interface ListUploadState {
   value: Array<ValueItem>;
@@ -27,6 +27,14 @@ class ListUpload extends Component<ListUploadProps, ListUploadState> {
     this.dragUploadRef = React.createRef();
   }
 
+  static getDerivedStateFromProps (nextProps, prevState) {
+    if ('value' in nextProps && nextProps.value !== prevState.value) {
+      return {
+        value: !Array.isArray(nextProps.value) ? [] : nextProps.value,
+      };
+    }
+    return null;
+  }
 
   /**
    * @desc 中断上传
@@ -43,7 +51,6 @@ class ListUpload extends Component<ListUploadProps, ListUploadState> {
   }
 
   handleDragUploadRef = ref => (this.dragUploadRef = ref);
-
 
   render(): React.ReactNode {
     const {

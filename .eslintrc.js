@@ -34,6 +34,8 @@ module.exports = {
     },
   },
   'rules': {
+    // 圈复杂度
+    'complexity': ['error', 10],
     'import/no-extraneous-dependencies': [
       'error',
       {
@@ -60,7 +62,7 @@ module.exports = {
     'import/newline-after-import': ['error', { 'count': 1 }],
     'class-methods-use-this': ['off', { 'enforceForClassFields': false }],
     'jsx-a11y/rule-name': 0,
-    'prettier/prettier': 2,
+    // 'prettier/prettier': 2,
     'semi': ['error', 'always'],
     'linebreak-style': [0, 'error', 'windows'],
     'comma-dangle': 0,
