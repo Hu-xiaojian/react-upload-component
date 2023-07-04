@@ -186,13 +186,13 @@ class OriginalUpload extends React.Component<OriginalUploadProps, OriginalUpload
         response = JSON.parse(response);
       }
     } catch (e) {
-      e.code = 'RESPONSE_FAIL';
+      e.code = errorCode.RESPONSE_FAIL;
       return this.onHandleError(e, response, file);
     }
 
     if (response.success === false) {
-      const err = new Error(response.message || 'RESPONSE_FAIL');
-      err.code = 'RESPONSE_FAIL';
+      const err = new Error(response.message || errorCode.RESPONSE_FAIL);
+      err.code = errorCode.RESPONSE_FAIL;
       return this.onHandleError(err, response, file);
     }
 

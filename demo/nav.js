@@ -1,4 +1,4 @@
-import { TextList, CardList, ImageList, IconList, UploadDraggable, MaxCount, FileSize, ExtraList } from './component';
+import { TextList, CardList, ImageList, IconList, UploadDraggable, MaxCount, FileSize, ExtraList, CropperUpload } from './component';
 
 const navs = [
   {
@@ -33,6 +33,11 @@ const navs = [
   {
     title: '额外内容',
     component: ExtraList,
+  },
+  {
+    title: '裁剪上传',
+    content: '通过转换 dataURL to Blob to File, 构造文件对象',
+    component: CropperUpload,
   },
 ];
 

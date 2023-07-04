@@ -1,19 +1,20 @@
 import React from 'react';
 import List from '@/list';
 import Upload from '@/upload/original-upload';
-import type { CardUploadProps, ValueItem } from '@/types';
+import Base from './base';
 import { prefix } from '@/manifest';
 import { emptyFn } from "@/utils";
+import type { CardUploadProps, ValueItem } from '@/types';
 
 interface CardUploadState {
   value: Array<ValueItem>
 }
 
-class CardUpload extends React.Component<CardUploadProps, CardUploadState> {
+class CardUpload extends Base<CardUploadProps, CardUploadState> {
   static displayName: string;
   defaultProps: object;
 
-  cardUploadRef: React.RefObject<any>;
+  uploaderRef: React.RefObject<any>;
 
   constructor (props) {
     super(props);
@@ -26,7 +27,7 @@ class CardUpload extends React.Component<CardUploadProps, CardUploadState> {
 
     this.state = {
       value: !Array.isArray(value) ? [] : value,
-      uploaderRef: this.cardUploadRef,
+      uploaderRef: this.uploaderRef,
     };
   }
 
@@ -38,8 +39,6 @@ class CardUpload extends React.Component<CardUploadProps, CardUploadState> {
     }
     return null;
   }
-
-  handleCardUploadRef = ref => (this.cardUploadRef = ref);
 
   /**
    *
@@ -85,7 +84,7 @@ class CardUpload extends React.Component<CardUploadProps, CardUploadState> {
         onPreview={onPreview}
         itemRender={itemRender}
         isPreview={isPreview}
-        uploader={this.cardUploadRef}
+        uploader={this.uploaderRef}
         reUpload={reUpload}
         onImageError={onImageError}
       >
@@ -100,7 +99,7 @@ class CardUpload extends React.Component<CardUploadProps, CardUploadState> {
             value={this.state.value}
             onProgress={this.onHandleProgress}
             onChange={this.onHandleChange}
-            ref={this.handleCardUploadRef}
+            ref={this.saveUploaderRef}
           >
             {children || '上传图片'}
           </Upload>
@@ -111,13 +110,13 @@ class CardUpload extends React.Component<CardUploadProps, CardUploadState> {
 
 
   componentDidMount() {
-    this.updateUploaderRef(this.cardUploadRef);
+    this.saveUploaderRef(this.uploaderRef);
   }
 
   componentDidUpdate() {
     const { uploaderRef } = this.state;
-    if (!uploaderRef && this.cardUploadRef) {
-      this.updateUploaderRef(this.cardUploadRef);
+    if (!uploaderRef && this.uploaderRef) {
+      this.updateUploaderRef(this.uploaderRef);
     }
   }
   updateUploaderRef(uploaderRef) {

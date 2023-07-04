@@ -6,3 +6,4 @@ export { default as UploadDraggable } from './upload-dragger';
 export { default as MaxCount } from './max-count';
 export { default as FileSize } from './file-size';
 export { default as ExtraList } from './extra-list';
+export { default as CropperUpload } from './cropper-upload';

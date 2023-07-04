@@ -54,6 +54,7 @@
     "postcss-preset-env": "^8.3.2",
     "prettier": "^2.8.8",
     "react": "^18.2.0",
+    "react-cropper": "^2.3.3",
     "react-dom": "^18.2.0",
     "sass-loader": "^13.2.2",
     "style-loader": "^3.3.2",

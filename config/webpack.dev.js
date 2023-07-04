@@ -13,7 +13,7 @@ const devConfig = {
   module: {
     rules: [
       {
-        test: /.s[ac]ss$/,
+        test: /\.(sa|sc|c)ss$/i,
         exclude: /.min.css$/,
         use: [
           { loader: 'style-loader' },

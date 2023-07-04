@@ -1,5 +1,6 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Upload from '@/upload/original-upload';
+import Base from './base';
 import { UploadIcon } from '@/icon';
 import { prefix } from '@/manifest';
 import { emptyFn } from '@/utils';
@@ -26,17 +27,17 @@ interface DragUploadState {
 /**
  * @desc 拖拽上传
  */
-class DragUpload extends Component<DragUploadProps, DragUploadState> {
+class DragUpload extends Base<DragUploadProps, DragUploadState> {
   static displayName: string;
   static defaultProps: object;
 
-  dragUploadRef: React.Ref<any>;
+  uploaderRef: React.Ref<any>;
+
   constructor (props) {
     super(props);
     this.state = {
       dragOver: false,
     };
-    this.dragUploadRef = React.createRef();
   }
 
   /**
@@ -71,22 +72,6 @@ class DragUpload extends Component<DragUploadProps, DragUploadState> {
     this.props.onDrop(e);
   }
 
-  /**
-   * @desc 中断上传
-   */
-  abort = (file) => {
-    this.dragUploadRef.abort(file);
-  }
-
-  /**
-   * @desc 开始上传
-   */
-  startUpload = () => {
-    this.dragUploadRef.startUpload();
-  }
-
-  handleDragUploadRef = ref => (this.dragUploadRef = ref);
-
   render (): React.ReactNode {
     const {
       children,
@@ -110,7 +95,7 @@ class DragUpload extends Component<DragUploadProps, DragUploadState> {
       onDragLeave={ this.onHandleDragLeave }
       onDragOver={ this.onHandleDragOver }
       onDrop={ this.onHandleDrop }
-      ref={ this.handleDragUploadRef }
+      ref={ this.saveUploaderRef }
     >
       <DragChildren className={ (dragOver ? `${ prefix }-drag-over` : '') }>{ children }</DragChildren>
     </Upload>);
