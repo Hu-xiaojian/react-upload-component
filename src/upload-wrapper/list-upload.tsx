@@ -1,13 +1,8 @@
 import React, { Component } from 'react';
 import Upload from '@/upload/original-upload';
-import { shallowEqual } from '@/utils';
-import type { ListUploadProps, ValueItem } from '@/types';
+import type { ListUploadProps } from '@/types';
 
-interface ListUploadState {
-  value: Array<ValueItem>;
-}
-
-class ListUpload extends Component<ListUploadProps, ListUploadState> {
+class ListUpload extends Component<ListUploadProps, any> {
   static displayName: string;
   static defaultProps: object;
 
@@ -15,25 +10,7 @@ class ListUpload extends Component<ListUploadProps, ListUploadState> {
 
   constructor (props) {
     super(props);
-    let value;
-    if ('value' in props) {
-      value = props.value;
-    } else {
-      value = props.defaultValue;
-    }
-    this.state = {
-      value: !Array.isArray(value) ? [] : value,
-    };
     this.dragUploadRef = React.createRef();
-  }
-
-  static getDerivedStateFromProps (nextProps, prevState) {
-    if ('value' in nextProps && nextProps.value !== prevState.value) {
-      return {
-        value: !Array.isArray(nextProps.value) ? [] : nextProps.value,
-      };
-    }
-    return null;
   }
 
   /**
@@ -60,10 +37,8 @@ class ListUpload extends Component<ListUploadProps, ListUploadState> {
       isPreview,
       ...others
     } = this.props;
-    const { value } = this.state;
     return (<Upload
       { ...others }
-      value={value}
       isPreview={isPreview}
       // 非预览态只能text/image
       listType={!isPreview && listType === 'card' ? 'text' : listType}

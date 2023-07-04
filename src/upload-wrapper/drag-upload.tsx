@@ -20,7 +20,6 @@ const DragChildren = React.memo(({
  * @desc state
  */
 interface DragUploadState {
-  value: Array<any>;
   dragOver: boolean;
 }
 
@@ -34,27 +33,10 @@ class DragUpload extends Component<DragUploadProps, DragUploadState> {
   dragUploadRef: React.Ref<any>;
   constructor (props) {
     super(props);
-    let value;
-    if ('value' in props) {
-      value = props.value;
-    } else {
-      value = props.defaultValue;
-    }
-
     this.state = {
-      value: !Array.isArray(value) ? [] : value,
       dragOver: false,
     };
     this.dragUploadRef = React.createRef();
-  }
-
-  static getDerivedStateFromProps (nextProps, prevState) {
-    if ('value' in nextProps && nextProps.value !== prevState.value) {
-      return {
-        value: !Array.isArray(nextProps.value) ? [] : nextProps.value,
-      };
-    }
-    return null;
   }
 
   /**
@@ -117,10 +99,9 @@ class DragUpload extends Component<DragUploadProps, DragUploadState> {
       ...others
     } = this.props;
 
-    const { dragOver, value } = this.state;
+    const { dragOver } = this.state;
     return (<Upload
       { ...others }
-      value={value}
       isPreview={isPreview}
       // 非预览态只能text/image
       listType={!isPreview && listType === 'card' ? 'text' : listType}
