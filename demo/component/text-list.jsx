@@ -54,6 +54,7 @@ const defaultValue = [
 
 const TextList = () => {
   return (<Upload.List
+    action='http://127.0.0.1:7001/file'
     defaultValue={defaultValue}
   />);
 };

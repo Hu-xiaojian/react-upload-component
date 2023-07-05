@@ -231,7 +231,8 @@ class OriginalUpload extends React.Component<OriginalUploadProps, OriginalUpload
 
     // NOTE：合并会对同一个对象操作，不需要setState更新，重新赋值需要setState更新
     Object.assign(targetItem, {
-      state: '',
+      // todo state: ''
+      state: 'uploading',
       percent: e.percent,
     });
 

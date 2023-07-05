@@ -118,7 +118,15 @@ const TextAndImageList: React.FunctionComponent<TextAndImageListProps> = (props:
                 { !!size && <span className={ `${ prefix }-list-item-size` }>({ size })</span> }
               </a>
             </div>
-            { state === 'uploading' ? (<div className={`${prefix}-list-item-progress`}><Progress state="normal" percent={file.percent} { ...progressProps } /></div>) : null }
+            { state === 'uploading' ? (
+              <div className={`${prefix}-list-item-progress`}>
+                <Progress
+                  state="normal"
+                  percent={file.percent}
+                  textRender={percent => `${Math.floor(percent)}%`}
+                  { ...progressProps }
+                />
+              </div>) : null }
             { state === 'error' && file.errorMsg ? (<div className={`${prefix}-list-item-error-msg`}>{file.errorMsg}</div>) : null }
             <div className={`${prefix}-list-item-options`}>
               { !isPreview ? typeOfFn(actionRender) ? actionRender(file) : <DeleteIcon onClick={onClick} /> : null }
@@ -278,7 +286,7 @@ export const IconList: React.FunctionComponent<IconListProps> = (props: IconList
   const onClick = () => (state === 'uploading' ? onHandleCancel(file) : onHandleRemove(file));
 
   if (state === 'uploading') {
-    item = <Progress key='progress' shape="circle" state="normal" textRender={v => `${v}%`} percent={file.percent} { ...progressProps } />;
+    item = <Progress key='progress' shape="circle" state="normal" textRender={v => `${Math.floor(v)}%`} percent={file.percent} { ...progressProps } />;
   } else if (state === 'error') {
     item = <IconListError />;
   } else {

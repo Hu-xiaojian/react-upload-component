@@ -45,12 +45,9 @@ const CropperUpload = () => {
   const onOk = () => {
     const data = saveCropperRef.current.cropper.getCroppedCanvas().toDataURL();
     const file = dataURL2Blob2File(data, "test.png");
-    console.log(file,'--------file', uploader.current.startUpload)
-    // this.uploader.startUpload(file);
-    //
-    // this.setState({
-    //   visible: false
-    // });
+    // console.log(file,'--------file', uploader.current)
+    uploader.current.startUpload(file);
+    onCancel();
   }
 
   const onCancel = () => {
@@ -58,10 +55,14 @@ const CropperUpload = () => {
   }
 
   return (<>
-    <Upload.List
+    <Upload.Selecter
       ref={uploader}
       defaultValue={defaultValue}
       autoUpload={false}
+      action='http://127.0.0.1:7001/file'
+      onChange={val => {
+        console.log(val,'---===================val')
+      }}
       onSelect={(files, value) => {
         const reader = new FileReader();
 
@@ -72,7 +73,9 @@ const CropperUpload = () => {
         // console.log(files,'--=======')
         reader.readAsDataURL(files[0].originalFileObj);
       }}
-    />
+    >
+
+    </Upload.Selecter>
     <Dialog
       visible={visible}
       onCancel={onCancel}
