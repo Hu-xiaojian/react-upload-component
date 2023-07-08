@@ -5,9 +5,10 @@
 import React from 'react';
 import Upload from '@/upload';
 import classNames from 'classnames';
-import { fileToObj, checkValue, emptyFn, getTargetFile, promiseCall, errorCode } from '@/utils';
-import List from "@/list";
+import List from '@/list';
+import BaseRef from './base-ref';
 import { prefix } from '@/manifest';
+import { fileToObj, checkValue, emptyFn, getTargetFile, promiseCall, errorCode } from '@/utils';
 import type { OriginalUploadProps, UploaderInstance, ValueItem } from '@/types';
 
 
@@ -19,10 +20,10 @@ interface OriginalUploadState {
 /**
  * @desc 原始上传
  */
-class OriginalUpload extends React.Component<OriginalUploadProps, OriginalUploadState> {
+class OriginalUpload extends BaseRef<OriginalUploadProps, OriginalUploadState> {
   static defaultProps: object;
 
-  uploadRef: UploaderInstance;
+  uploaderRef: UploaderInstance;
 
   constructor (props) {
     super(props);
@@ -129,7 +130,7 @@ class OriginalUpload extends React.Component<OriginalUploadProps, OriginalUpload
       }).map(file => {
         return file.originalFileObj;
       });
-    fileList.length && this.uploadRef.startUpload(fileList);
+    fileList.length && this.uploaderRef.startUpload(fileList);
   }
 
   /**
@@ -259,7 +260,7 @@ class OriginalUpload extends React.Component<OriginalUploadProps, OriginalUpload
   removeFile = file => {
     file.state = 'removed';
     // 删除文件时调用组件的 `abortUpload` 方法中断上传
-    this.uploadRef.abortUpload(file);
+    this.uploaderRef.abortUpload(file);
 
     const fileList = this.state.value;
     const targetItem = getTargetFile(fileList, file);
@@ -282,18 +283,15 @@ class OriginalUpload extends React.Component<OriginalUploadProps, OriginalUpload
       fileList.splice(index, 1);
       this.onHandleChange(fileList, targetItem);
     }
-    this.uploadRef.abortUpload(file); // 取消上传时调用组件的 `abort` 方法中断上传
+    this.uploaderRef.abortUpload(file); // 取消上传时调用组件的 `abort` 方法中断上传
   };
 
   /**
    * @desc 开始上传
    */
-  startUpload() {
+  startUpload = () => {
     this.uploadFiles(this.state.value);
   }
-
-  handleUploadRef = ref => (this.uploadRef = ref);
-
   /**
    * @desc 替换掉[]里面的文件
    * @param old
@@ -368,7 +366,7 @@ class OriginalUpload extends React.Component<OriginalUploadProps, OriginalUpload
           onProgress={this.onHandleProgress}
           onSuccess={this.onHandleSuccess}
           onError={this.onHandleError}
-          ref={this.handleUploadRef}
+          ref={this.saveUploaderRef}
         >
           { children }
         </Upload> : null

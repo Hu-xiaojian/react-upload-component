@@ -1,7 +1,7 @@
 import React from 'react';
 import List from '@/list';
 import Upload from '@/upload/original-upload';
-import Base from './base';
+import BaseRef from '../upload/base-ref';
 import { prefix } from '@/manifest';
 import { emptyFn } from "@/utils";
 import type { CardUploadProps, ValueItem } from '@/types';
@@ -10,7 +10,7 @@ interface CardUploadState {
   value: Array<ValueItem>
 }
 
-class CardUpload extends Base<CardUploadProps, CardUploadState> {
+class CardUpload extends BaseRef<CardUploadProps, CardUploadState> {
   static displayName: string;
   defaultProps: object;
 

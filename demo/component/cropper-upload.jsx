@@ -45,7 +45,6 @@ const CropperUpload = () => {
   const onOk = () => {
     const data = saveCropperRef.current.cropper.getCroppedCanvas().toDataURL();
     const file = dataURL2Blob2File(data, "test.png");
-    // console.log(file,'--------file', uploader.current)
     uploader.current.startUpload(file);
     onCancel();
   }
@@ -70,7 +69,6 @@ const CropperUpload = () => {
           setSrc(reader.result);
           setVisible(true);
         };
-        // console.log(files,'--=======')
         reader.readAsDataURL(files[0].originalFileObj);
       }}
     >

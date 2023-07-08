@@ -1,6 +1,6 @@
 import React from 'react';
 import Upload from '@/upload/original-upload';
-import Base from './base';
+import BaseRef from '../upload/base-ref';
 import { UploadIcon } from '@/icon';
 import { prefix } from '@/manifest';
 import { emptyFn } from '@/utils';
@@ -27,7 +27,7 @@ interface DragUploadState {
 /**
  * @desc 拖拽上传
  */
-class DragUpload extends Base<DragUploadProps, DragUploadState> {
+class DragUpload extends BaseRef<DragUploadProps, DragUploadState> {
   static displayName: string;
   static defaultProps: object;
 

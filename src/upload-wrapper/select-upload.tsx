@@ -1,8 +1,9 @@
+import React from 'react';
 import OriginalUpload from '@/upload/original-upload';
 import { emptyFn, errorCode, fileToObj, promiseCall } from "@/utils";
-import React from "react";
+import type { OriginalUploadProps } from '@/types';
 
-class SelectUpload extends OriginalUpload {
+class SelectUpload extends OriginalUpload<OriginalUploadProps> {
   static displayName: string;
 
   constructor (props) {
@@ -51,13 +52,11 @@ class SelectUpload extends OriginalUpload {
     });
   }
 
-
-
   /**
    * @desc 重写开始上传
    * 处理不自动上传
    */
-  startUpload(files) {
+  startUpload = (files) => {
     const { value } = this.state;
     const { autoUpload, afterSelect } = this.props;
     const _files = files.length ?  Array.prototype.slice.call(files) : [files];
@@ -76,7 +75,6 @@ class SelectUpload extends OriginalUpload {
       })
     }
   }
-
 }
 
 SelectUpload.displayName = 'SelectUpload';

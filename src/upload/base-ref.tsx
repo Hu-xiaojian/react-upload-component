@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default class Base extends React.Component<any, any> {
+export default class BaseRef extends React.Component<any, any> {
   abort(file) {
     this.uploaderRef.abort(file);
   }

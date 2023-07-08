@@ -1,9 +1,9 @@
 import React from 'react';
 import Upload from '@/upload/original-upload';
-import Base from './base';
+import BaseRef from '../upload/base-ref';
 import type { ListUploadProps } from '@/types';
 
-class ListUpload extends Base<ListUploadProps, any> {
+class ListUpload extends BaseRef<ListUploadProps, any> {
   static displayName: string;
   static defaultProps: object;
 
