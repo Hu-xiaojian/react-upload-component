@@ -4,6 +4,7 @@
   "description": "file upload component",
   "main": "index.js",
   "scripts": {
+    "start": "dumi dev",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "webpack-dev-server --config config/webpack.dev.js",
     "build": "webpack --config config/webpack.pro.js",
@@ -36,6 +37,7 @@
     "babel-loader": "^9.1.2",
     "classnames": "^2.3.2",
     "css-loader": "^6.7.3",
+    "dumi": "^2.2.1",
     "eslint": "^8.40.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-prettier": "^8.8.0",

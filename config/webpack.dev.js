@@ -6,7 +6,6 @@ const baseConfig = require('./webpack.base.js');
 
 const devConfig = {
   mode: 'development',
-  entry: path.join(__dirname, '../demo/app'),
   output: {
     path: path.join(__dirname, '../lib'),
   },
@@ -50,17 +49,10 @@ const devConfig = {
   plugins: [
     new HtmlWebpackPlugin({
       filename: 'index.html',
-      template: path.join(__dirname, '../demo/index.html'),
+      template: path.join(__dirname, '../docs/index.html'),
     }),
     new ESLintPlugin(),
   ],
-  devServer: {
-    static: path.join(__dirname, '../demo/'),
-    compress: true,
-    host: '127.0.0.1',
-    port: 8888,
-    open: true,
-  },
 };
 
 module.exports = merge(devConfig, baseConfig);
