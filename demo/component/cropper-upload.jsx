@@ -44,7 +44,7 @@ const CropperUpload = () => {
 
   const onOk = () => {
     const data = saveCropperRef.current.cropper.getCroppedCanvas().toDataURL();
-    const file = dataURL2Blob2File(data, "test.png");
+    const file = dataURL2Blob2File(data, "components.png");
     uploader.current.startUpload(file);
     onCancel();
   }

@@ -110,7 +110,7 @@ const ExtraList = () => {
 
   return (<>
     <Upload.Dragger
-      className={'test-----------------'}
+      className={'components-----------------'}
       value={value}
       fileNameRender={fileNameRender}
       actionRender={actionRender}

@@ -78,6 +78,20 @@
       "eslint --fix",
       "prettier --write",
       "git add"
+    ],
+    "types/**/*.d.ts": [
+      "npm run tslint --"
+    ],
+    "@(src|scripts|docs/*/demo)/**/*.@(js|jsx)": [
+      "prettier --write"
+    ],
+    "@(src|scripts|docs/*/demo)/**/*.@(js|jsx|md)": [
+      "eslint",
+      "git add"
+    ],
+    "src/**/*.@(css|scss)": [
+      "stylelint",
+      "git add"
     ]
   }
 }

@@ -52,10 +52,10 @@ const defaultValue = [
   }
 ];
 
-const IconList = () => {
+const CardList = () => {
   return (<Upload.Card
     defaultValue={defaultValue}
   />);
 };
 
-export default IconList;
+export default CardList;
