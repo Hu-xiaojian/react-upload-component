@@ -3,7 +3,7 @@ import classnames from 'classnames';
 import { prefix } from '@/manifest';
 import type { ListProps, RenderImageProps, TextAndImageListProps } from '@/types';
 import { RenderImage, TextAndImageList, CardList, IconList } from "@/list/helper";
-import { emptyFn } from "@/utils";
+import { emptyFn, promiseCall } from "@/utils";
 
 /**
  * @desc
@@ -18,9 +18,10 @@ class List extends React.Component<ListProps, any> {
    */
   onHandleCancel = file => {
     const { onCancel, upload } = this.props;
-    if (onCancel(file) !== false) {
-      upload.abort(file);
-    }
+    const cancel = onCancel(file);
+    promiseCall(cancel, () => {
+      upload && upload.removeFile(file);
+    });
   }
 
   /**
@@ -29,9 +30,10 @@ class List extends React.Component<ListProps, any> {
    */
   onHandleRemove = file => {
     const { onRemove, upload } = this.props;
-    if (onRemove(file) !== false) {
-      upload.removeFile(file);
-    }
+    const remove = onRemove(file);
+    promiseCall(remove, () => {
+      upload && upload.removeFile(file);
+    });
   }
 
   /**

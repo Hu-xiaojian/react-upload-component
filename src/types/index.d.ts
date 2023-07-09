@@ -8,3 +8,5 @@ export { DragUploadProps } from './drag-upload';
 export { ListProps, TextAndImageListProps, RenderImageProps, CardListProps, IconListProps } from './list';
 export { ProgressProps } from './progress';
 export { CardUploadProps } from './card-upload';
+
+export default './upload';

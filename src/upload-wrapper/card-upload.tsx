@@ -32,7 +32,8 @@ class CardUpload extends BaseRef<CardUploadProps, CardUploadState> {
   }
 
   static getDerivedStateFromProps (nextProps, prevState) {
-    if ('value' in nextProps && nextProps.value !== prevState.value) {
+    // 上传中不允许做受控修改
+    if ('value' in nextProps && nextProps.value !== prevState.value && !prevState.uploaderRef?.isUploading()) {
       return {
         value: !Array.isArray(nextProps.value) ? [] : nextProps.value,
       };
@@ -41,10 +42,14 @@ class CardUpload extends BaseRef<CardUploadProps, CardUploadState> {
   }
 
   /**
-   *
+   * @desc 文件上传进度
+   * @param value 所有文件
+   * @param targetItem 上传文件
    */
-  onHandleProgress = () => {
-
+  onHandleProgress = (value, targetItem) => {
+    this.setState({ value }, () => {
+      this.props.onProgress(value, targetItem);
+    });
   }
 
   onHandleChange = (value, file) => {
@@ -68,6 +73,8 @@ class CardUpload extends BaseRef<CardUploadProps, CardUploadState> {
       timeout,
       children,
       maxCount,
+      formatter,
+      onSuccess,
       ...others
     } = this.props;
     const { value } = this.state;
@@ -84,12 +91,13 @@ class CardUpload extends BaseRef<CardUploadProps, CardUploadState> {
         onPreview={onPreview}
         itemRender={itemRender}
         isPreview={isPreview}
-        uploader={this.uploaderRef}
+        upload={this.uploaderRef}
         reUpload={reUpload}
         onImageError={onImageError}
       >
         <div className={`${prefix}-list-item ${_maxCount ? `${prefix}-hidden` : ""}`}>
           <Upload
+            formatter={formatter}
             listType={false} // list不渲染
             className={`${prefix}-list-card-upload`}
             disabled={disabled}
@@ -99,6 +107,7 @@ class CardUpload extends BaseRef<CardUploadProps, CardUploadState> {
             value={this.state.value}
             onProgress={this.onHandleProgress}
             onChange={this.onHandleChange}
+            onSuccess={onSuccess}
             ref={this.saveUploaderRef}
           >
             {children || '上传图片'}
@@ -127,6 +136,7 @@ class CardUpload extends BaseRef<CardUploadProps, CardUploadState> {
 
 CardUpload.defaultProps = {
   onChange: emptyFn,
+  onProgress: emptyFn,
 }
 
 CardUpload.displayName = 'CardUpload';

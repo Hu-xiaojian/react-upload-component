@@ -1,6 +1,7 @@
 import React from 'react';
 import Upload from 'react-upload-component';
 import 'react-upload-component/index.scss';
+import DialogImg from "./dialog-img";
 
 const defaultValue = [
   {
@@ -11,7 +12,7 @@ const defaultValue = [
     downloadURL:
       "https://img.alicdn.com/tps/TB19O79MVXXXXcZXVXXXXXXXXXX-1024-1024.jpg",
     imgURL:
-      "https://im.alicdn.com/tps/TB19O79MVXXXXcZXVXXXXXXXXXX-1024-1024.jpg",
+      "https://img.alicdn.com/tps/TB19O79MVXXXXcZXVXXXXXXXXXX-1024-1024.jpg",
     size: 2000
   },
   {
@@ -53,11 +54,49 @@ const defaultValue = [
   }
 ];
 
-const TextList = () => {
-  return (<Upload.List
-    action='http://127.0.0.1:7001/file'
-    defaultValue={defaultValue}
-  />);
-};
+class CardList extends React.Component<any, any>{
+  constructor (props) {
+    super(props);
+    this.state = {
+      value: [],
+      src: '',
+      visible: false,
+    };
+  }
+  render () {
+    const { src, visible } = this.state;
+    return (<>
+      <Upload.Card
+        // maxCount={1}
+        // value={this.state.value}
+        action='http://127.0.0.1:7001/file'
+        formatter={(response) => {
+          return { ...response, url: `http://127.0.0.1:7001${response.url}` }
+        }}
+        onPreview={file => {
+          this.setState({ src: file.url, visible: true })
+        }}
+        onRemove={file => {
+          console.log(file,'-============')
+          return Promise.resolve()
+        }}
+        onError={file => {
+          console.log(file,'------------error')
+        }}
+        onSuccess={(file, values) => {
+          console.log(file,'---------success', values)
+        }}
+        // onChange={values => {
+        //   console.log('0--------------',values)
+        //   this.setState({ value: [] })
+        // }}
+        // onProgress={(values, file) => {
+        //   console.log(values,'----------------',file,'-====================')
+        // }}
+      />
+      <DialogImg src={src} visible={visible} onClose={() => this.setState({visible: false})} />
+    </>);
+  }
+}
 
-export default TextList;
+export default CardList;

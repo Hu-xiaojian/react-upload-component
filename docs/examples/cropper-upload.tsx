@@ -1,8 +1,9 @@
 import React from 'react';
-import Upload from '../../src';
+import Upload from 'react-upload-component';
 import { Dialog } from '@alifd/next';
 import Cropper from 'react-cropper';
 import 'cropperjs/dist/cropper.css';
+import 'react-upload-component/index.scss';
 
 const defaultValue = [
   {

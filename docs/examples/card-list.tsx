@@ -1,6 +1,6 @@
 import React from 'react';
-import Upload from '../../src';
-import '../../src/index.scss'
+import Upload from 'react-upload-component';
+import 'react-upload-component/index.scss';
 
 const defaultValue = [
   {

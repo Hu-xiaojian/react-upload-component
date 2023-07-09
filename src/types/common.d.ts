@@ -29,12 +29,11 @@ export interface Common {
   withCredentials: boolean;
 
   /**
-   * todo
    * @desc 文件上传中调用
-   * @param {Object} 上传事件
-   * @param {File} file 文件对象
+   * @param {Array<ValueItem>} values 所有文件
+   * @param {ValueItem} file 文件对象
    */
-  onProgress: (e, file) => void;
+  onProgress: (values: Array<ValueItem>, file: ValueItem) => void;
 
   /**
    * @desc 文件上传成功回调
@@ -49,7 +48,7 @@ export interface Common {
    * @param {Object} response 接口错误信息
    * @param {file} file 文件
    */
-  onError: (error, response?, file?) => void;
+  onError: (error, response, file) => void;
 
   /**
    * @desc 超时事件（单位ms）
@@ -150,7 +149,6 @@ export interface CommonComponent extends CommonComponentHelper, Base, Common {
   itemRender: (value: ValueItem) => ReactNode;
 
   /**
-   * todo
    * @desc 行为渲染
    */
   actionRender: (value: ValueItem) => ReactNode;

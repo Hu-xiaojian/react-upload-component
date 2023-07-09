@@ -1,5 +1,6 @@
 import React from 'react';
-import Upload from '../../src';
+import Upload from 'react-upload-component';
+import 'react-upload-component/index.scss';
 import { View, DownLoadIcon, DeleteIcon } from './icon';
 import { Dialog, Button } from '@alifd/next';
 import '@alifd/next/index.scss';
