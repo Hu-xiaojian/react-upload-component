@@ -1,3 +1,3 @@
-## icon-list
+## 图标列表
 
-<code src="../examples/icon-list.tsx"></code>
+<code src="../examples/icon-list.tsx" description="cs"></code>

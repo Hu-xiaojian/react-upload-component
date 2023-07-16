@@ -1,3 +1,3 @@
-## max-count
+## 限制数量
 
-<code src="../examples/max-count.tsx"></code>
+<code src="../examples/max-count.tsx" description="cs"></code>

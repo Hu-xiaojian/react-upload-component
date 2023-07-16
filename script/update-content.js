@@ -8,23 +8,23 @@ const fs = require('fs');
 const glob = require('glob');
 
 const paths = glob.sync('./docs/examples/*.tsx');
-
+const names = require('./name');
 
 paths.forEach(path => {
   const name = path.split('/').pop().split('.')[0];
+  const item = names.find(it => it.name === name);
   fs.writeFile(
     `./docs/demo/${name}.md`,
-    `## ${name}
-
-<code src="../examples/${name}.tsx"></code>
-`,
+    `## ${item?.title || name}
+           ${item?.content || ''}
+<code src="../examples/${name}.tsx"></code>`,
     'utf8',
     function(error) {
       if(error){
         console.log(error);
         return false;
       }
-      console.log(`${name} 更新成功~`);
+      console.log(`${item?.title} 更新成功~`);
     }
   )
 });

@@ -1,3 +1,3 @@
-## card-list
+## 卡片列表
 
-<code src="../examples/card-list.tsx"></code>
+<code src="../examples/card-list.tsx" description="cs"></code>
