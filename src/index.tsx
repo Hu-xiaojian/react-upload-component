@@ -4,6 +4,7 @@ import CardUpload from '@/upload-wrapper/card-upload';
 import ListUpload from '@/upload-wrapper/list-upload';
 import DragUpload from '@/upload-wrapper/drag-upload';
 import SelectUpload from '@/upload-wrapper/select-upload';
+import Progress from '@/progress';
 import type { OriginalUploadProps } from '@/types';
 
 function Upload(props: OriginalUploadProps): React.ReactElement {
@@ -13,5 +14,5 @@ Upload.Dragger = DragUpload;
 Upload.Card = CardUpload;
 Upload.List = ListUpload;
 Upload.Selecter = SelectUpload;
-
+export { Progress };
 export default Upload;

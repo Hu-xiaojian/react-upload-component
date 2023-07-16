@@ -90,7 +90,7 @@ Object.defineProperties(Uploader.prototype, {
             err = new Error(errorCode.BEFORE_UPLOAD_ERROR);
             err.code = errorCode.BEFORE_UPLOAD_ERROR;
           }
-          onError(err, null, file);
+          onError(file, err, null);
         }
       );
     }

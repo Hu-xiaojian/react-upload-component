@@ -83,14 +83,14 @@ class OriginalUpload extends BaseRef<OriginalUploadProps, OriginalUploadState> {
       // 超出最大文件数量
       const err = new Error(errorCode.EXCESS_MAX_COUNT);
       err.code = errorCode.EXCESS_MAX_COUNT;
-      this.onHandleError(err, null, it);
+      this.onHandleError(it, err, null);
     });
 
     if (!autoUpload) {
       uploadFiles.forEach(it => {
         const validateResult = afterSelect(it);
-        promiseCall(validateResult, emptyFn, error => {
-          this.onHandleError(error, null, it);
+        promiseCall(validateResult, emptyFn, err => {
+          this.onHandleError(it, err, null);
         });
       });
       this.onHandleChange(_value, uploadFiles);
@@ -135,11 +135,11 @@ class OriginalUpload extends BaseRef<OriginalUploadProps, OriginalUploadState> {
 
   /**
    * @desc 文件错误信息
+   * @param file 错误文件
    * @param err 错误信息
    * @param response 接口错误
-   * @param file 错误文件
    */
-  onHandleError = (err, response, file) => {
+  onHandleError = (file, err, response) => {
     const value = this.state.value;
     const targetFile = getTargetFile(value, file);
 
@@ -156,7 +156,7 @@ class OriginalUpload extends BaseRef<OriginalUploadProps, OriginalUploadState> {
     this.updateFilesState();
 
     this.onHandleChange(value, targetFile);
-    this.props.onError(targetFile, value);
+    this.props.onError(targetFile, err, response);
   }
 
   /**
@@ -188,13 +188,13 @@ class OriginalUpload extends BaseRef<OriginalUploadProps, OriginalUploadState> {
       }
     } catch (e) {
       e.code = errorCode.RESPONSE_FAIL;
-      return this.onHandleError(e, response, file);
+      return this.onHandleError(file, e, response);
     }
 
     if (response.success === false) {
       const err = new Error(response.message || errorCode.RESPONSE_FAIL);
       err.code = errorCode.RESPONSE_FAIL;
-      return this.onHandleError(err, response, file);
+      return this.onHandleError(file, err, response);
     }
 
     const value = this.state.value;
@@ -232,7 +232,6 @@ class OriginalUpload extends BaseRef<OriginalUploadProps, OriginalUploadState> {
 
     // NOTE：合并会对同一个对象操作，不需要setState更新，重新赋值需要setState更新
     Object.assign(targetItem, {
-      // todo state: ''
       state: 'uploading',
       percent: e.percent,
     });
@@ -336,6 +335,7 @@ class OriginalUpload extends BaseRef<OriginalUploadProps, OriginalUploadState> {
       fileNameRender,
       reUpload,
       progressProps,
+      renderPreview,
       onImageError,
       // -------------------list
       style,
@@ -344,7 +344,6 @@ class OriginalUpload extends BaseRef<OriginalUploadProps, OriginalUploadState> {
 
     const { value } = this.state;
     const _maxCount = value.length >= maxCount;
-
     const innerCls = classNames({
       [`${ prefix }-draggable`]: draggable,
       [`${prefix}-hidden`]: _maxCount,
@@ -375,19 +374,19 @@ class OriginalUpload extends BaseRef<OriginalUploadProps, OriginalUploadState> {
         className={className}
         style={style}
         progressProps={progressProps}
+        reUpload={ reUpload }
         value={ value }
         upload={ this }
         listType={ listType }
-        onCancel={ onCancel }
-        onImageError={onImageError}
-        // onProgress={}
         onRemove={ onRemove }
-        itemRender={ itemRender }
-        actionRender={ actionRender }
-        reUpload={ reUpload }
+        onCancel={ onCancel }
         isPreview={ isPreview }
         onPreview={ onPreview }
+        renderPreview={renderPreview}
+        onImageError={onImageError}
+        actionRender={ actionRender }
         fileNameRender={ fileNameRender }
+        itemRender={ itemRender }
       />) : null
       }
     </>);

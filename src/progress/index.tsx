@@ -40,7 +40,7 @@ const Progress: React.FunctionComponent<InteriorProgressProps> = (props: Interio
     color,
     backgroundColor,
     progressive,
-    state,
+    state = 'normal',
     hasBorder,
     ...others
   } = props;

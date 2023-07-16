@@ -1,6 +1,7 @@
 import React from 'react';
 import type { Base } from '@/types';
 import { prefix } from '@/manifest';
+import classnames from "classnames";
 
 interface BaseUploadProps extends Base {
   /**
@@ -116,7 +117,12 @@ class BaseUpload extends React.Component<BaseUploadProps, null> {
       newProps.capture = capture;
     }
 
-    return (<div className={ `${prefix}-upload ${className}` } style={ style } { ...eventWrapper }>
+    const cls = classnames({
+      [`${prefix}-upload`]: true,
+      [`${prefix}-disabled`]: disabled,
+      }, className);
+
+    return (<div className={cls} style={ style } { ...eventWrapper }>
         <input
           { ...newProps }
           ref={ this.handleFileRef }

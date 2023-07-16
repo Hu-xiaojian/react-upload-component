@@ -48,7 +48,6 @@ export interface Base {
   capture: string;
 
   /**
-   * todo
    * @desc 文件上传类型 (image/png, image/jpeg, .jpg, .jpeg, .png, ...)
    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/Input#attr-accept
    */

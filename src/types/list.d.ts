@@ -19,6 +19,7 @@ export interface ListProps extends CommonComponent {
   upload: {
     abort(file: ValueItem): void;
     removeFile(file: ValueItem): void;
+    replaceWithNewFile(old, current): void;
   };
 
   /**
@@ -43,7 +44,7 @@ export interface TextAndImageListProps {
   style: CSSProperties;
   file: ValueItem;
   listType: ListType;
-  itemRender: (value: ValueItem) => ReactNode;
+  itemRender: (value: ValueItem, obj: object) => ReactNode;
   fileNameRender: (file: ValueItem) => ReactNode;
   actionRender: (value: ValueItem) => ReactNode;
   progressProps: object;
@@ -76,7 +77,6 @@ export interface CardListProps extends TextAndImageListProps {
   // 编辑
   onSelect: (oldFile: ValueItem, files: Array<File>) => void;
   reUpload: boolean;
-  // todo name accept
   accept: string;
   name: string;
 }

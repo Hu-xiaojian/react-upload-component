@@ -8,6 +8,14 @@ import { prefix } from '@/manifest';
 import type { TextAndImageListProps, RenderImageProps, CardListProps, IconListProps } from '@/types';
 
 /**
+ * @desc 上传容器
+ */
+const UploadContainer = props => {
+  console.log(props,'-------props')
+  return <Base { ...props } />;
+}
+
+/**
  * @desc 根据类型获取对应svg
  * @param type 文件类型
  * @param mimeType 文件类型
@@ -86,15 +94,15 @@ const TextAndImageList: React.FunctionComponent<TextAndImageListProps> = (props:
     renderImageChildren,
   } = props;
   let item = null;
-
-  if (isPreview && typeOfFn(renderPreview)) {
-    item = renderPreview(file);
-  } else if (!isPreview && typeOfFn(itemRender)) {
-    // todo
-    item = itemRender(file, { onRemove: onHandleRemove, onCancel: onHandleCancel });
-  }
-
   const { downloadURL, size, classNames } = getFileInfo(file, { listType, isPreview });
+
+  if (!isPreview && typeOfFn(itemRender)) {
+    return (<div className={classNames} key={file.uid || file.name} style={style}>
+      { itemRender(file, { onRemove: () => onHandleRemove(file), onCancel: () => onHandleCancel(file) }) }
+    </div>)
+  } else if (isPreview && typeOfFn(renderPreview)) {
+    item = renderPreview(file);
+  }
 
   const state = isPreview ? '' : file.state;
   // 上传中为取消，其他情况为删除
@@ -190,7 +198,6 @@ const CardList: React.FunctionComponent<CardListProps> = (props: CardListProps):
     // 编辑
     onSelect,
     reUpload,
-    // todo name accept
     accept,
     name,
   } = props;
@@ -199,7 +206,24 @@ const CardList: React.FunctionComponent<CardListProps> = (props: CardListProps):
 
   const { downloadURL, classNames } = getFileInfo(file, { listType, isPreview });
   const state = isPreview ? '' : file.state;
-  if (state === 'uploading') {
+  if (!isPreview && typeOfFn(itemRender)) {
+    return (
+      <div className={classNames} key={file.uid || file.name} style={style}>
+        { itemRender(file, {
+          onRemove: () => onHandleRemove(file),
+          onCancel: () => onHandleCancel(file),
+          UploadContainer: ({ children }) => (
+            <UploadContainer
+              accept={accept}
+              name={name}
+              onSelect={files => onSelect(file, files)}
+              children={children}
+            />
+          ),
+        }) }
+      </div>
+    );
+  } else if (state === 'uploading') {
     item = [
       renderImageChildren,
       <div key='cancel' className="card-cancel" onClick={() => onHandleCancel(file)}>取消</div>,
@@ -208,9 +232,6 @@ const CardList: React.FunctionComponent<CardListProps> = (props: CardListProps):
   } else {
     if (isPreview && typeOfFn(renderPreview)) {
       item = renderPreview(file);
-    } else if (!isPreview && typeOfFn(itemRender)) {
-      // todo
-      item = itemRender(file, { onRemove: onHandleRemove, onCancel: onHandleCancel });
     } else {
       item = [
         renderImageChildren,
@@ -233,13 +254,13 @@ const CardList: React.FunctionComponent<CardListProps> = (props: CardListProps):
                 }
                 {
                   reUpload && !isPreview ? (
-                    <Base
+                    <UploadContainer
                       accept={accept}
                       name={name}
                       onSelect={files => onSelect(file, files)}
                     >
                       <EditorIcon />
-                    </Base>
+                    </UploadContainer>
                   ) : null
                 }
                 { !isPreview && <div><DeleteIcon className="card-del" onClick={() => onHandleRemove(file)}  /></div> }
@@ -284,23 +305,24 @@ export const IconList: React.FunctionComponent<IconListProps> = (props: IconList
   const state = isPreview ? '' : file.state;
   // 上传中为取消，其他情况为删除
   const onClick = () => (state === 'uploading' ? onHandleCancel(file) : onHandleRemove(file));
+  const { downloadURL, classNames, size } = getFileInfo(file, { listType, isPreview });
 
-  if (state === 'uploading') {
+  if (!isPreview && typeOfFn(itemRender)) {
+    return (<div className={classNames} key={file.uid || file.name} style={style}>
+      { itemRender(file, { onRemove: () => onHandleRemove(file), onCancel: () => onHandleCancel(file) }) }
+    </div>)
+  } else if (state === 'uploading') {
     item = <Progress key='progress' shape="circle" state="normal" textRender={v => `${Math.floor(v)}%`} percent={file.percent} { ...progressProps } />;
   } else if (state === 'error') {
     item = <IconListError />;
   } else {
     if (isPreview && typeOfFn(renderPreview)) {
       item = renderPreview(file);
-    } else if (!isPreview && typeOfFn(itemRender)) {
-      // todo
-      item = itemRender(file, { onRemove: onHandleRemove, onCancel: onHandleCancel });
-    } else {
+    }  else {
       item = React.createElement(getFileSvg(file.type, file.mimeType, file.suffix, file.name), { className: 'icon' })
     }
   }
 
-  const { downloadURL, classNames, size } = getFileInfo(file, { listType, isPreview });
   return (<div className={classNames} key={file.uid || file.name} style={style}>
     <a
       href={downloadURL}

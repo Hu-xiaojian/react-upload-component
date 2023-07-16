@@ -44,11 +44,11 @@ export interface Common {
 
   /**
    * @desc 文件上传失败回调
+   * @param {file} file 文件
    * @param {Error} error 上传失败信息、响应信息及文件
    * @param {Object} response 接口错误信息
-   * @param {file} file 文件
    */
-  onError: (error, response, file) => void;
+  onError: (file, error, response) => void;
 
   /**
    * @desc 超时事件（单位ms）
@@ -135,7 +135,6 @@ export interface CommonComponent extends CommonComponentHelper, Base, Common {
   formatter: (response: ResponseUpload, file: File) => ValueItem;
 
   /**
-   * todo
    * @desc 渲染预览态
    * @param value 文件项
    * @return ReactNode
@@ -143,10 +142,12 @@ export interface CommonComponent extends CommonComponentHelper, Base, Common {
   renderPreview: (value: ValueItem) => ReactNode;
 
   /**
-   * todo
    * @desc 自定义文件项渲染
+   * @param {ValueItem} value 文件
+   * @param {Object} obj 取消/删除回调
+   * @return ReactNode
    */
-  itemRender: (value: ValueItem) => ReactNode;
+  itemRender: (value: ValueItem, obj: object) => ReactNode;
 
   /**
    * @desc 行为渲染

@@ -32,8 +32,9 @@ class CardUpload extends BaseRef<CardUploadProps, CardUploadState> {
   }
 
   static getDerivedStateFromProps (nextProps, prevState) {
+    const isUploading = prevState.uploaderRef && prevState.uploaderRef.isUploading();
     // 上传中不允许做受控修改
-    if ('value' in nextProps && nextProps.value !== prevState.value && !prevState.uploaderRef?.isUploading()) {
+    if ('value' in nextProps && nextProps.value !== prevState.value && !isUploading) {
       return {
         value: !Array.isArray(nextProps.value) ? [] : nextProps.value,
       };
@@ -59,22 +60,35 @@ class CardUpload extends BaseRef<CardUploadProps, CardUploadState> {
   }
   render(): React.ReactNode {
     const {
+      children,
+
       className,
       style,
       onRemove,
       onCancel,
       onPreview,
       isPreview,
-      onImageError,
-      reUpload,
-      disabled,
       itemRender,
+      onImageError,
+      actionRender,
+      fileNameRender,
+      renderPreview,
+      reUpload,
+      maxCount,
+
+      onSelect,
+      autoUpload,
+      multiple,
+      disabled,
       action,
       timeout,
-      children,
-      maxCount,
       formatter,
       onSuccess,
+      accept,
+      name = 'file',
+      beforeUpload,
+      afterSelect,
+      onError,
       ...others
     } = this.props;
     const { value } = this.state;
@@ -83,20 +97,31 @@ class CardUpload extends BaseRef<CardUploadProps, CardUploadState> {
       <List
         { ...others }
         style={style}
+        accept={accept}
+        name={name}
         className={className}
+        upload={this.uploaderRef}
+        reUpload={reUpload}
         listType="card"
         value={this.state.value}
         onRemove={onRemove}
         onCancel={onCancel}
-        onPreview={onPreview}
-        itemRender={itemRender}
         isPreview={isPreview}
-        upload={this.uploaderRef}
-        reUpload={reUpload}
+        onPreview={onPreview}
+        renderPreview={renderPreview}
         onImageError={onImageError}
+        actionRender={actionRender}
+        fileNameRender={fileNameRender}
+        itemRender={itemRender}
       >
         <div className={`${prefix}-list-item ${_maxCount ? `${prefix}-hidden` : ""}`}>
           <Upload
+            value={this.state.value}
+            maxCount={maxCount}
+            ref={this.saveUploaderRef}
+            multiple={multiple}
+            accept={accept}
+            name={name}
             formatter={formatter}
             listType={false} // list不渲染
             className={`${prefix}-list-card-upload`}
@@ -104,11 +129,14 @@ class CardUpload extends BaseRef<CardUploadProps, CardUploadState> {
             action={action}
             timeout={timeout}
             isPreview={isPreview}
-            value={this.state.value}
+            autoUpload={autoUpload}
+            beforeUpload={beforeUpload}
+            afterSelect={afterSelect}
+            onError={onError}
+            onSelect={onSelect}
             onProgress={this.onHandleProgress}
             onChange={this.onHandleChange}
             onSuccess={onSuccess}
-            ref={this.saveUploaderRef}
           >
             {children || '上传图片'}
           </Upload>
@@ -119,7 +147,7 @@ class CardUpload extends BaseRef<CardUploadProps, CardUploadState> {
 
 
   componentDidMount() {
-    this.saveUploaderRef(this.uploaderRef);
+    this.updateUploaderRef(this.uploaderRef);
   }
 
   componentDidUpdate() {

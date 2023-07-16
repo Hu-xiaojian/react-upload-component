@@ -52,8 +52,8 @@ class List extends React.Component<ListProps, any> {
    * @param files 新file Array<File>
    */
   onHandleSelect = (oldFile, files) => {
-    const { uploader } = this.props;
-    uploader && files.length && uploader.replaceWithNewFile(oldFile, files[0]);
+    const { upload } = this.props;
+    upload && files.length && upload.replaceWithNewFile(oldFile, files[0]);
   }
 
   render (): React.ReactNode {
@@ -67,11 +67,13 @@ class List extends React.Component<ListProps, any> {
       fileNameRender,
       actionRender,
       onPreview,
-      onProgress,
       reUpload = true,
       isPreview,
       renderPreview,
       progressProps,
+
+      accept,
+      name,
     } = this.props;
 
     const props = {
@@ -112,7 +114,16 @@ class List extends React.Component<ListProps, any> {
           } else if (listType === 'image') {
             return (<TextAndImageList key={key} {...props} file={file} renderImageChildren={<RenderImage key="img" { ...renderImageChildrenProps } file={file} />} />);
           } else if (listType === 'card') {
-            return <CardList key={key} {...props} file={file} onSelect={this.onHandleSelect} reUpload={reUpload} renderImageChildren={<RenderImage key="img" { ...renderImageChildrenProps } file={file} />} />
+            return (<CardList
+              key={key}
+              {...props}
+              name={name}
+              accept={accept}
+              file={file}
+              onSelect={this.onHandleSelect}
+              reUpload={reUpload}
+              renderImageChildren={<RenderImage key="img" { ...renderImageChildrenProps } file={file} />}
+            />);
           } else if (listType === 'icon') {
             return <IconList key={key} {...props} file={file} />
           }
