@@ -156,7 +156,7 @@ class OriginalUpload extends BaseRef<OriginalUploadProps, OriginalUploadState> {
     this.updateFilesState();
 
     this.onHandleChange(value, targetFile);
-    this.props.onError(targetFile, err, response);
+    this.props.onError(targetFile, err, response, value);
   }
 
   /**
@@ -351,7 +351,7 @@ class OriginalUpload extends BaseRef<OriginalUploadProps, OriginalUploadState> {
       [className]: !listType,
     });
 
-    return (<>
+    return (<div className={prefix}>
       {
         !isPreview ? <Upload
           { ...others }
@@ -389,7 +389,7 @@ class OriginalUpload extends BaseRef<OriginalUploadProps, OriginalUploadState> {
         itemRender={ itemRender }
       />) : null
       }
-    </>);
+    </div>);
   }
 }
 

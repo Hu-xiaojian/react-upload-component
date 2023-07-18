@@ -41,6 +41,10 @@ const names = [
     title: '卡片上传',
     name: 'card-upload',
   },
+  {
+    title: '文字上传',
+    name: 'list-upload',
+  },
 ];
 
 module.exports = names;

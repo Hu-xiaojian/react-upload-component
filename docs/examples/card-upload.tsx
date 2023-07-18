@@ -68,6 +68,9 @@ class CardList extends React.Component<any, any>{
     return (<>
       <Upload.Card
         className='test'
+        ref={ref => {
+          console.log(ref,'----------ref')
+        }}
         // disabled
         // maxCount={1}
         // isPreview
@@ -137,8 +140,8 @@ class CardList extends React.Component<any, any>{
           console.log(file,'-============onRemove')
           return Promise.resolve()
         }}
-        onError={(file, error, response) => {
-          console.log(file, error, '------------error',response , '--------------onError')
+        onError={(file, error, response, values) => {
+          console.log(file, error, '------------error',response , '--------------onError', values)
         }}
         onSuccess={(file, values) => {
           console.log(file,'---------success', values)
@@ -146,13 +149,13 @@ class CardList extends React.Component<any, any>{
         onImageError={(file,error) => {
           console.log(file,error,'-------------------------onImageError')
         }}
-        onChange={values => {
-          console.log('0--------------',values)
-          this.setState({ value: [] })
-        }}
-        onProgress={(values, file) => {
-          console.log(values,'----------------',file,'-====================onProgress')
-        }}
+        // onChange={values => {
+        //   console.log('0--------------',values)
+        //   this.setState({ value: [] })
+        // }}
+        // onProgress={(values, file) => {
+        //   console.log(values,'----------------',file,'-====================onProgress')
+        // }}
       />
       <DialogImg src={src} visible={visible} onClose={() => this.setState({visible: false})} />
     </>);

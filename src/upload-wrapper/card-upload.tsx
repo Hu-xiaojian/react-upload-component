@@ -145,7 +145,6 @@ class CardUpload extends BaseRef<CardUploadProps, CardUploadState> {
     );
   }
 
-
   componentDidMount() {
     this.updateUploaderRef(this.uploaderRef);
   }

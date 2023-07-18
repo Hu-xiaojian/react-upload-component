@@ -47,8 +47,9 @@ export interface Common {
    * @param {file} file 文件
    * @param {Error} error 上传失败信息、响应信息及文件
    * @param {Object} response 接口错误信息
+   * @param {Array<ValueItem>} values 所有文件
    */
-  onError: (file, error, response) => void;
+  onError: (file, error, response, values) => void;
 
   /**
    * @desc 超时事件（单位ms）
