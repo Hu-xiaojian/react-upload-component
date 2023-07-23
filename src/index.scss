@@ -540,7 +540,7 @@ $s-2: $size-base * 2;
     #{$upload-prefix}-list-item {
       // 图片 文字
       &-image-preview, &-text-preview, &-icon-preview {
-        padding: $s-2;
+        padding: $size-base $s-2;
 
         &:hover {
           color: $list-item-element-hover-color;

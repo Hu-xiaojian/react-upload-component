@@ -90,6 +90,8 @@ class OriginalUpload extends BaseRef<OriginalUploadProps, OriginalUploadState> {
       uploadFiles.forEach(it => {
         const validateResult = afterSelect(it);
         promiseCall(validateResult, emptyFn, err => {
+          // 中断上传
+          this.abort(it);
           this.onHandleError(it, err, null);
         });
       });
