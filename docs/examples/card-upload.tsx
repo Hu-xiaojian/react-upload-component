@@ -69,25 +69,27 @@ class CardList extends React.Component<any, any>{
       <Upload.Card
         className='test'
         ref={ref => {
-          console.log(ref,'----------ref')
+          this.ref = ref;
+          // console.log(ref,'----------ref')
         }}
         // disabled
         // maxCount={1}
         // isPreview
-        renderPreview={file => {
-          console.log('-----------------renderPreview')
-          return <div>{ file.name }预览渲染</div>
-        }}
-        defaultValue={defaultValue}
-        fileNameRender={file => {
-          console.log('-------------------------fileNameRender')
-          return `${file.name}-fileNameRender`;
-        }}
+        // renderPreview={file => {
+        //   console.log('-----------------renderPreview')
+        //   return <div>{ file.name }预览渲染</div>
+        // }}
+        // defaultValue={defaultValue}
+        // fileNameRender={file => {
+        //   console.log('-------------------------fileNameRender')
+        //   return `${file.name}-fileNameRender`;
+        // }}
         // actionRender={(file) => {
         //   console.log('-------------------------actionRender')
         //   return <>11111111</>
         // }}
         onSelect={(file, values) => {
+          // this.ref.startUpload();
           console.log(file, values,'-----------------onSelect')
         }}
         // value={this.state.value}
@@ -103,52 +105,52 @@ class CardList extends React.Component<any, any>{
         formatter={(response) => {
           return { ...response, url: `http://127.0.0.1:7001${response.url}`,  }
         }}
-        itemRender={(file, props) => {
-          console.log(file,'-------------itemRender', props)
-          if (file.state === 'uploading') {
-            return (<div>
-              <Progress percent={file.percent} shape="circle" textRender={(percent) => {
-                return `${Math.floor(percent)}%`
-              }} />
-              <div onClick={props.onCancel}>取消</div>
-              <div>{ file.name }</div>
-            </div>)
-          }
-          return (<>
-            <div onClick={props.onRemove}>删除</div>
-            <props.UploadContainer test='test'>重新上传</props.UploadContainer>
-            自定义渲染{file.name}
-          </>)
-        }}
+        // itemRender={(file, props) => {
+        //   console.log(file,'-------------itemRender', props)
+        //   if (file.state === 'uploading') {
+        //     return (<div>
+        //       <Progress percent={file.percent} shape="circle" textRender={(percent) => {
+        //         return `${Math.floor(percent)}%`
+        //       }} />
+        //       <div onClick={props.onCancel}>取消</div>
+        //       <div>{ file.name }</div>
+        //     </div>)
+        //   }
+        //   return (<>
+        //     <div onClick={props.onRemove}>删除</div>
+        //     <props.UploadContainer test='test'>重新上传</props.UploadContainer>
+        //     自定义渲染{file.name}
+        //   </>)
+        // }}
         // autoUpload={false}
-        beforeUpload={(file, configs) => {
-          console.log(file,configs,'-----------------------beforeUpload')
-          if (file.size > 1) {
-            console.error('----------------------测试')
-            // return false;
-          }
-        }}
-        afterSelect={file => {
-          console.log(file,'-----------------------afterSelect')
-          return Promise.reject('---------afterSelect')
-        }}
-        onPreview={file => {
-          this.setState({ src: file.url, visible: true })
-        }}
-        accept="image/png"
-        onRemove={file => {
-          console.log(file,'-============onRemove')
-          return Promise.resolve()
-        }}
-        onError={(file, error, response, values) => {
-          console.log(file, error, '------------error',response , '--------------onError', values)
-        }}
-        onSuccess={(file, values) => {
-          console.log(file,'---------success', values)
-        }}
-        onImageError={(file,error) => {
-          console.log(file,error,'-------------------------onImageError')
-        }}
+        // beforeUpload={(file, configs) => {
+        //   console.log(file,configs,'-----------------------beforeUpload')
+        //   if (file.size > 1) {
+        //     console.error('----------------------测试')
+        //     // return false;
+        //   }
+        // }}
+        // afterSelect={file => {
+        //   console.log(file,'-----------------------afterSelect')
+        //   return Promise.reject('---------afterSelect')
+        // }}
+        // onPreview={file => {
+        //   this.setState({ src: file.url, visible: true })
+        // }}
+        accept="image/png,.pdf"
+        // onRemove={file => {
+        //   console.log(file,'-============onRemove')
+        //   return Promise.resolve()
+        // }}
+        // onError={(file, error, response, values) => {
+        //   console.log(file, error, '------------error',response , '--------------onError', values)
+        // }}
+        // onSuccess={(file, values) => {
+        //   console.log(file,'---------success', values)
+        // }}
+        // onImageError={(file,error) => {
+        //   console.log(file,error,'-------------------------onImageError')
+        // }}
         // onChange={values => {
         //   console.log('0--------------',values)
         //   this.setState({ value: [] })

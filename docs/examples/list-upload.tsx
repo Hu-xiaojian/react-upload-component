@@ -15,50 +15,50 @@ const defaultValue = [
       "https://img.alicdn.com/tps/TB19O79MVXXXXcZXVXXXXXXXXXX-1024-1024.jpg",
     size: 2000
   },
-  // {
-  //   uid: "1",
-  //   name: "IMG.png",
-  //   percent: 50,
-  //   suffix: 'jpg',
-  //   state: "uploading",
-  //   url: "https://img.alicdn.com/tps/TB19O79MVXXXXcZXVXXXXXXXXXX-1024-1024.jpg",
-  //   downloadURL:
-  //     "https://img.alicdn.com/tps/TB19O79MVXXXXcZXVXXXXXXXXXX-1024-1024.jpg",
-  //   imgURL:
-  //     "https://img.alicdn.com/tps/TB19O79MVXXXXcZXVXXXXXXXXXX-1024-1024.jpg",
-  //   size: 2000
-  // },
-  // {
-  //   uid: "2",
-  //   name: "IMG.png",
-  //   state: "error",
-  //   size: 2000,
-  //   url: "https://img.alicdn.com/tps/TB19O79MVXXXXcZXVXXXXXXXXXX-1024-1024.jpg",
-  //   downloadURL:
-  //     "https://img.alicdn.com/tps/TB19O79MVXXXXcZXVXXXXXXXXXX-1024-1024.jpg",
-  //   imgURL:
-  //     "https://img.alicdn.com/tps/TB19O79MVXXXXcZXVXXXXXXXXXX-1024-1024.jpg",
-  //   errorMsg: "这是错误信息"
-  // },
-  // {
-  //   uid: "3",
-  //   name: "IMG.png",
-  //   suffix: 'zip',
-  //   state: "error",
-  //   url: "https://img.alicdn.com/tps/TB19O79MVXXXXcZXVXXXXXXXXXX-1024-1024.jpg",
-  //   downloadURL:
-  //     "https://img.alicdn.com/tps/TB19O79MVXXXXcZXVXXXXXXXXXX-1024-1024.jpg",
-  //   imgURL:
-  //     "https://img.alicdn.com/tps/TB19O79MVXXXXcZXVXXXXXXXXXX-1024-1024.jpg",
-  //   size: 2000
-  // }
+  {
+    uid: "1",
+    name: "IMG.png",
+    percent: 50,
+    suffix: 'jpg',
+    state: "uploading",
+    url: "https://img.alicdn.com/tps/TB19O79MVXXXXcZXVXXXXXXXXXX-1024-1024.jpg",
+    downloadURL:
+      "https://img.alicdn.com/tps/TB19O79MVXXXXcZXVXXXXXXXXXX-1024-1024.jpg",
+    imgURL:
+      "https://img.alicdn.com/tps/TB19O79MVXXXXcZXVXXXXXXXXXX-1024-1024.jpg",
+    size: 2000
+  },
+  {
+    uid: "2",
+    name: "IMG.png",
+    state: "error",
+    size: 2000,
+    url: "https://img.alicdn.com/tps/TB19O79MVXXXXcZXVXXXXXXXXXX-1024-1024.jpg",
+    downloadURL:
+      "https://img.alicdn.com/tps/TB19O79MVXXXXcZXVXXXXXXXXXX-1024-1024.jpg",
+    imgURL:
+      "https://img.alicdn.com/tps/TB19O79MVXXXXcZXVXXXXXXXXXX-1024-1024.jpg",
+    errorMsg: "这是错误信息"
+  },
+  {
+    uid: "3",
+    name: "IMG.png",
+    suffix: 'zip',
+    state: "error",
+    url: "https://img.alicdn.com/tps/TB19O79MVXXXXcZXVXXXXXXXXXX-1024-1024.jpg",
+    downloadURL:
+      "https://img.alicdn.com/tps/TB19O79MVXXXXcZXVXXXXXXXXXX-1024-1024.jpg",
+    imgURL:
+      "https://img.alicdn.com/tps/TB19O79MVXXXXcZXVXXXXXXXXXX-1024-1024.jpg",
+    size: 2000
+  }
 ];
 
 class ListUpload extends React.Component<any, any>{
   constructor (props) {
     super(props);
     this.state = {
-      value: defaultValue,
+      value: [],
       src: '',
       visible: false,
     };
@@ -72,7 +72,8 @@ class ListUpload extends React.Component<any, any>{
     const { src, visible } = this.state;
     return (<>
       <Upload.List
-        listType='text'
+        listType='image'
+        // listType='text'
         ref={this.saveUploaderRef}
         className='test'
         // disabled
@@ -94,7 +95,7 @@ class ListUpload extends React.Component<any, any>{
         // onSelect={(file, values) => {
         //   console.log(file, values,'-----------------onSelect')
         // }}
-        value={this.state.value}
+        // value={this.state.value}
         progressProps={{
           className: 'test-className',
           textRender: (percent) => {
@@ -107,6 +108,7 @@ class ListUpload extends React.Component<any, any>{
           return { ...response, url: `http://127.0.0.1:7001${response.url}`,  }
         }}
         // itemRender={(file, props) => {
+        //   const { UploadContainer } = props;
         //   console.log(file,'-------------itemRender', props)
         //   if (file.state === 'uploading') {
         //     return (<div>
@@ -118,9 +120,10 @@ class ListUpload extends React.Component<any, any>{
         //     </div>)
         //   }
         //   return (<>
-        //     <div onClick={props.onRemove}>删除</div>
-        //     <props.UploadContainer test='test'>重新上传</props.UploadContainer>
-        //     自定义渲染{file.name}
+        //     <img src={file.url} alt=""/>
+        //     <div>自定义渲染{file.name}<span onClick={props.onRemove}>删除</span>
+        //       <UploadContainer test='test'>重新上传</UploadContainer>
+        //     </div>
         //   </>)
         // }}
         // autoUpload={false}
@@ -140,28 +143,28 @@ class ListUpload extends React.Component<any, any>{
         // onPreview={file => {
         //   this.setState({ src: file.url, visible: true })
         // }}
-        accept="image/png"
+        accept="image/png,.pdf"
         // onRemove={file => {
         //   console.log(file,'-============onRemove')
         //   return Promise.reject('12312312')
         // }}
-        onError={(file, error, response, values) => {
-          console.log(file, error, '------------error',response , '--------------onError', values)
-        }}
-        onSuccess={(file, values) => {
-          console.log(file,'---------success', values)
-        }}
+        // onError={(file, error, response, values) => {
+        //   console.log(file, error, '------------error',response , '--------------onError', values)
+        // }}
+        // onSuccess={(file, values) => {
+        //   console.log(file,'---------success', values)
+        // }}
         // onSelect={(v, file) => {
         //   console.log(this.ref.startUpload(),'-------')
-        //   console.log(v,'----------onSelect',file)
+        //   console.log(v,'----------onSelect',file, this.ref)
         // }}
         onImageError={(file,error) => {
           console.log(file,error,'-------------------------onImageError')
         }}
-        onChange={values => {
-          console.log('0--------------',values)
-          // this.setState({ value: [] })
-        }}
+        // onChange={values => {
+        //   console.log('0--------------',values)
+        //   this.setState({ value: [] })
+        // }}
         onProgress={(values, file) => {
           console.log(values,'----------------',file,'-====================onProgress')
         }}

@@ -264,7 +264,7 @@ $s-2: $size-base * 2;
         line-height: calc(48px / 2);
       }
 
-      &-uploading, &-error {
+      &-uploading, &-error, &-selected {
         #{$upload-prefix}-list-item-image-thumbnail {
           border: 1px solid #dcdfe6;
           background-color: #f4f6f9;

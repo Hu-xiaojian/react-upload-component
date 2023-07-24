@@ -325,6 +325,7 @@ class OriginalUpload extends BaseRef<OriginalUploadProps, OriginalUploadState> {
       maxCount,
       beforeUpload,
       name,
+      accept,
       // -------------------list
       listType,
       onCancel,
@@ -357,6 +358,7 @@ class OriginalUpload extends BaseRef<OriginalUploadProps, OriginalUploadState> {
       {
         !isPreview ? <Upload
           { ...others }
+          accept={accept}
           name={name}
           className={innerCls}
           beforeUpload={beforeUpload}
@@ -373,6 +375,8 @@ class OriginalUpload extends BaseRef<OriginalUploadProps, OriginalUploadState> {
         </Upload> : null
       }
       { listType ? (<List
+        name={name}
+        accept={accept}
         className={className}
         style={style}
         progressProps={progressProps}

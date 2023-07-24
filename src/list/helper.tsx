@@ -92,13 +92,29 @@ const TextAndImageList: React.FunctionComponent<TextAndImageListProps> = (props:
     renderPreview,
 
     renderImageChildren,
+
+    name,
+    accept,
+    onSelect,
   } = props;
   let item = null;
   const { downloadURL, size, classNames } = getFileInfo(file, { listType, isPreview });
 
   if (!isPreview && typeOfFn(itemRender)) {
     return (<div className={classNames} key={file.uid || file.name} style={style}>
-      { itemRender(file, { onRemove: () => onHandleRemove(file), onCancel: () => onHandleCancel(file) }) }
+      { itemRender(file, {
+        onRemove: () => onHandleRemove(file),
+        onCancel: () => onHandleCancel(file),
+        UploadContainer: ({ children }) => (
+          <UploadContainer
+            accept={accept}
+            name={name}
+            onSelect={files => onSelect(file, files)}
+            children={children}
+          />
+        ),
+        },
+      )}
     </div>)
   } else if (isPreview && typeOfFn(renderPreview)) {
     item = renderPreview(file);
